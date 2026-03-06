@@ -1,6 +1,6 @@
 {
   "name": "guidemygrid",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Plugin UXP para Adobe Photoshop — generador de retículas de columnas",
   "private": true,
   "scripts": {

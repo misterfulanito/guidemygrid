@@ -1,8 +1,8 @@
 {
-  "manifestVersion": 5,
+  "manifestVersion": 4,
   "id": "com.guidemygrid.plugin",
   "name": "GuideMyGrid",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.html",
   "host": [
     {
@@ -30,11 +30,8 @@
     { "width": 96, "height": 96, "path": "icons/icon-96.png", "scale": [1, 2], "theme": ["all"] }
   ],
   "requiredPermissions": {
-    "launchProcess": false,
-    "localFileSystem": "plugin",
     "network": {
       "domains": ["https://api.github.com"]
-    },
-    "allowCodeGenerationFromStrings": false
+    }
   }
 }

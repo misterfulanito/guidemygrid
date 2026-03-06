@@ -1,6 +1,6 @@
 // src/services/updateChecker.ts
 
-const PLUGIN_VERSION = '1.0.0'; // Sincronizar con manifest.json en cada release
+const PLUGIN_VERSION = '1.0.1'; // Sincronizar con manifest.json en cada release
 const GITHUB_REPO = 'misterfulanito/guidemygrid';
 
 export interface UpdateInfo {
