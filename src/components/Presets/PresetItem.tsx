@@ -45,16 +45,19 @@ export function PresetItem({ preset, onApply, onDelete }: PresetItemProps) {
       )}
 
       {!preset.isBuiltIn && (
-        <button
-          className={styles.itemDelete}
+        <sp-action-button
+          quiet
+          size="s"
+          class={styles.itemDelete}
           title="Eliminar preset"
-          onClick={(e) => {
+          aria-label="Eliminar preset"
+          onClick={(e: React.MouseEvent<HTMLElement>) => {
             e.stopPropagation();
             onDelete(preset.id);
           }}
         >
           ×
-        </button>
+        </sp-action-button>
       )}
     </div>
   );

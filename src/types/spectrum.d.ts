@@ -8,6 +8,7 @@ declare namespace JSX {
       size?: 'xs' | 's' | 'm' | 'l' | 'xl';
       disabled?: boolean | undefined;
       quiet?: boolean;
+      class?: string;
       onClick?: React.MouseEventHandler<HTMLElement>;
     };
     'sp-textfield': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
@@ -65,6 +66,19 @@ declare namespace JSX {
       title?: string;
       onClick?: React.MouseEventHandler<HTMLElement>;
       'aria-label'?: string;
+      class?: string;
+    };
+    'sp-divider': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
+      size?: 's' | 'm' | 'l';
+      vertical?: boolean;
+    };
+    'sp-action-group': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
+      selects?: 'single' | 'multiple';
+      class?: string;
+    };
+    'sp-label': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
+      for?: string;
+      class?: string;
     };
   }
 }

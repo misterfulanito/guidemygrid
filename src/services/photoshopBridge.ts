@@ -78,12 +78,12 @@ export class PhotoshopBridge {
     await photoshop.core.executeAsModal(async () => {
       await photoshop.action.batchPlay(
         [{
-          _obj: 'set',
-          _target: [{ _ref: 'guide', _enum: 'ordinal', _value: 'targetEnum' }],
-          to: {
+          _obj: 'make',
+          _target: [{ _ref: 'guide' }],
+          new: {
             _obj: 'guide',
             position: { _unit: 'pixelsUnit', _value: position },
-            orientation: orientation === 'vertical'
+            kind: orientation === 'vertical'
               ? { _enum: 'orientation', _value: 'vertical' }
               : { _enum: 'orientation', _value: 'horizontal' },
           },
@@ -100,41 +100,40 @@ export class PhotoshopBridge {
     if (!doc) throw new Error('No hay documento activo en Photoshop');
 
     await photoshop.core.executeAsModal(async () => {
+      // Clear existing guides first (ignore error if there are none)
       if (mode === 'replace') {
-        await photoshop.action.batchPlay(
-          [{ _obj: 'clearGuides' }],
-          {}
-        );
+        try {
+          await photoshop.action.batchPlay(
+            [{ _obj: 'clearGuides', _target: [{ _ref: 'document', _enum: 'ordinal', _value: 'targetEnum' }] }],
+            { synchronousExecution: false }
+          );
+        } catch { /* no guides to clear */ }
       }
 
-      for (const x of guides.vertical) {
-        await photoshop.action.batchPlay(
-          [{
-            _obj: 'set',
-            _target: [{ _ref: 'guide', _enum: 'ordinal', _value: 'targetEnum' }],
-            to: {
-              _obj: 'guide',
-              position: { _unit: 'pixelsUnit', _value: x },
-              orientation: { _enum: 'orientation', _value: 'vertical' },
-            },
-          }],
-          {}
-        );
-      }
+      // Build all guide descriptors in one batch call
+      const descriptors = [
+        ...guides.vertical.map((x) => ({
+          _obj: 'make',
+          _target: [{ _ref: 'guide' }],
+          new: {
+            _obj: 'guide',
+            position: { _unit: 'pixelsUnit', _value: x },
+            orientation: { _enum: 'orientation', _value: 'vertical' },
+          },
+        })),
+        ...guides.horizontal.map((y) => ({
+          _obj: 'make',
+          _target: [{ _ref: 'guide' }],
+          new: {
+            _obj: 'guide',
+            position: { _unit: 'pixelsUnit', _value: y },
+            orientation: { _enum: 'orientation', _value: 'horizontal' },
+          },
+        })),
+      ];
 
-      for (const y of guides.horizontal) {
-        await photoshop.action.batchPlay(
-          [{
-            _obj: 'set',
-            _target: [{ _ref: 'guide', _enum: 'ordinal', _value: 'targetEnum' }],
-            to: {
-              _obj: 'guide',
-              position: { _unit: 'pixelsUnit', _value: y },
-              orientation: { _enum: 'orientation', _value: 'horizontal' },
-            },
-          }],
-          {}
-        );
+      if (descriptors.length > 0) {
+        await photoshop.action.batchPlay(descriptors, { synchronousExecution: false });
       }
     }, { commandName: 'Apply GuideMyGrid' });
   }

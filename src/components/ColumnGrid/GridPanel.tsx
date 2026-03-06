@@ -7,116 +7,128 @@ import { generateGuides, GridGenerationError } from '../../services/gridGenerato
 import { VERSION } from '../../version';
 import styles from './GridPanel.module.css';
 
-// ── SVG icons ────────────────────────────────────────────────────────────────
+// ── Icons ────────────────────────────────────────────────────────────────────
 
 function IconMargins() {
   return (
-    <svg className={styles.sectionIcon} viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-      <rect x="1" y="1" width="10" height="10" rx="1" fill="none" stroke="currentColor" strokeWidth="1.2"/>
-      <rect x="3" y="3" width="6" height="6" fill="currentColor" opacity="0.25"/>
+    <svg className={styles.sectionIcon} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1.5" y="1.5" width="13" height="13" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
+      <rect x="4.5" y="4.5" width="7" height="7" stroke="currentColor" strokeWidth="1.2"/>
     </svg>
   );
 }
 
 function IconColumns() {
   return (
-    <svg className={styles.sectionIcon} viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-      <rect x="1" y="1" width="2.5" height="10" rx="0.5" fill="currentColor"/>
-      <rect x="4.75" y="1" width="2.5" height="10" rx="0.5" fill="currentColor"/>
-      <rect x="8.5" y="1" width="2.5" height="10" rx="0.5" fill="currentColor"/>
+    <svg className={styles.sectionIcon} viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1" y="2" width="3.5" height="12" rx="0.5"/>
+      <rect x="6.25" y="2" width="3.5" height="12" rx="0.5"/>
+      <rect x="11.5" y="2" width="3.5" height="12" rx="0.5"/>
     </svg>
   );
 }
 
 function IconRows() {
   return (
-    <svg className={styles.sectionIcon} viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-      <rect x="1" y="1" width="10" height="2.5" rx="0.5" fill="currentColor"/>
-      <rect x="1" y="4.75" width="10" height="2.5" rx="0.5" fill="currentColor"/>
-      <rect x="1" y="8.5" width="10" height="2.5" rx="0.5" fill="currentColor"/>
+    <svg className={styles.sectionIcon} viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="1" width="12" height="3.5" rx="0.5"/>
+      <rect x="2" y="6.25" width="12" height="3.5" rx="0.5"/>
+      <rect x="2" y="11.5" width="12" height="3.5" rx="0.5"/>
     </svg>
   );
 }
 
-// ── Labeled number input ─────────────────────────────────────────────────────
+function IconPosition() {
+  return (
+    <svg className={styles.sectionIcon} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1.5" y="1.5" width="13" height="13" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
+      <path d="M1.5 5.5h13M5.5 1.5v13" stroke="currentColor" strokeWidth="1.2"/>
+    </svg>
+  );
+}
 
-interface LabeledInputProps {
-  label: string;
+function IconReset() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+      stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3.5 8a4.5 4.5 0 1 0 1-2.8"/>
+      <path d="M1.5 4.5l2 1.5 1.5-2"/>
+    </svg>
+  );
+}
+
+function IconSave() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+      stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="12" height="12" rx="1.5"/>
+      <path d="M5 2v4h6V2M5 9v5"/>
+    </svg>
+  );
+}
+
+// ── Placeholder input ─────────────────────────────────────────────────────────
+
+interface PInput {
+  placeholder: string;
   value: number;
   min?: number;
   max?: number;
-  disabled?: boolean;
   onChange: (v: number) => void;
 }
 
-function LabeledInput({ label, value, min, max, disabled, onChange }: LabeledInputProps) {
+function PInput({ placeholder, value, min, max, onChange }: PInput) {
   const [raw, setRaw] = useState(String(value));
-
   useEffect(() => { setRaw(String(value)); }, [value]);
 
   const commit = () => {
     const n = parseFloat(raw);
     if (!isNaN(n)) {
-      let clamped = n;
-      if (min !== undefined) clamped = Math.max(min, clamped);
-      if (max !== undefined) clamped = Math.min(max, clamped);
-      onChange(clamped);
-      setRaw(String(clamped));
+      let c = n;
+      if (min !== undefined) c = Math.max(min, c);
+      if (max !== undefined) c = Math.min(max, c);
+      onChange(c);
+      setRaw(String(c));
     } else {
       setRaw(String(value));
     }
   };
 
   return (
-    <div className={styles.inputGroup}>
-      <span className={styles.inputLabel}>{label}</span>
-      <input
-        type="number"
-        className={styles.inputField}
-        value={raw}
-        min={min}
-        max={max}
-        disabled={disabled}
-        onChange={(e) => setRaw(e.target.value)}
-        onBlur={commit}
-        onKeyDown={(e) => { if (e.key === 'Enter') (e.target as HTMLInputElement).blur(); }}
-      />
-    </div>
-  );
-}
-
-// ── Section header ────────────────────────────────────────────────────────────
-
-interface SectionHeaderProps {
-  icon: React.ReactNode;
-  title: string;
-  enabled: boolean;
-  onToggle: () => void;
-}
-
-function SectionHeader({ icon, title, enabled, onToggle }: SectionHeaderProps) {
-  return (
-    <div className={styles.sectionHeader}>
-      <span className={styles.sectionTitle}>{icon}{title}</span>
-      <sp-switch checked={enabled || undefined} onClick={onToggle} />
-    </div>
+    <input
+      type="number"
+      className={styles.input}
+      value={raw}
+      placeholder={placeholder}
+      min={min}
+      max={max}
+      onChange={(e) => setRaw(e.target.value)}
+      onBlur={commit}
+      onKeyDown={(e) => { if (e.key === 'Enter') (e.target as HTMLInputElement).blur(); }}
+    />
   );
 }
 
 // ── GridPanel ─────────────────────────────────────────────────────────────────
 
 export function GridPanel() {
-  const { config, setColumnConfig, setRowConfig, setMarginsConfig, setApplyTarget, setApplyMode } = useGridStore();
-  const { columns, rows, margins, applyTarget, applyMode } = config;
+  const { config, setColumnConfig, setRowConfig, setMarginsConfig, setApplyMode, resetToDefaults } = useGridStore();
+  const { columns, rows, margins, applyMode } = config;
   const { isApplying, lastError, lastSuccess, setApplying, setError, setSuccess } = useUIStore();
+  const { setActiveTab } = useUIStore();
   const { document, selection, refresh } = useDocument();
 
-  // Auto-revert applyTarget to 'canvas' when selection disappears
+  // Position offset for guide origin
+  const [posX, setPosX] = useState(0);
+  const [posY, setPosY] = useState(0);
+
+  // Auto-populate position from active selection
   useEffect(() => {
-    if (!selection && applyTarget === 'selection') {
-      setApplyTarget('canvas');
+    if (selection) {
+      setPosX(Math.round(selection.left));
+      setPosY(Math.round(selection.top));
     }
-  }, [selection, applyTarget, setApplyTarget]);
+  }, [selection]);
 
   // Clear success message after 2 s
   useEffect(() => {
@@ -131,11 +143,15 @@ export function GridPanel() {
     setError(null);
     setSuccess(false);
     try {
-      const ctx =
-        applyTarget === 'selection' && selection
-          ? { width: selection.width, height: selection.height, offsetX: selection.left, offsetY: selection.top }
-          : { width: document.width, height: document.height };
-      const guides = generateGuides(config, ctx);
+      // All sections active; position offset determines guide origin
+      const effectiveConfig = {
+        ...config,
+        columns: { ...columns, enabled: true },
+        rows: { ...rows, enabled: true },
+        margins: { ...margins, enabled: true },
+      };
+      const ctx = { width: document.width, height: document.height, offsetX: posX, offsetY: posY };
+      const guides = generateGuides(effectiveConfig, ctx);
       await photoshopBridge.applyGuides(guides, applyMode);
       setSuccess(true);
     } catch (err) {
@@ -145,140 +161,147 @@ export function GridPanel() {
     }
   };
 
+  const handleReset = () => {
+    resetToDefaults();
+    setPosX(0);
+    setPosY(0);
+    setError(null);
+  };
+
   return (
     <div className={styles.panel}>
 
-      {/* ── Header ── */}
+      {/* ── Header strip ── */}
       <div className={styles.header}>
         <span className={styles.headerTitle}>GuideMyGrid</span>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <span className={styles.headerVersion}>v{VERSION}</span>
-          <button className={styles.refreshBtn} onClick={refresh} title="Actualizar estado">↻</button>
+        <div className={styles.headerRight}>
+          {selection && (
+            <span
+              className={styles.selectionDot}
+              title={`Selección activa: ${Math.round(selection.width)} × ${Math.round(selection.height)} px`}
+            />
+          )}
+          <span className={styles.version}>v{VERSION}</span>
+          <button className={styles.refreshBtn} onClick={refresh} title="Actualizar estado" aria-label="Actualizar">
+            <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" width="11" height="11"
+              stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+              <path d="M2 6a4 4 0 1 0 .8-2.4"/>
+              <path d="M1 3l1 1.4 1.4-1"/>
+            </svg>
+          </button>
         </div>
       </div>
 
-      {/* ── Status banner ── */}
-      {!document ? (
-        <div className={styles.noDocBanner}>
-          <span>◦</span>
-          Abre un documento en Photoshop
-        </div>
-      ) : selection ? (
-        <div className={styles.selectionBanner}>
-          <span className={styles.selectionBannerDot} />
-          Selección activa
-          <span className={styles.selectionMeta}>
-            {Math.round(selection.width)} × {Math.round(selection.height)} px
-          </span>
-        </div>
-      ) : null}
+      {/* ── No-document notice ── */}
+      {!document && (
+        <div className={styles.noDoc}>Abre un documento en Photoshop</div>
+      )}
 
       {/* ── Scrollable sections ── */}
       <div className={styles.content}>
 
         {/* Márgenes */}
         <div className={styles.section}>
-          <SectionHeader icon={<IconMargins />} title="Márgenes" enabled={margins.enabled}
-            onToggle={() => setMarginsConfig({ enabled: !margins.enabled })} />
-          {margins.enabled && (
-            <div className={styles.marginsGrid}>
-              <LabeledInput label="Arriba" value={margins.top} min={0} max={2000}
-                onChange={(v) => setMarginsConfig({ top: v })} />
-              <LabeledInput label="Derecha" value={margins.right} min={0} max={2000}
-                onChange={(v) => setMarginsConfig({ right: v })} />
-              <LabeledInput label="Abajo" value={margins.bottom} min={0} max={2000}
-                onChange={(v) => setMarginsConfig({ bottom: v })} />
-              <LabeledInput label="Izquierda" value={margins.left} min={0} max={2000}
-                onChange={(v) => setMarginsConfig({ left: v })} />
-            </div>
-          )}
+          <div className={styles.sectionHead}>
+            <IconMargins />
+            <span className={styles.sectionLabel}>Márgenes</span>
+          </div>
+          <div className={styles.grid2x2}>
+            <PInput placeholder="Arriba" value={margins.top} min={0} max={2000}
+              onChange={(v) => setMarginsConfig({ top: v })} />
+            <PInput placeholder="Izquierda" value={margins.left} min={0} max={2000}
+              onChange={(v) => setMarginsConfig({ left: v })} />
+            <PInput placeholder="Abajo" value={margins.bottom} min={0} max={2000}
+              onChange={(v) => setMarginsConfig({ bottom: v })} />
+            <PInput placeholder="Derecha" value={margins.right} min={0} max={2000}
+              onChange={(v) => setMarginsConfig({ right: v })} />
+          </div>
         </div>
 
         {/* Columnas */}
         <div className={styles.section}>
-          <SectionHeader icon={<IconColumns />} title="Columnas" enabled={columns.enabled}
-            onToggle={() => setColumnConfig({ enabled: !columns.enabled })} />
-          {columns.enabled && (
-            <div className={styles.inputRow}>
-              <LabeledInput label="Cantidad" value={columns.columns} min={1} max={24}
-                onChange={(v) => setColumnConfig({ columns: v })} />
-              <LabeledInput label="Gutter" value={columns.gutter} min={0} max={500}
-                onChange={(v) => setColumnConfig({ gutter: v })} />
-              <LabeledInput label="Margen" value={columns.marginLeft} min={0} max={2000}
-                onChange={(v) => setColumnConfig({ marginLeft: v, marginRight: v })} />
-            </div>
-          )}
+          <div className={styles.sectionHead}>
+            <IconColumns />
+            <span className={styles.sectionLabel}>Columnas</span>
+          </div>
+          <div className={styles.row3}>
+            <PInput placeholder="Cantidad" value={columns.columns} min={1} max={24}
+              onChange={(v) => setColumnConfig({ columns: v })} />
+            <PInput placeholder="Gutter" value={columns.gutter} min={0} max={500}
+              onChange={(v) => setColumnConfig({ gutter: v })} />
+            <PInput placeholder="Margen" value={columns.marginLeft} min={0} max={2000}
+              onChange={(v) => setColumnConfig({ marginLeft: v, marginRight: v })} />
+          </div>
         </div>
 
         {/* Filas */}
         <div className={styles.section}>
-          <SectionHeader icon={<IconRows />} title="Filas" enabled={rows.enabled}
-            onToggle={() => setRowConfig({ enabled: !rows.enabled })} />
-          {rows.enabled && (
-            <div className={styles.inputRow}>
-              <LabeledInput label="Filas" value={rows.rows} min={1} max={100}
-                onChange={(v) => setRowConfig({ rows: v })} />
-              <LabeledInput label="Gutter" value={rows.gutter} min={0} max={500}
-                onChange={(v) => setRowConfig({ gutter: v })} />
-              <LabeledInput label="Margen" value={rows.marginTop} min={0} max={2000}
-                onChange={(v) => setRowConfig({ marginTop: v, marginBottom: v })} />
-            </div>
-          )}
+          <div className={styles.sectionHead}>
+            <IconRows />
+            <span className={styles.sectionLabel}>Filas</span>
+          </div>
+          <div className={styles.row3}>
+            <PInput placeholder="Filas" value={rows.rows} min={1} max={100}
+              onChange={(v) => setRowConfig({ rows: v })} />
+            <PInput placeholder="Gutter" value={rows.gutter} min={0} max={500}
+              onChange={(v) => setRowConfig({ gutter: v })} />
+            <PInput placeholder="Margen" value={rows.marginTop} min={0} max={2000}
+              onChange={(v) => setRowConfig({ marginTop: v, marginBottom: v })} />
+          </div>
+        </div>
+
+        {/* Posición */}
+        <div className={styles.section}>
+          <div className={styles.sectionHead}>
+            <IconPosition />
+            <span className={styles.sectionLabel}>Posición</span>
+          </div>
+          <div className={styles.row2}>
+            <PInput placeholder="Izquierda" value={posX} min={0} max={99999}
+              onChange={setPosX} />
+            <PInput placeholder="Arriba" value={posY} min={0} max={99999}
+              onChange={setPosY} />
+          </div>
         </div>
 
       </div>
 
-      {/* ── Apply footer ── */}
-      <div className={styles.applySection}>
-
-        <span className={styles.applyLabel}>Aplicar en</span>
-        <div className={styles.segmented}>
+      {/* ── Footer ── */}
+      <div className={styles.footer}>
+        <div className={styles.footerRow}>
           <button
-            className={`${styles.segmentedBtn} ${applyTarget === 'canvas' ? styles.segmentedBtnActive : ''}`}
-            onClick={() => setApplyTarget('canvas')}
+            className={styles.applyBtn}
+            disabled={!document || isApplying}
+            onClick={handleApply}
           >
-            Canvas
+            {isApplying ? 'Aplicando…' : 'Añadir guías'}
           </button>
-          <button
-            className={`${styles.segmentedBtn} ${applyTarget === 'selection' ? styles.segmentedBtnActive : ''}`}
-            disabled={!selection}
-            onClick={() => setApplyTarget('selection')}
-            title={!selection ? 'Haz una selección en Photoshop para usar esta opción' : undefined}
-          >
-            Selección
-          </button>
+          <div className={styles.footerIcons}>
+            <button
+              className={`${styles.iconBtn} ${applyMode === 'replace' ? styles.iconBtnActive : ''}`}
+              title={applyMode === 'replace' ? 'Modo: Reemplazar guías existentes' : 'Modo: Añadir a guías existentes'}
+              onClick={() => setApplyMode(applyMode === 'replace' ? 'add' : 'replace')}
+            >
+              <IconSave />
+            </button>
+            <button
+              className={styles.iconBtn}
+              title="Restablecer valores por defecto"
+              onClick={handleReset}
+            >
+              <IconReset />
+            </button>
+          </div>
         </div>
 
-        <span className={styles.applyLabel}>Modo</span>
-        <div className={styles.segmented}>
-          <button
-            className={`${styles.segmentedBtn} ${applyMode === 'replace' ? styles.segmentedBtnActiveDark : ''}`}
-            onClick={() => setApplyMode('replace')}
-          >
-            Reemplazar
-          </button>
-          <button
-            className={`${styles.segmentedBtn} ${applyMode === 'add' ? styles.segmentedBtnActiveDark : ''}`}
-            onClick={() => setApplyMode('add')}
-          >
-            Añadir
-          </button>
-        </div>
-
-        <button
-          className={styles.applyBtn}
-          disabled={!document || isApplying}
-          onClick={handleApply}
-        >
-          {isApplying ? 'Aplicando…' : 'Aplicar guías'}
-        </button>
-
-        <div className={styles.statusMsg}>
-          {lastError && <span className={styles.statusError}>{lastError}</span>}
-          {lastSuccess && !lastError && <span className={styles.statusSuccess}>✓ Guías aplicadas</span>}
-        </div>
-
+        {(lastError || lastSuccess) && (
+          <div className={styles.statusMsg}>
+            {lastError && <span className={styles.statusError}>{lastError}</span>}
+            {lastSuccess && !lastError && <span className={styles.statusSuccess}>✓ Guías aplicadas</span>}
+          </div>
+        )}
       </div>
+
     </div>
   );
 }

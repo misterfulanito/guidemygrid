@@ -13,56 +13,15 @@
 
 .saveInput {
   flex: 1;
-  height: 28px;
-  padding: 0 8px;
-  font-size: 12px;
-  color: var(--spectrum-global-color-gray-900, #1a1a1a);
-  background: var(--spectrum-global-color-gray-50, #f8f8f8);
-  border: 1px solid var(--spectrum-global-color-gray-300, #d0d0d0);
-  border-radius: 4px;
-  box-sizing: border-box;
-  outline: none;
   min-width: 0;
-}
-
-.saveInput::placeholder {
-  color: var(--spectrum-global-color-gray-600, #909090);
-}
-
-.saveInput:focus {
-  border-color: var(--spectrum-global-color-blue-500, #1473e6);
-  box-shadow: 0 0 0 1px var(--spectrum-global-color-blue-500, #1473e6);
+  --spectrum-textfield-m-height: 26px;
 }
 
 .saveBtn {
-  height: 28px;
-  padding: 0 10px;
-  font-size: 11px;
-  font-weight: 600;
-  background: var(--spectrum-global-color-blue-500, #1473e6);
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
   flex-shrink: 0;
+  --spectrum-button-m-height: 26px;
+  font-size: 11px;
   white-space: nowrap;
-  transition: background 0.15s;
-}
-
-.saveBtn:hover:not(:disabled) {
-  background: var(--spectrum-global-color-blue-600, #0d66d0);
-}
-
-.saveBtn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-/* ── Divider ── */
-.divider {
-  height: 1px;
-  background: var(--spectrum-global-color-gray-200, #e0e0e0);
-  margin: 0;
 }
 
 /* ── Preset list ── */
@@ -148,23 +107,12 @@
 }
 
 .itemDelete {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 2px 4px;
-  border-radius: 3px;
-  color: var(--spectrum-global-color-gray-500, #adadad);
-  font-size: 14px;
-  line-height: 1;
   flex-shrink: 0;
   opacity: 0;
-  transition: opacity 0.1s, color 0.1s;
+  --spectrum-actionbutton-m-height: 22px;
+  transition: opacity 0.1s;
 }
 
 .item:hover .itemDelete {
   opacity: 1;
-}
-
-.itemDelete:hover {
-  color: var(--spectrum-global-color-red-500, #d7373f);
 }

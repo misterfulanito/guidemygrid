@@ -16,10 +16,6 @@ export function Presets() {
     setName('');
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') handleSave();
-  };
-
   const builtIns = presets.filter((p) => p.isBuiltIn);
   const custom = presets.filter((p) => !p.isBuiltIn);
 
@@ -27,25 +23,27 @@ export function Presets() {
     <div className={styles.panel}>
       {/* Save current config */}
       <div className={styles.saveForm}>
-        <input
-          className={styles.saveInput}
-          type="text"
+        <sp-textfield
+          class={styles.saveInput}
           placeholder="Nombre del preset…"
           value={name}
-          onChange={(e) => setName(e.target.value)}
-          onKeyDown={handleKeyDown}
-          maxLength={40}
+          onInput={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.currentTarget.value)}
+          onKeyDown={(e: React.KeyboardEvent<HTMLElement>) => {
+            if (e.key === 'Enter') handleSave();
+          }}
         />
-        <button
-          className={styles.saveBtn}
+        <sp-button
+          variant="primary"
+          size="s"
+          class={styles.saveBtn}
+          disabled={(!name.trim()) || undefined}
           onClick={handleSave}
-          disabled={!name.trim()}
         >
           Guardar
-        </button>
+        </sp-button>
       </div>
 
-      <div className={styles.divider} />
+      <sp-divider size="s" />
 
       {/* Built-in presets */}
       {builtIns.length > 0 && (
