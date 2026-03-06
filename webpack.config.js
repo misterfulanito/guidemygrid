@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: './src/index.tsx',
@@ -14,11 +15,11 @@ module.exports = {
   },
   // UXP provee photoshop y uxp como módulos externos — no bundlear
   externals: {
-    photoshop: 'photoshop',
-    uxp: 'uxp',
-    os: 'os',
-    fs: 'fs',
-    path: 'path',
+    photoshop: 'commonjs2 photoshop',
+    uxp: 'commonjs2 uxp',
+    os: 'commonjs2 os',
+    fs: 'commonjs2 fs',
+    path: 'commonjs2 path',
   },
   module: {
     rules: [
@@ -29,11 +30,12 @@ module.exports = {
       },
       {
         test: /\.module\.css$/,
-        use: ['style-loader', { loader: 'css-loader', options: { modules: true } }],
+        use: [MiniCssExtractPlugin.loader, { loader: 'css-loader', options: { modules: true } }],
       },
     ],
   },
   plugins: [
+    new MiniCssExtractPlugin({ filename: 'styles.css' }),
     new HtmlWebpackPlugin({ template: './index.html' }),
     new CopyWebpackPlugin({
       patterns: [
