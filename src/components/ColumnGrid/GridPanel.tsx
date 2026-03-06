@@ -1,13 +1,13 @@
 // src/components/ColumnGrid/GridPanel.tsx
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGridStore, useUIStore } from '../../store';
 import { useDocument } from '../../hooks/useDocument';
-import { NumberInput } from '../shared/NumberInput';
 import { photoshopBridge } from '../../services/photoshopBridge';
 import { generateGuides, GridGenerationError } from '../../services/gridGenerator';
+import { VERSION } from '../../version';
 import styles from './GridPanel.module.css';
 
-// ── SVG icons (inline, minimal) ─────────────────────────────────────────────
+// ── SVG icons ────────────────────────────────────────────────────────────────
 
 function IconMargins() {
   return (
@@ -38,6 +38,53 @@ function IconRows() {
   );
 }
 
+// ── Labeled number input ─────────────────────────────────────────────────────
+
+interface LabeledInputProps {
+  label: string;
+  value: number;
+  min?: number;
+  max?: number;
+  disabled?: boolean;
+  onChange: (v: number) => void;
+}
+
+function LabeledInput({ label, value, min, max, disabled, onChange }: LabeledInputProps) {
+  const [raw, setRaw] = useState(String(value));
+
+  useEffect(() => { setRaw(String(value)); }, [value]);
+
+  const commit = () => {
+    const n = parseFloat(raw);
+    if (!isNaN(n)) {
+      let clamped = n;
+      if (min !== undefined) clamped = Math.max(min, clamped);
+      if (max !== undefined) clamped = Math.min(max, clamped);
+      onChange(clamped);
+      setRaw(String(clamped));
+    } else {
+      setRaw(String(value));
+    }
+  };
+
+  return (
+    <div className={styles.inputGroup}>
+      <span className={styles.inputLabel}>{label}</span>
+      <input
+        type="number"
+        className={styles.inputField}
+        value={raw}
+        min={min}
+        max={max}
+        disabled={disabled}
+        onChange={(e) => setRaw(e.target.value)}
+        onBlur={commit}
+        onKeyDown={(e) => { if (e.key === 'Enter') (e.target as HTMLInputElement).blur(); }}
+      />
+    </div>
+  );
+}
+
 // ── Section header ────────────────────────────────────────────────────────────
 
 interface SectionHeaderProps {
@@ -50,27 +97,28 @@ interface SectionHeaderProps {
 function SectionHeader({ icon, title, enabled, onToggle }: SectionHeaderProps) {
   return (
     <div className={styles.sectionHeader}>
-      <span className={styles.sectionTitle}>
-        {icon}
-        {title}
-      </span>
-      <sp-switch
-        checked={enabled || undefined}
-        onClick={onToggle}
-      />
+      <span className={styles.sectionTitle}>{icon}{title}</span>
+      <sp-switch checked={enabled || undefined} onClick={onToggle} />
     </div>
   );
 }
 
-// ── Apply area ────────────────────────────────────────────────────────────────
+// ── GridPanel ─────────────────────────────────────────────────────────────────
 
-function ApplyArea() {
-  const config = useGridStore((s) => s.config);
-  const { setApplyMode } = useGridStore();
-  const { document } = useDocument();
+export function GridPanel() {
+  const { config, setColumnConfig, setRowConfig, setMarginsConfig, setApplyTarget, setApplyMode } = useGridStore();
+  const { columns, rows, margins, applyTarget, applyMode } = config;
   const { isApplying, lastError, lastSuccess, setApplying, setError, setSuccess } = useUIStore();
+  const { document, selection, refresh } = useDocument();
 
-  // Clear success after 2 s
+  // Auto-revert applyTarget to 'canvas' when selection disappears
+  useEffect(() => {
+    if (!selection && applyTarget === 'selection') {
+      setApplyTarget('canvas');
+    }
+  }, [selection, applyTarget, setApplyTarget]);
+
+  // Clear success message after 2 s
   useEffect(() => {
     if (!lastSuccess) return;
     const t = setTimeout(() => setSuccess(false), 2000);
@@ -83,8 +131,12 @@ function ApplyArea() {
     setError(null);
     setSuccess(false);
     try {
-      const guides = generateGuides(config, { width: document.width, height: document.height });
-      await photoshopBridge.applyGuides(guides, config.applyMode);
+      const ctx =
+        applyTarget === 'selection' && selection
+          ? { width: selection.width, height: selection.height, offsetX: selection.left, offsetY: selection.top }
+          : { width: document.width, height: document.height };
+      const guides = generateGuides(config, ctx);
+      await photoshopBridge.applyGuides(guides, applyMode);
       setSuccess(true);
     } catch (err) {
       setError(err instanceof GridGenerationError ? err.message : 'Error al aplicar guías');
@@ -94,117 +146,139 @@ function ApplyArea() {
   };
 
   return (
-    <div className={styles.applySection}>
-      <div className={styles.modeRow}>
-        <button
-          className={`${styles.modeBtn} ${config.applyMode === 'replace' ? styles.modeBtnActive : ''}`}
-          onClick={() => setApplyMode('replace')}
-        >
-          Reemplazar
-        </button>
-        <button
-          className={`${styles.modeBtn} ${config.applyMode === 'add' ? styles.modeBtnActive : ''}`}
-          onClick={() => setApplyMode('add')}
-        >
-          Añadir
-        </button>
-      </div>
-
-      {!document && (
-        <p className={styles.notice}>Abre un documento en Photoshop</p>
-      )}
-
-      <button
-        className={styles.applyBtn}
-        disabled={!document || isApplying}
-        onClick={handleApply}
-        style={{ marginTop: document ? 8 : 4 }}
-      >
-        {isApplying ? 'Aplicando…' : 'Aplicar guías'}
-      </button>
-
-      <div className={styles.status}>
-        {lastError && <span className={styles.statusError}>{lastError}</span>}
-        {lastSuccess && !lastError && <span className={styles.statusSuccess}>✓ Guías aplicadas</span>}
-      </div>
-    </div>
-  );
-}
-
-// ── GridPanel ─────────────────────────────────────────────────────────────────
-
-export function GridPanel() {
-  const { config, setColumnConfig, setRowConfig, setMarginsConfig } = useGridStore();
-  const { columns, rows, margins } = config;
-
-  return (
     <div className={styles.panel}>
 
-      {/* Margins */}
-      <div className={styles.section}>
-        <SectionHeader
-          icon={<IconMargins />}
-          title="Márgenes"
-          enabled={margins.enabled}
-          onToggle={() => setMarginsConfig({ enabled: !margins.enabled })}
-        />
-        {margins.enabled && (
-          <div className={styles.marginsGrid}>
-            <NumberInput compact label="Arriba" value={margins.top} min={0} max={2000} suffix="px"
-              onChange={(v) => setMarginsConfig({ top: v })} />
-            <NumberInput compact label="Derecha" value={margins.right} min={0} max={2000} suffix="px"
-              onChange={(v) => setMarginsConfig({ right: v })} />
-            <NumberInput compact label="Abajo" value={margins.bottom} min={0} max={2000} suffix="px"
-              onChange={(v) => setMarginsConfig({ bottom: v })} />
-            <NumberInput compact label="Izquierda" value={margins.left} min={0} max={2000} suffix="px"
-              onChange={(v) => setMarginsConfig({ left: v })} />
-          </div>
-        )}
+      {/* ── Header ── */}
+      <div className={styles.header}>
+        <span className={styles.headerTitle}>GuideMyGrid</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <span className={styles.headerVersion}>v{VERSION}</span>
+          <button className={styles.refreshBtn} onClick={refresh} title="Actualizar estado">↻</button>
+        </div>
       </div>
 
-      {/* Columns */}
-      <div className={styles.section}>
-        <SectionHeader
-          icon={<IconColumns />}
-          title="Columnas"
-          enabled={columns.enabled}
-          onToggle={() => setColumnConfig({ enabled: !columns.enabled })}
-        />
-        {columns.enabled && (
-          <div className={styles.inputRow}>
-            <NumberInput compact label="Cantidad" value={columns.columns} min={1} max={24}
-              onChange={(v) => setColumnConfig({ columns: v })} />
-            <NumberInput compact label="Gutter" value={columns.gutter} min={0} max={500} suffix="px"
-              onChange={(v) => setColumnConfig({ gutter: v })} />
-            <NumberInput compact label="Margen" value={columns.marginLeft} min={0} max={2000} suffix="px"
-              onChange={(v) => setColumnConfig({ marginLeft: v, marginRight: v })} />
-          </div>
-        )}
+      {/* ── Status banner ── */}
+      {!document ? (
+        <div className={styles.noDocBanner}>
+          <span>◦</span>
+          Abre un documento en Photoshop
+        </div>
+      ) : selection ? (
+        <div className={styles.selectionBanner}>
+          <span className={styles.selectionBannerDot} />
+          Selección activa
+          <span className={styles.selectionMeta}>
+            {Math.round(selection.width)} × {Math.round(selection.height)} px
+          </span>
+        </div>
+      ) : null}
+
+      {/* ── Scrollable sections ── */}
+      <div className={styles.content}>
+
+        {/* Márgenes */}
+        <div className={styles.section}>
+          <SectionHeader icon={<IconMargins />} title="Márgenes" enabled={margins.enabled}
+            onToggle={() => setMarginsConfig({ enabled: !margins.enabled })} />
+          {margins.enabled && (
+            <div className={styles.marginsGrid}>
+              <LabeledInput label="Arriba" value={margins.top} min={0} max={2000}
+                onChange={(v) => setMarginsConfig({ top: v })} />
+              <LabeledInput label="Derecha" value={margins.right} min={0} max={2000}
+                onChange={(v) => setMarginsConfig({ right: v })} />
+              <LabeledInput label="Abajo" value={margins.bottom} min={0} max={2000}
+                onChange={(v) => setMarginsConfig({ bottom: v })} />
+              <LabeledInput label="Izquierda" value={margins.left} min={0} max={2000}
+                onChange={(v) => setMarginsConfig({ left: v })} />
+            </div>
+          )}
+        </div>
+
+        {/* Columnas */}
+        <div className={styles.section}>
+          <SectionHeader icon={<IconColumns />} title="Columnas" enabled={columns.enabled}
+            onToggle={() => setColumnConfig({ enabled: !columns.enabled })} />
+          {columns.enabled && (
+            <div className={styles.inputRow}>
+              <LabeledInput label="Cantidad" value={columns.columns} min={1} max={24}
+                onChange={(v) => setColumnConfig({ columns: v })} />
+              <LabeledInput label="Gutter" value={columns.gutter} min={0} max={500}
+                onChange={(v) => setColumnConfig({ gutter: v })} />
+              <LabeledInput label="Margen" value={columns.marginLeft} min={0} max={2000}
+                onChange={(v) => setColumnConfig({ marginLeft: v, marginRight: v })} />
+            </div>
+          )}
+        </div>
+
+        {/* Filas */}
+        <div className={styles.section}>
+          <SectionHeader icon={<IconRows />} title="Filas" enabled={rows.enabled}
+            onToggle={() => setRowConfig({ enabled: !rows.enabled })} />
+          {rows.enabled && (
+            <div className={styles.inputRow}>
+              <LabeledInput label="Filas" value={rows.rows} min={1} max={100}
+                onChange={(v) => setRowConfig({ rows: v })} />
+              <LabeledInput label="Gutter" value={rows.gutter} min={0} max={500}
+                onChange={(v) => setRowConfig({ gutter: v })} />
+              <LabeledInput label="Margen" value={rows.marginTop} min={0} max={2000}
+                onChange={(v) => setRowConfig({ marginTop: v, marginBottom: v })} />
+            </div>
+          )}
+        </div>
+
       </div>
 
-      {/* Rows */}
-      <div className={styles.section}>
-        <SectionHeader
-          icon={<IconRows />}
-          title="Filas"
-          enabled={rows.enabled}
-          onToggle={() => setRowConfig({ enabled: !rows.enabled })}
-        />
-        {rows.enabled && (
-          <div className={styles.inputRow}>
-            <NumberInput compact label="Cantidad" value={rows.rows} min={1} max={100}
-              onChange={(v) => setRowConfig({ rows: v })} />
-            <NumberInput compact label="Gutter" value={rows.gutter} min={0} max={500} suffix="px"
-              onChange={(v) => setRowConfig({ gutter: v })} />
-            <NumberInput compact label="Margen" value={rows.marginTop} min={0} max={2000} suffix="px"
-              onChange={(v) => setRowConfig({ marginTop: v, marginBottom: v })} />
-          </div>
-        )}
+      {/* ── Apply footer ── */}
+      <div className={styles.applySection}>
+
+        <span className={styles.applyLabel}>Aplicar en</span>
+        <div className={styles.segmented}>
+          <button
+            className={`${styles.segmentedBtn} ${applyTarget === 'canvas' ? styles.segmentedBtnActive : ''}`}
+            onClick={() => setApplyTarget('canvas')}
+          >
+            Canvas
+          </button>
+          <button
+            className={`${styles.segmentedBtn} ${applyTarget === 'selection' ? styles.segmentedBtnActive : ''}`}
+            disabled={!selection}
+            onClick={() => setApplyTarget('selection')}
+            title={!selection ? 'Haz una selección en Photoshop para usar esta opción' : undefined}
+          >
+            Selección
+          </button>
+        </div>
+
+        <span className={styles.applyLabel}>Modo</span>
+        <div className={styles.segmented}>
+          <button
+            className={`${styles.segmentedBtn} ${applyMode === 'replace' ? styles.segmentedBtnActiveDark : ''}`}
+            onClick={() => setApplyMode('replace')}
+          >
+            Reemplazar
+          </button>
+          <button
+            className={`${styles.segmentedBtn} ${applyMode === 'add' ? styles.segmentedBtnActiveDark : ''}`}
+            onClick={() => setApplyMode('add')}
+          >
+            Añadir
+          </button>
+        </div>
+
+        <button
+          className={styles.applyBtn}
+          disabled={!document || isApplying}
+          onClick={handleApply}
+        >
+          {isApplying ? 'Aplicando…' : 'Aplicar guías'}
+        </button>
+
+        <div className={styles.statusMsg}>
+          {lastError && <span className={styles.statusError}>{lastError}</span>}
+          {lastSuccess && !lastError && <span className={styles.statusSuccess}>✓ Guías aplicadas</span>}
+        </div>
+
       </div>
-
-      {/* Apply */}
-      <ApplyArea />
-
     </div>
   );
 }
