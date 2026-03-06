@@ -38,14 +38,17 @@ declare namespace JSX {
       selected?: string;
       direction?: 'horizontal' | 'vertical';
       onChange?: React.ChangeEventHandler<HTMLElement & { selected: string }>;
+      class?: string;
     };
     'sp-tab': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
       label?: string;
       value?: string;
       disabled?: boolean;
+      class?: string;
     };
     'sp-tab-panel': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
       value?: string;
+      class?: string;
     };
     'sp-radio-group': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
       selected?: string;

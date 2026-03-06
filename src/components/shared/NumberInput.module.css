@@ -1,3 +1,4 @@
+/* Standard mode (label above) */
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -27,4 +28,60 @@
   font-size: 11px;
   color: var(--spectrum-global-color-gray-600, #909090);
   flex-shrink: 0;
+}
+
+/* Compact mode (placeholder as label) */
+.compactWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.compactInput {
+  width: 100%;
+  height: 28px;
+  padding: 0 8px;
+  font-size: 12px;
+  color: var(--spectrum-global-color-gray-900, #1a1a1a);
+  background: var(--spectrum-global-color-gray-50, #f8f8f8);
+  border: 1px solid var(--spectrum-global-color-gray-300, #d0d0d0);
+  border-radius: 4px;
+  box-sizing: border-box;
+  outline: none;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.compactInput::-webkit-outer-spin-button,
+.compactInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.compactInput::placeholder {
+  color: var(--spectrum-global-color-gray-600, #909090);
+  font-size: 12px;
+}
+
+.compactInput:focus {
+  border-color: var(--spectrum-global-color-blue-500, #1473e6);
+  box-shadow: 0 0 0 1px var(--spectrum-global-color-blue-500, #1473e6);
+}
+
+.compactInput:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.compactDisabled .compactInput {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.compactSuffix {
+  position: absolute;
+  right: 6px;
+  font-size: 10px;
+  color: var(--spectrum-global-color-gray-500, #adadad);
+  pointer-events: none;
 }
