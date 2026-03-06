@@ -1,0 +1,30 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.label {
+  font-size: 11px;
+  color: var(--spectrum-global-color-gray-700, #747474);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+}
+
+.suffix {
+  font-size: 11px;
+  color: var(--spectrum-global-color-gray-600, #909090);
+  flex-shrink: 0;
+}
