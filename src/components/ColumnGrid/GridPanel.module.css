@@ -3,75 +3,10 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: var(--spectrum-global-color-gray-75);
-  font-family: var(--spectrum-global-font-family-base);
+  background: var(--gmg-bg-panel);
+  font-family: var(--gmg-font);
   font-size: 12px;
-  color: var(--spectrum-global-color-gray-900);
-}
-
-/* ── Header strip ────────────────────────────────────────────────────────── */
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 5px 8px 5px 12px;
-  border-bottom: 1px solid var(--spectrum-global-color-gray-200);
-  flex-shrink: 0;
-}
-.headerTitle {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--spectrum-global-color-gray-700);
-  letter-spacing: 0.02em;
-}
-.headerRight {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.version {
-  font-size: 10px;
-  color: var(--spectrum-global-color-gray-500);
-}
-.selectionDot {
-  display: block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--spectrum-global-color-blue-500);
-  animation: blink 1.8s ease-in-out infinite;
-}
-@keyframes blink {
-  0%,100% { opacity: 1; }
-  50%     { opacity: 0.35; }
-}
-.refreshBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  background: none;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  color: var(--spectrum-global-color-gray-500);
-  padding: 0;
-  transition: color 0.1s, background 0.1s;
-}
-.refreshBtn:hover {
-  color: var(--spectrum-global-color-gray-800);
-  background: var(--spectrum-global-color-gray-200);
-}
-
-/* ── No-document notice ──────────────────────────────────────────────────── */
-.noDoc {
-  padding: 5px 12px;
-  font-size: 11px;
-  color: var(--spectrum-global-color-gray-600);
-  background: var(--spectrum-global-color-gray-100);
-  border-bottom: 1px solid var(--spectrum-global-color-gray-200);
-  flex-shrink: 0;
+  color: var(--gmg-text-primary);
 }
 
 /* ── Scrollable content ──────────────────────────────────────────────────── */
@@ -84,24 +19,73 @@
 /* ── Section ─────────────────────────────────────────────────────────────── */
 .section {
   padding: 10px 12px 12px;
-  border-bottom: 1px solid var(--spectrum-global-color-gray-200);
+  border-bottom: 1px solid var(--gmg-border);
 }
+
 .sectionHead {
   display: flex;
   align-items: center;
   gap: 7px;
   margin-bottom: 8px;
 }
+
 .sectionIcon {
   width: 16px;
   height: 16px;
-  color: var(--spectrum-global-color-gray-700);
+  color: var(--gmg-accent);
   flex-shrink: 0;
 }
+
 .sectionLabel {
   font-size: 13px;
   font-weight: 700;
-  color: var(--spectrum-global-color-gray-900);
+  color: var(--gmg-text-primary);
+}
+
+.sectionHeadIcons {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.sectionIconBtn {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  color: var(--gmg-text-secondary);
+  padding: 0;
+  transition: color 0.1s;
+}
+
+.sectionIconBtn:hover {
+  color: var(--gmg-text-primary);
+}
+
+.sectionIconBtnActive {
+  color: var(--gmg-accent);
+}
+
+/* ── Input wrapper (label + field stacked) ───────────────────────────────── */
+.inputWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.inputLabel {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--gmg-text-secondary);
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ── Inputs ──────────────────────────────────────────────────────────────── */
@@ -110,10 +94,10 @@
   height: 28px;
   padding: 0 8px;
   font-size: 12px;
-  font-family: var(--spectrum-global-font-family-base);
-  color: var(--spectrum-global-color-gray-900);
-  background: var(--spectrum-global-color-gray-50);
-  border: 1px solid var(--spectrum-global-color-gray-300);
+  font-family: var(--gmg-font);
+  color: var(--gmg-text-primary);
+  background: var(--gmg-bg-input);
+  border: 1px solid var(--gmg-border);
   border-radius: 4px;
   box-sizing: border-box;
   outline: none;
@@ -121,67 +105,107 @@
   appearance: textfield;
   transition: border-color 0.1s;
 }
+
 .input::-webkit-outer-spin-button,
-.input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-.input::placeholder { color: var(--spectrum-global-color-gray-600); }
-.input:hover { border-color: var(--spectrum-global-color-gray-400); }
-.input:focus {
-  border-color: var(--spectrum-global-color-blue-500);
-  box-shadow: 0 0 0 1px var(--spectrum-global-color-blue-500);
+.input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-/* ── Layouts ─────────────────────────────────────────────────────────────── */
+.input::placeholder {
+  color: var(--gmg-text-placeholder);
+}
+
+.input:hover:not(:disabled) {
+  border-color: var(--gmg-text-secondary);
+}
+
+.input:focus:not(:disabled) {
+  border-color: var(--gmg-border-focus);
+  box-shadow: 0 0 0 1px var(--gmg-border-focus);
+}
+
+.inputDisabled {
+  background: var(--gmg-bg-disabled);
+  color: var(--gmg-text-disabled);
+  cursor: default;
+}
+
+/* ── Grid layouts ────────────────────────────────────────────────────────── */
 .grid2x2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 5px;
+  gap: 6px;
 }
+
 .row3 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 5px;
+  gap: 6px;
 }
+
 .row2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 5px;
+  gap: 6px;
+}
+
+/* ── Selection note ──────────────────────────────────────────────────────── */
+.selectionNote {
+  padding: 5px 12px;
+  font-size: 10px;
+  color: var(--gmg-text-secondary);
+  border-bottom: 1px solid var(--gmg-border);
 }
 
 /* ── Footer ──────────────────────────────────────────────────────────────── */
 .footer {
   padding: 8px 10px;
-  border-top: 1px solid var(--spectrum-global-color-gray-200);
+  border-top: 1px solid var(--gmg-border);
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
+
 .footerRow {
   display: flex;
   align-items: center;
   gap: 6px;
 }
+
 .applyBtn {
   flex: 1;
-  height: 30px;
+  height: 36px;
   font-size: 12px;
-  font-family: var(--spectrum-global-font-family-base);
-  font-weight: 400;
-  color: var(--spectrum-global-color-gray-900);
-  background: var(--spectrum-global-color-gray-75);
-  border: 1px solid var(--spectrum-global-color-gray-300);
+  font-family: var(--gmg-font);
+  font-weight: 600;
+  color: #ffffff;
+  background: var(--gmg-accent);
+  border: none;
   border-radius: 4px;
   cursor: pointer;
   transition: background 0.1s;
 }
-.applyBtn:hover:not(:disabled) { background: var(--spectrum-global-color-gray-100); }
-.applyBtn:active:not(:disabled) { background: var(--spectrum-global-color-gray-200); }
-.applyBtn:disabled { opacity: 0.4; cursor: default; }
+
+.applyBtn:hover:not(:disabled) {
+  background: var(--gmg-accent-hover);
+}
+
+.applyBtn:active:not(:disabled) {
+  background: var(--gmg-accent-active);
+}
+
+.applyBtn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
 
 .footerIcons {
   display: flex;
   gap: 4px;
 }
+
 .iconBtn {
   width: 30px;
   height: 30px;
@@ -189,21 +213,23 @@
   align-items: center;
   justify-content: center;
   background: none;
-  border: 1px solid var(--spectrum-global-color-gray-300);
+  border: 1px solid var(--gmg-border);
   border-radius: 4px;
   cursor: pointer;
-  color: var(--spectrum-global-color-gray-700);
+  color: var(--gmg-text-secondary);
   transition: background 0.1s, color 0.1s;
   padding: 0;
 }
+
 .iconBtn:hover {
-  background: var(--spectrum-global-color-gray-100);
-  color: var(--spectrum-global-color-gray-900);
+  background: var(--gmg-bg-hover);
+  color: var(--gmg-text-primary);
 }
+
 .iconBtnActive {
-  background: var(--spectrum-global-color-gray-200);
-  color: var(--spectrum-global-color-gray-900);
-  border-color: var(--spectrum-global-color-gray-400);
+  background: var(--gmg-bg-active);
+  color: var(--gmg-text-primary);
+  border-color: var(--gmg-text-secondary);
 }
 
 /* ── Status messages ─────────────────────────────────────────────────────── */
@@ -211,5 +237,11 @@
   font-size: 11px;
   text-align: center;
 }
-.statusError   { color: var(--spectrum-global-color-red-500); }
-.statusSuccess { color: var(--spectrum-global-color-green-500); }
+
+.statusError {
+  color: var(--gmg-error);
+}
+
+.statusSuccess {
+  color: var(--gmg-success);
+}
