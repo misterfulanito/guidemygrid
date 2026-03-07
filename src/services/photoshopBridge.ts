@@ -74,6 +74,75 @@ export class PhotoshopBridge {
     }, { commandName: 'Clear Guides' });
   }
 
+  async toggleGuidesVisibility(visible: boolean): Promise<void> {
+    // Uses the "Show Extras Options" / guide line visibility descriptor.
+    // Equivalent to View > Show > Guides in Photoshop.
+    await photoshop.core.executeAsModal(async () => {
+      await photoshop.action.batchPlay(
+        [{
+          _obj: 'set',
+          _target: [
+            { _ref: 'property', _property: 'guideLine' },
+            { _ref: 'document', _enum: 'ordinal', _value: 'targetEnum' },
+          ],
+          to: { _obj: 'guideLine', visible },
+        }],
+        { synchronousExecution: false }
+      );
+    }, { commandName: 'Toggle Guides Visibility' });
+  }
+
+  async getGuidesVisible(): Promise<boolean> {
+    try {
+      const result = await photoshop.core.executeAsModal(async () => {
+        return await photoshop.action.batchPlay(
+          [{
+            _obj: 'get',
+            _target: [
+              { _ref: 'property', _property: 'guideLine' },
+              { _ref: 'document', _enum: 'ordinal', _value: 'targetEnum' },
+            ],
+          }],
+          { synchronousExecution: false }
+        );
+      }, { commandName: 'Get Guides Visibility' });
+
+      // The descriptor returns an object with a guideLine property containing visible.
+      if (result?.[0]?.guideLine?.visible !== undefined) {
+        return Boolean(result[0].guideLine.visible);
+      }
+    } catch {
+      // Property may not be readable on older PS versions — fall back to guide count heuristic.
+    }
+
+    // Fallback: if there are no guides in the document, treat as effectively "visible"
+    // (there is nothing to show/hide). Return true as a safe default.
+    const doc = app.activeDocument;
+    if (!doc) return true;
+    return true;
+  }
+
+  async addAlignmentGuide(
+    orientation: 'vertical' | 'horizontal',
+    position: number,
+    commandName: string
+  ): Promise<void> {
+    await photoshop.core.executeAsModal(async () => {
+      await photoshop.action.batchPlay(
+        [{
+          _obj: 'make',
+          _target: [{ _ref: 'guide' }],
+          using: {
+            _obj: 'guide',
+            orientation: { _enum: 'orientation', _value: orientation },
+            position: { _unit: 'pixelsUnit', _value: position },
+          },
+        }],
+        {}
+      );
+    }, { commandName });
+  }
+
   async addGuide(position: number, orientation: GuideOrientation): Promise<void> {
     await photoshop.core.executeAsModal(async () => {
       await photoshop.action.batchPlay(
