@@ -83,18 +83,27 @@ export class PhotoshopBridge {
     return true;
   }
 
-  async toggleGuidesVisibility(_visible: boolean): Promise<void> {
-    console.log('[GMG] toggleGuidesVisibility — start');
-    // View state commands must run outside executeAsModal
-    const result = await photoshop.action.batchPlay(
-      // @ts-ignore — 'null' is a valid PS action descriptor key
-      [{
-        _obj: 'showHide',
-        null: [{ _ref: 'extrasLayer', _enum: 'extrasLayer', _value: 'guides' }],
-      }],
-      { synchronousExecution: false }
-    );
-    console.log('[GMG] toggleGuidesVisibility — OK', JSON.stringify(result));
+  async toggleGuidesVisibility(visible: boolean): Promise<void> {
+    console.log('[GMG] toggleGuidesVisibility — start, visible:', visible);
+    await photoshop.core.executeAsModal(async () => {
+      // Read current state via uiInfo (real-time, uncached)
+      const stateResult = await photoshop.action.batchPlay(
+        [{
+          _obj: 'uiInfo',
+          _target: { _ref: 'application', _enum: 'ordinal', _value: 'targetEnum' },
+          command: 'getCommandEnabled',
+          commandID: 3503,
+        }],
+        { synchronousExecution: false }
+      );
+      const currentlyVisible = stateResult[0]?.result?.checked ?? false;
+      console.log('[GMG] toggleGuidesVisibility — currentlyVisible:', currentlyVisible, 'want:', visible);
+      // Only invoke if state actually needs to change
+      if (currentlyVisible !== visible) {
+        await (photoshop.core as any).performMenuCommand({ commandID: 3503 });
+      }
+    }, { commandName: 'Toggle Guides Visibility' });
+    console.log('[GMG] toggleGuidesVisibility — OK');
   }
 
   async getGuidesVisible(): Promise<boolean> {
