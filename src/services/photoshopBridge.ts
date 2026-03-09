@@ -65,31 +65,36 @@ export class PhotoshopBridge {
     }));
   }
 
-  async clearAllGuides(): Promise<void> {
-    await photoshop.core.executeAsModal(async () => {
-      await photoshop.action.batchPlay(
-        [{ _obj: 'clearGuides', _target: [{ _ref: 'document', _enum: 'ordinal', _value: 'targetEnum' }] }],
-        {}
-      );
-    }, { commandName: 'Clear Guides' });
-  }
-
-  async toggleGuidesVisibility(visible: boolean): Promise<void> {
-    // Uses the "Show Extras Options" / guide line visibility descriptor.
-    // Equivalent to View > Show > Guides in Photoshop.
-    await photoshop.core.executeAsModal(async () => {
-      await photoshop.action.batchPlay(
+  // Returns true if guides were cleared, false if there was nothing to remove.
+  async clearAllGuides(): Promise<boolean> {
+    console.log('[GMG] clearAllGuides — start');
+    const result = await photoshop.core.executeAsModal(async () => {
+      return await photoshop.action.batchPlay(
         [{
-          _obj: 'set',
-          _target: [
-            { _ref: 'property', _property: 'guideLine' },
-            { _ref: 'document', _enum: 'ordinal', _value: 'targetEnum' },
-          ],
-          to: { _obj: 'guideLine', visible },
+          _obj: 'delete',
+          _target: [{ _ref: 'guide', _enum: 'ordinal', _value: 'allEnum' }],
         }],
         { synchronousExecution: false }
       );
-    }, { commandName: 'Toggle Guides Visibility' });
+    }, { commandName: 'Clear Guides' });
+    console.log('[GMG] clearAllGuides — OK', JSON.stringify(result));
+    // PS returns an error descriptor when there are no guides to delete
+    if (result?.[0]?._obj === 'error') return false;
+    return true;
+  }
+
+  async toggleGuidesVisibility(_visible: boolean): Promise<void> {
+    console.log('[GMG] toggleGuidesVisibility — start');
+    // View state commands must run outside executeAsModal
+    const result = await photoshop.action.batchPlay(
+      // @ts-ignore — 'null' is a valid PS action descriptor key
+      [{
+        _obj: 'showHide',
+        null: [{ _ref: 'extrasLayer', _enum: 'extrasLayer', _value: 'guides' }],
+      }],
+      { synchronousExecution: false }
+    );
+    console.log('[GMG] toggleGuidesVisibility — OK', JSON.stringify(result));
   }
 
   async getGuidesVisible(): Promise<boolean> {

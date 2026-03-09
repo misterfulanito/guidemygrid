@@ -10,102 +10,25 @@
   color: var(--gmg-text-primary);
 }
 
-.updateBanner {
-  flex-shrink: 0;
-}
-
-/* ── Alignment toolbar ───────────────────────────────────────────────────── */
-.toolbar {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  padding: 4px 8px;
-  border-bottom: 1px solid var(--gmg-border);
-  flex-shrink: 0;
-  background: var(--gmg-bg-toolbar);
-}
-
-.toolbarGroup {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
-
-.toolbarDivider {
-  width: 1px;
-  height: 16px;
-  background: var(--gmg-border);
-  margin: 0 3px;
-  flex-shrink: 0;
-}
-
-.toolbarSpacer {
-  flex: 1;
-}
-
-.toolBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  padding: 0;
-  background: none;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  color: var(--gmg-text-secondary);
-  transition: background 0.1s, color 0.1s;
-}
-
-.toolBtn:hover {
-  background: var(--gmg-bg-hover);
-  color: var(--gmg-text-primary);
-}
-
-.toolBtn:active {
-  background: var(--gmg-bg-active);
-}
-
-.toolBtn:disabled {
-  opacity: 0.35;
-  cursor: default;
-  pointer-events: none;
-}
-
 /* ── Tab bar ─────────────────────────────────────────────────────────────── */
 .tabBar {
   display: flex;
-  align-items: stretch;
+  align-items: center;
   border-bottom: 1px solid var(--gmg-border);
   flex-shrink: 0;
   background: var(--gmg-bg-toolbar);
-  padding: 0 4px;
-}
-
-.tab {
-  position: relative;
-  padding: 7px 10px 6px;
-  font-size: 12px;
-  font-family: var(--gmg-font);
-  font-weight: 400;
-  color: var(--gmg-text-secondary);
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  cursor: pointer;
-  transition: color 0.1s;
-  margin-bottom: -1px;
-}
-
-.tab:hover {
-  color: var(--gmg-text-primary);
+  height: 36px;
+  padding: 0 12px;
 }
 
 .tabActive {
-  color: var(--gmg-text-primary);
+  font-size: 12px;
+  font-family: var(--gmg-font);
   font-weight: 700;
-  border-bottom-color: var(--gmg-accent);
+  color: var(--gmg-text-primary);
+  border-bottom: 2px solid var(--gmg-accent);
+  padding: 7px 0 6px;
+  margin-bottom: -1px;
 }
 
 .tabBarSpacer {
@@ -116,19 +39,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  padding: 0;
+  padding: 0 8px;
+  height: 100%;
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--gmg-text-secondary);
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
+  font-family: var(--gmg-font);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gmg-accent);
   transition: color 0.1s;
 }
 
 .eyeBtn:hover {
   color: var(--gmg-text-primary);
+}
+
+.eyeBtn:disabled {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
 }
 
 /* ── No-document notice ──────────────────────────────────────────────────── */
@@ -148,30 +78,4 @@
   flex-direction: column;
   min-height: 0;
   overflow: hidden;
-}
-
-/* ── Toast ───────────────────────────────────────────────────────────────── */
-.toast {
-  position: absolute;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--gmg-bg-active, rgba(0,0,0,0.75));
-  color: var(--gmg-text-primary, #fff);
-  font-size: 11px;
-  padding: 4px 10px;
-  border-radius: 4px;
-  white-space: nowrap;
-  pointer-events: none;
-  z-index: 100;
-}
-
-/* ── Placeholder (Custom tab) ────────────────────────────────────────────── */
-.placeholder {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--gmg-text-secondary);
-  font-size: 12px;
 }

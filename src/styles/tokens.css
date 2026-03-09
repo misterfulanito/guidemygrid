@@ -1,33 +1,33 @@
 /* ── GuideMyGrid Design Tokens — Dark Theme ─────────────────────────────── */
-:root {
+:root, body, #root {
   /* Backgrounds */
-  --gmg-bg-panel:      #1E1E1E;
-  --gmg-bg-input:      #2A2A2A;
-  --gmg-bg-toolbar:    #1A1A1A;
-  --gmg-bg-hover:      #333333;
-  --gmg-bg-active:     #3A3A3A;
-  --gmg-bg-disabled:   #252525;
+  --gmg-bg-panel:          #1A1A1A;
+  --gmg-bg-input:          #2D2D2D;
+  --gmg-bg-input-disabled: #3D3D3D;
+  --gmg-bg-toolbar:        #212121;
+  --gmg-bg-hover:          #333333;
+  --gmg-bg-active:         #2D2D2D;
 
-  /* Borders */
-  --gmg-border:        #3A3A3A;
-  --gmg-border-light:  #2E2E2E;
-  --gmg-border-focus:  #FF5700;
+  /* Borders / Dividers */
+  --gmg-border:            #2D2D2D;
+  --gmg-border-focus:      #FF6B35;
+  --gmg-border-toolbar:    #3D3D3D;
 
   /* Text */
-  --gmg-text-primary:      #F0F0F0;
-  --gmg-text-secondary:    #888888;
-  --gmg-text-placeholder:  #555555;
+  --gmg-text-primary:      #FFFFFF;
+  --gmg-text-secondary:    #777777;
+  --gmg-text-placeholder:  #777777;
   --gmg-text-disabled:     #555555;
+  --gmg-text-version:      #555555;
 
   /* Accent */
-  --gmg-accent:        #FF5700;
-  --gmg-accent-hover:  #FF6B1A;
-  --gmg-accent-active: #E64D00;
+  --gmg-accent:            #FF6B35;
+  --gmg-accent-hover:      #FF8050;
+  --gmg-accent-active:     #E55A25;
 
   /* Semantic */
-  --gmg-error:   #E05252;
-  --gmg-success: #4CAF7D;
+  --gmg-error:             #E05252;
 
   /* Typography */
-  --gmg-font: 'Adobe Clean', ui-sans-serif, system-ui, sans-serif;
+  --gmg-font: 'PT Sans', ui-sans-serif, system-ui, sans-serif;
 }
