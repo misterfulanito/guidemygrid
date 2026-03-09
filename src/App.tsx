@@ -1,49 +1,47 @@
 // src/App.tsx
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useUIStore } from './store';
-import { checkForUpdates, UpdateInfo } from './services/updateChecker';
-import { UpdateBanner } from './components/shared/UpdateBanner';
 import { GridPanel } from './components/ColumnGrid/GridPanel';
-import { Presets } from './components/Presets/Presets';
+import { useDocument } from './hooks/useDocument';
+import { photoshopBridge } from './services/photoshopBridge';
 import styles from './App.module.css';
 
 export function App() {
-  const { activeTab, setActiveTab } = useUIStore();
-  const [updateInfo, setUpdateInfo] = useState<UpdateInfo | null>(null);
-  const [bannerDismissed, setBannerDismissed] = useState(false);
+  const { guidesVisible, setGuidesVisible } = useUIStore();
+  const { document } = useDocument();
 
-  useEffect(() => {
-    checkForUpdates().then((info) => {
-      if (info?.hasUpdate) setUpdateInfo(info);
-    });
-  }, []);
+  async function handleToggleEye() {
+    const next = !guidesVisible;
+    await photoshopBridge.toggleGuidesVisibility(next);
+    setGuidesVisible(next);
+  }
 
   return (
     <div className={styles.app}>
-      {updateInfo && !bannerDismissed && (
-        <div className={styles.updateBanner}>
-          <UpdateBanner info={updateInfo} onDismiss={() => setBannerDismissed(true)} />
-        </div>
+
+      {/* ── Tab bar ── */}
+      <div className={styles.tabBar}>
+        <span className={styles.tabActive}>Grid</span>
+        <div className={styles.tabBarSpacer} />
+        <button
+          className={styles.eyeBtn}
+          onClick={handleToggleEye}
+          disabled={!document}
+        >
+          {guidesVisible ? 'Hide' : 'Show'}
+        </button>
+      </div>
+
+      {/* ── No-document notice ── */}
+      {!document && (
+        <div className={styles.noDoc}>Open a document in Photoshop to get started.</div>
       )}
 
-      <sp-tabs
-        selected={activeTab}
-        onChange={(e: React.ChangeEvent<HTMLElement & { selected: string }>) =>
-          setActiveTab(e.target.selected as 'grid' | 'presets')
-        }
-        class={styles.tabs}
-      >
-        <sp-tab label="Grid" value="grid" />
-        <sp-tab label="Saved" value="presets" />
+      {/* ── Main panel ── */}
+      <div className={styles.tabContent}>
+        <GridPanel />
+      </div>
 
-        <sp-tab-panel value="grid" class={styles.tabPanel}>
-          <GridPanel />
-        </sp-tab-panel>
-
-        <sp-tab-panel value="presets" class={styles.tabPanel}>
-          <Presets />
-        </sp-tab-panel>
-      </sp-tabs>
     </div>
   );
 }

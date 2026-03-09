@@ -3,13 +3,11 @@ import { create } from 'zustand';
 import { UIStore } from '../types';
 
 export const useUIStore = create<UIStore>((set) => ({
-  activeTab: 'grid',
+  guidesVisible: true,
   isApplying: false,
   lastError: null,
-  lastSuccess: false,
 
-  setActiveTab: (tab) => set({ activeTab: tab }),
+  setGuidesVisible: (v) => set({ guidesVisible: v }),
   setApplying: (state) => set({ isApplying: state }),
-  setError: (message) => set({ lastError: message, lastSuccess: false }),
-  setSuccess: (state) => set({ lastSuccess: state, lastError: null }),
+  setError: (message) => set({ lastError: message }),
 }));

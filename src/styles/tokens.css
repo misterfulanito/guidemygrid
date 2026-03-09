@@ -1,0 +1,33 @@
+/* ── GuideMyGrid Design Tokens — Dark Theme ─────────────────────────────── */
+:root, body, #root {
+  /* Backgrounds */
+  --gmg-bg-panel:          #1A1A1A;
+  --gmg-bg-input:          #2D2D2D;
+  --gmg-bg-input-disabled: #3D3D3D;
+  --gmg-bg-toolbar:        #212121;
+  --gmg-bg-hover:          #333333;
+  --gmg-bg-active:         #2D2D2D;
+
+  /* Borders / Dividers */
+  --gmg-border:            #2D2D2D;
+  --gmg-border-focus:      #FF6B35;
+  --gmg-border-toolbar:    #3D3D3D;
+
+  /* Text */
+  --gmg-text-primary:      #FFFFFF;
+  --gmg-text-secondary:    #777777;
+  --gmg-text-placeholder:  #777777;
+  --gmg-text-disabled:     #555555;
+  --gmg-text-version:      #555555;
+
+  /* Accent */
+  --gmg-accent:            #FF6B35;
+  --gmg-accent-hover:      #FF8050;
+  --gmg-accent-active:     #E55A25;
+
+  /* Semantic */
+  --gmg-error:             #E05252;
+
+  /* Typography */
+  --gmg-font: 'PT Sans', ui-sans-serif, system-ui, sans-serif;
+}

@@ -1,28 +1,81 @@
+/* ── App shell ───────────────────────────────────────────────────────────── */
 .app {
   display: flex;
   flex-direction: column;
   height: 100%;
   min-height: 0;
-  background: var(--spectrum-global-color-gray-75, #f5f5f5);
-  font-family: var(--spectrum-global-font-family-base, 'Adobe Clean', ui-sans-serif, system-ui, sans-serif);
+  background: var(--gmg-bg-panel);
+  font-family: var(--gmg-font);
   font-size: 12px;
+  color: var(--gmg-text-primary);
 }
 
-.updateBanner {
+/* ── Tab bar ─────────────────────────────────────────────────────────────── */
+.tabBar {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--gmg-border);
+  flex-shrink: 0;
+  background: var(--gmg-bg-toolbar);
+  height: 36px;
+  padding: 0 12px;
+}
+
+.tabActive {
+  font-size: 12px;
+  font-family: var(--gmg-font);
+  font-weight: 700;
+  color: var(--gmg-text-primary);
+  border-bottom: 2px solid var(--gmg-accent);
+  padding: 7px 0 6px;
+  margin-bottom: -1px;
+}
+
+.tabBarSpacer {
+  flex: 1;
+}
+
+.eyeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  height: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--gmg-font);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gmg-accent);
+  transition: color 0.1s;
+}
+
+.eyeBtn:hover {
+  color: var(--gmg-text-primary);
+}
+
+.eyeBtn:disabled {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ── No-document notice ──────────────────────────────────────────────────── */
+.noDoc {
+  padding: 5px 12px;
+  font-size: 11px;
+  color: var(--gmg-text-secondary);
+  background: var(--gmg-bg-toolbar);
+  border-bottom: 1px solid var(--gmg-border);
   flex-shrink: 0;
 }
 
-.tabs {
+/* ── Tab content ─────────────────────────────────────────────────────────── */
+.tabContent {
   flex: 1;
   display: flex;
   flex-direction: column;
   min-height: 0;
   overflow: hidden;
-}
-
-.tabPanel {
-  flex: 1;
-  overflow-y: auto;
-  padding: 0;
-  min-height: 0;
 }
