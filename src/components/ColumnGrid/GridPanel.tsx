@@ -3,10 +3,21 @@ import React, { useEffect, useState } from 'react';
 import { useGridStore, useUIStore } from '../../store';
 import { useDocument } from '../../hooks/useDocument';
 import { photoshopBridge } from '../../services/photoshopBridge';
-import { generateColumnGuides, generateRowGuides, GridGenerationError } from '../../services/gridGenerator';
+import { generateColumnGuides, generateRowGuides, generateMarginGuides, GridGenerationError } from '../../services/gridGenerator';
 import { VERSION } from '../../version';
 import styles from './GridPanel.module.css';
 
+
+// ── Margins icon (SVG in div — renders fine in UXP) ───────────────────────
+
+function IconMargins() {
+  return (
+    <svg className={styles.sectionIcon} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1.5" y="1.5" width="13" height="13" rx="0.5"/>
+      <rect x="4" y="4" width="8" height="8" rx="0.5"/>
+    </svg>
+  );
+}
 
 // ── Columns icon (SVG in div — renders fine in UXP) ───────────────────────
 
@@ -77,7 +88,7 @@ function NumInput({ placeholder, value, disabled, onChange }: NumInputProps) {
 // ── GridPanel ─────────────────────────────────────────────────────────────
 
 export function GridPanel() {
-  const { columns, setColumns, rows, setRows } = useGridStore();
+  const { columns, setColumns, rows, setRows, margins, setMargins } = useGridStore();
   const { isApplying, lastError, setApplying, setError } = useUIStore();
   const { document, selection } = useDocument();
   const countNum = parseFloat(columns.count);
@@ -95,6 +106,16 @@ export function GridPanel() {
   const hasRowCount = rows.count !== '' && !isNaN(rowCountNum) && rowCountNum > 0;
   const rowGutterDisabled = !hasRowCount;
   const offsetY = selection ? selection.top : 0;
+
+  const parseMargin = (v: string) => {
+    const n = parseFloat(v);
+    return v !== '' && !isNaN(n) && n > 0 ? n : undefined;
+  };
+  const topVal    = parseMargin(margins.top);
+  const bottomVal = parseMargin(margins.bottom);
+  const leftVal   = parseMargin(margins.left);
+  const rightVal  = parseMargin(margins.right);
+  const hasAnyMargin = topVal != null || bottomVal != null || leftVal != null || rightVal != null;
 
   const computedHeightPx = hasRowCount && containerHeight > 0
     ? (containerHeight - (rowCountNum - 1) * rowGutterNum) / rowCountNum
@@ -117,19 +138,29 @@ export function GridPanel() {
     ? String(Math.round(computedWidthPx * 100) / 100)
     : '';
 
-  const addDisabled = (!hasCount && !hasRowCount) || !document || isApplying;
+  const addDisabled = (!hasCount && !hasRowCount && !hasAnyMargin) || !document || isApplying;
 
   const handleAdd = async () => {
     if (addDisabled) return;
     setApplying(true);
     setError(null);
     try {
-      const vertical = hasCount
+      const colVertical = hasCount
         ? generateColumnGuides({ columns: countNum, gutter: gutterNum, containerWidth, offsetX })
         : [];
-      const horizontal = hasRowCount
+      const rowHorizontal = hasRowCount
         ? generateRowGuides({ rows: rowCountNum, gutter: rowGutterNum, containerHeight, offsetY })
         : [];
+      const marginGuides = hasAnyMargin
+        ? generateMarginGuides({
+            top: topVal, bottom: bottomVal, left: leftVal, right: rightVal,
+            containerWidth, containerHeight, offsetX, offsetY,
+          })
+        : { vertical: [], horizontal: [] };
+
+      const vertical   = [...new Set([...marginGuides.vertical,   ...colVertical])].sort((a, b) => a - b);
+      const horizontal = [...new Set([...marginGuides.horizontal, ...rowHorizontal])].sort((a, b) => a - b);
+
       await photoshopBridge.applyGuides({ vertical, horizontal }, 'replace');
     } catch (err) {
       setError(err instanceof GridGenerationError ? err.message : 'Error applying guides');
@@ -165,6 +196,39 @@ export function GridPanel() {
 
       {/* ── Content ── */}
       <div className={styles.content}>
+
+        {/* Margins section */}
+        <div className={styles.section}>
+          <div className={styles.sectionHead}>
+            <IconMargins />
+            <span className={styles.sectionLabel}>margins</span>
+          </div>
+
+          <div className={styles.row2}>
+            <NumInput
+              placeholder="Top"
+              value={margins.top}
+              onChange={(v) => setMargins({ top: v })}
+            />
+            <NumInput
+              placeholder="Left"
+              value={margins.left}
+              onChange={(v) => setMargins({ left: v })}
+            />
+          </div>
+          <div className={styles.row2}>
+            <NumInput
+              placeholder="Bottom"
+              value={margins.bottom}
+              onChange={(v) => setMargins({ bottom: v })}
+            />
+            <NumInput
+              placeholder="Right"
+              value={margins.right}
+              onChange={(v) => setMargins({ right: v })}
+            />
+          </div>
+        </div>
 
         {/* Columns section */}
         <div className={styles.section}>

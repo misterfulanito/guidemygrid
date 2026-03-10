@@ -11,4 +11,8 @@ export const useGridStore = create<GridStore>((set) => ({
   rows: { count: '', gutter: '' },
   setRows: (partial) =>
     set((state) => ({ rows: { ...state.rows, ...partial } })),
+
+  margins: { top: '', bottom: '', left: '', right: '' },
+  setMargins: (partial) =>
+    set((state) => ({ margins: { ...state.margins, ...partial } })),
 }));
