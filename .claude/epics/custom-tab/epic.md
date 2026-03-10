@@ -2,9 +2,10 @@
 name: custom-tab
 status: backlog
 created: 2026-03-07T16:16:12Z
-updated: 2026-03-07T16:16:12Z
+updated: 2026-03-10T22:10:47Z
 progress: 0%
 iteration: post-MVP
+github: https://github.com/misterfulanito/guidemygrid/issues/17
 ---
 
 # Epic: Custom Tab — Configuración Personalizada de Guías
