@@ -1,5 +1,33 @@
 // src/services/gridGenerator.ts
 
+export type SideGuideType =
+  | 'left' | 'center-v' | 'right'
+  | 'top'  | 'center-h' | 'bottom';
+
+/**
+ * Generate position for a single side guide (edge or center of container).
+ * Returns absolute pixel position + orientation.
+ */
+export function generateSideGuide(
+  type: SideGuideType,
+  params: {
+    containerWidth: number;
+    containerHeight: number;
+    offsetX: number;
+    offsetY: number;
+  }
+): { position: number; orientation: 'vertical' | 'horizontal' } {
+  const { containerWidth, containerHeight, offsetX, offsetY } = params;
+  switch (type) {
+    case 'left':     return { position: Math.round(offsetX * 100) / 100,                               orientation: 'vertical' };
+    case 'center-v': return { position: Math.round((offsetX + containerWidth / 2) * 100) / 100,        orientation: 'vertical' };
+    case 'right':    return { position: Math.round((offsetX + containerWidth) * 100) / 100,            orientation: 'vertical' };
+    case 'top':      return { position: Math.round(offsetY * 100) / 100,                               orientation: 'horizontal' };
+    case 'center-h': return { position: Math.round((offsetY + containerHeight / 2) * 100) / 100,      orientation: 'horizontal' };
+    case 'bottom':   return { position: Math.round((offsetY + containerHeight) * 100) / 100,          orientation: 'horizontal' };
+  }
+}
+
 export class GridGenerationError extends Error {
   constructor(message: string) {
     super(message);
