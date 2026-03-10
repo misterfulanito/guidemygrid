@@ -5,9 +5,16 @@ export interface ColumnsState {
   gutter: string; // '' or numeric string
 }
 
+export interface RowsState {
+  count: string;  // '' or numeric string
+  gutter: string; // '' or numeric string
+}
+
 export interface GridStore {
   columns: ColumnsState;
   setColumns: (partial: Partial<ColumnsState>) => void;
+  rows: RowsState;
+  setRows: (partial: Partial<RowsState>) => void;
 }
 
 export interface UIStore {
