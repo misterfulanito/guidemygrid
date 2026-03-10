@@ -2,7 +2,8 @@
 name: side-guides
 status: backlog
 created: 2026-03-10T22:57:08Z
-updated: 2026-03-10T22:57:08Z
+updated: 2026-03-10T23:20:44Z
+github: https://github.com/misterfulanito/guidemygrid/issues/33
 progress: 0%
 prd: .claude/prds/side-guides.md
 ---
