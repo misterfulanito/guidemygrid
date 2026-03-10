@@ -39,3 +39,36 @@ export function generateColumnGuides(params: {
 
   return [...new Set(positions)].sort((a, b) => a - b);
 }
+
+/**
+ * Generate horizontal guide positions for a row grid.
+ * Returns absolute Y positions (top and bottom edge of each row).
+ */
+export function generateRowGuides(params: {
+  rows: number;
+  gutter: number;
+  containerHeight: number;
+  offsetY: number;
+}): number[] {
+  const { rows, gutter, containerHeight, offsetY } = params;
+
+  if (rows <= 0 || containerHeight <= 0) return [];
+
+  const rowHeight = (containerHeight - (rows - 1) * gutter) / rows;
+
+  if (rowHeight <= 0) {
+    throw new GridGenerationError(
+      `Gutter too large: row height would be ${Math.round(rowHeight)}px`
+    );
+  }
+
+  const positions: number[] = [];
+  for (let i = 0; i < rows; i++) {
+    const top = offsetY + i * (rowHeight + gutter);
+    const bottom = top + rowHeight;
+    positions.push(Math.round(top * 100) / 100);
+    positions.push(Math.round(bottom * 100) / 100);
+  }
+
+  return [...new Set(positions)].sort((a, b) => a - b);
+}
