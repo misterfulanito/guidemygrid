@@ -52,15 +52,18 @@ export function SideGuidesBar({ containerWidth, containerHeight, offsetX, offset
     }
   };
 
+  const isDisabled = disabled || loading;
+
   return (
     <div className={styles.bar}>
-      <button
-        className={`${styles.btn} ${loading ? styles.btnLoading : ''}`}
-        disabled={disabled || loading}
-        onClick={handleGuideLeft}
+      <div
+        className={`${styles.btn} ${loading ? styles.btnLoading : ''} ${isDisabled ? styles.btnDisabled : ''}`}
+        onClick={!isDisabled ? handleGuideLeft : undefined}
+        role="button"
+        aria-label="Add left guide"
       >
         <IconGuideLeft />
-      </button>
+      </div>
     </div>
   );
 }

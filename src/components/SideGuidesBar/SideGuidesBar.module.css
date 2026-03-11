@@ -22,15 +22,15 @@
   padding: 0;
 }
 
-.btn:hover:not(:disabled) {
+.btn:hover:not(.btnDisabled) {
   background: #3D3D3D;
 }
 
-.btn:active:not(:disabled) {
+.btn:active:not(.btnDisabled) {
   background: #FF6B35;
 }
 
-.btn:disabled {
+.btnDisabled {
   opacity: 0.4;
   cursor: default;
 }
