@@ -1,15 +1,6 @@
 // src/components/SideGuidesBar/SideGuidesBar.tsx
 import React, { useState } from 'react';
-import {
-  AlignStartVertical,
-  AlignCenterVertical,
-  AlignEndVertical,
-  AlignStartHorizontal,
-  AlignCenterHorizontal,
-  AlignEndHorizontal,
-  type LucideIcon,
-} from 'lucide-react';
-import { generateSideGuide, SideGuideType } from '../../services/gridGenerator';
+import { generateSideGuide } from '../../services/gridGenerator';
 import { photoshopBridge } from '../../services/photoshopBridge';
 import styles from './SideGuidesBar.module.css';
 
@@ -21,47 +12,48 @@ interface SideGuidesBarProps {
   disabled?: boolean;
 }
 
-const BUTTONS: { type: SideGuideType; Icon: LucideIcon }[] = [
-  { type: 'left',     Icon: AlignStartVertical },
-  { type: 'center-v', Icon: AlignCenterVertical },
-  { type: 'right',    Icon: AlignEndVertical },
-  { type: 'top',      Icon: AlignStartHorizontal },
-  { type: 'center-h', Icon: AlignCenterHorizontal },
-  { type: 'bottom',   Icon: AlignEndHorizontal },
-];
+// SVG from design (guide-left): vertical bar + left-pointing chevron
+function IconGuideLeft() {
+  return (
+    <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="2"
+      strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
+      <path d="M6 20.67V6.67M13 10.67L10 13.67L13 16.67" />
+    </svg>
+  );
+}
+
+// Other guide buttons (center-v, right, top, center-h, bottom)
+// will be added here once guide-left is validated.
 
 export function SideGuidesBar({ containerWidth, containerHeight, offsetX, offsetY, disabled }: SideGuidesBarProps) {
-  const [loading, setLoading] = useState<SideGuideType | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleClick = async (type: SideGuideType) => {
-    if (disabled || loading !== null) return;
-    setLoading(type);
+  const handleGuideLeft = async () => {
+    if (disabled || loading) return;
+    setLoading(true);
     try {
-      const { position, orientation } = generateSideGuide(type, {
+      const { position, orientation } = generateSideGuide('left', {
         containerWidth, containerHeight, offsetX, offsetY,
       });
       await photoshopBridge.addGuide(position, orientation);
     } catch {
       // silencioso — no bloquea UI
     } finally {
-      setLoading(null);
+      setLoading(false);
     }
   };
 
   return (
     <div className={styles.bar}>
-      {BUTTONS.map(({ type, Icon }) => (
-        <button
-          key={type}
-          className={`${styles.btn} ${loading === type ? styles.btnLoading : ''}`}
-          disabled={disabled || loading !== null}
-          onClick={() => handleClick(type)}
-        >
-          <span className={styles.iconWrap}>
-            <Icon size={16} strokeWidth={1.5} />
-          </span>
-        </button>
-      ))}
+      <button
+        className={`${styles.btn} ${loading ? styles.btnLoading : ''}`}
+        disabled={disabled || loading}
+        onClick={handleGuideLeft}
+      >
+        <span className={styles.iconWrap}>
+          <IconGuideLeft />
+        </span>
+      </button>
     </div>
   );
 }
