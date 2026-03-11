@@ -39,10 +39,8 @@
   background: #3D3D3D;
 }
 
-.iconWrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 16px;
-  height: 16px;
+.btnIcon {
+  width: 18px;
+  height: 18px;
+  display: block;
 }

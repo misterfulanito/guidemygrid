@@ -15,8 +15,8 @@ interface SideGuidesBarProps {
 // SVG from design (guide-left): vertical bar + left-pointing chevron
 function IconGuideLeft() {
   return (
-    <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="2"
-      strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
+    <svg className={styles.btnIcon} viewBox="0 0 32 32" fill="none"
+      stroke="#777777" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M6 20.67V6.67M13 10.67L10 13.67L13 16.67" />
     </svg>
   );
@@ -36,8 +36,8 @@ export function SideGuidesBar({ containerWidth, containerHeight, offsetX, offset
         containerWidth, containerHeight, offsetX, offsetY,
       });
       await photoshopBridge.addGuide(position, orientation);
-    } catch {
-      // silencioso — no bloquea UI
+    } catch (err) {
+      console.error('[GMG] guide-left failed:', err);
     } finally {
       setLoading(false);
     }
@@ -50,9 +50,7 @@ export function SideGuidesBar({ containerWidth, containerHeight, offsetX, offset
         disabled={disabled || loading}
         onClick={handleGuideLeft}
       >
-        <span className={styles.iconWrap}>
-          <IconGuideLeft />
-        </span>
+        <IconGuideLeft />
       </button>
     </div>
   );
