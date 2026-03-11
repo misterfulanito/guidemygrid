@@ -42,7 +42,8 @@
 .btnIcon {
   width: 16px;
   height: 16px;
-  color: #777777;
+  color: #888888;
+  fill: #888888;
   display: block;
   flex-shrink: 0;
 }

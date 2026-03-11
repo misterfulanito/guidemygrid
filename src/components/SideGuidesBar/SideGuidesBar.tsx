@@ -12,21 +12,21 @@ interface SideGuidesBarProps {
   disabled?: boolean;
 }
 
-// SVG icon: vertical bar (guide line) + left-pointing chevron
-// Uses <line>/<polyline> — more reliable than <path> in UXP
+// SVG icon: vertical bar + left-pointing chevron
+// fill="currentColor" — UXP only supports filled shapes reliably inside buttons
 function IconGuideLeft() {
   return (
     <svg
       className={styles.btnIcon}
       viewBox="0 0 16 16"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
+      fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
       style={{ pointerEvents: 'none' }}
     >
-      <line x1="3" y1="2" x2="3" y2="14" />
-      <polyline points="7,5 4.5,8 7,11" />
+      {/* Vertical bar — replaces <line> */}
+      <rect x="2" y="2" width="1.5" height="12" />
+      {/* Left-pointing chevron — replaces <polyline>, drawn as filled shape */}
+      <path d="M8 5L5.5 8L8 11L7 11L4.5 8L7 5Z" />
     </svg>
   );
 }
