@@ -76,15 +76,31 @@ function IconCenterH() {
   );
 }
 
-// ── Button config ──────────────────────────────────────────────────────────
+// ── Divider ────────────────────────────────────────────────────────────────
 
-const BUTTONS: { type: SideGuideType; Icon: () => React.ReactElement; label: string; align?: string }[] = [
-  { type: 'left',     Icon: IconLeft,    label: 'Add left guide' },
-  { type: 'center-v', Icon: IconCenterV, label: 'Add vertical center guide',    align: 'center' },
-  { type: 'right',    Icon: IconRight,   label: 'Add right guide',              align: 'right' },
-  { type: 'top',      Icon: IconTop,     label: 'Add top guide',                align: 'top' },
-  { type: 'bottom',   Icon: IconBottom,  label: 'Add bottom guide',             align: 'bottom' },
-  { type: 'center-h', Icon: IconCenterH, label: 'Add horizontal center guide',  align: 'center' },
+function Divider() {
+  return (
+    <svg viewBox="0 0 1 17" width="1" height="17" fill="none"
+      xmlns="http://www.w3.org/2000/svg" style={{ pointerEvents: 'none', flexShrink: 0 }}>
+      <path d="M0.5 0.5V16.5" stroke="#2D2D2D" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+// ── Bar items (order matches Pencil design) ────────────────────────────────
+
+type BarItem =
+  | { kind: 'button'; type: SideGuideType; Icon: () => React.ReactElement; label: string; align?: string }
+  | { kind: 'divider' };
+
+const BAR_ITEMS: BarItem[] = [
+  { kind: 'button', type: 'left',     Icon: IconLeft,    label: 'Add left guide' },
+  { kind: 'button', type: 'bottom',   Icon: IconBottom,  label: 'Add bottom guide',            align: 'bottom' },
+  { kind: 'button', type: 'top',      Icon: IconTop,     label: 'Add top guide',               align: 'top' },
+  { kind: 'button', type: 'right',    Icon: IconRight,   label: 'Add right guide',             align: 'right' },
+  { kind: 'divider' },
+  { kind: 'button', type: 'center-h', Icon: IconCenterH, label: 'Add horizontal center guide', align: 'center' },
+  { kind: 'button', type: 'center-v', Icon: IconCenterV, label: 'Add vertical center guide',   align: 'center' },
 ];
 
 // ── Component ──────────────────────────────────────────────────────────────
@@ -109,7 +125,11 @@ export function SideGuidesBar({ containerWidth, containerHeight, offsetX, offset
 
   return (
     <div className={styles.bar}>
-      {BUTTONS.map(({ type, Icon, label, align }) => {
+      {BAR_ITEMS.map((item, i) => {
+        if (item.kind === 'divider') {
+          return <Divider key={`divider-${i}`} />;
+        }
+        const { type, Icon, label, align } = item;
         const isLoading = loading === type;
         const isDisabled = disabled || loading !== null;
         const alignClass = align ? (styles as Record<string, string>)[`btnAlign${align.charAt(0).toUpperCase() + align.slice(1)}`] : '';
