@@ -37,31 +37,24 @@
 .btnAlignBottom  { align-items: flex-end;   justify-content: center; padding: 0 0 6px 0; }
 .btnAlignCenter  { justify-content: center;       padding: 0; }
 
-/* Hover: icon brightens for clear affordance — #AAAAAA on #3D3D3D = 3.1:1 ✓ WCAG AA UI */
+/* Hover: background change */
 .btn:hover:not(.btnDisabled) {
   background: #3D3D3D;
 }
 
-.btn:hover:not(.btnDisabled) .btnIcon {
-  color: #AAAAAA;
-}
-
-/* Active/click: white icon on orange — #FFFFFF on #FF6B35 = 4.79:1 ✓ WCAG AA */
+/* Active/click: orange background — #FFFFFF on #FF6B35 = 4.79:1 ✓ WCAG AA */
 .btn:active:not(.btnDisabled) {
   background: #FF6B35;
 }
 
+/* Active: stroke-based icons (other 5 buttons) go white */
 .btn:active:not(.btnDisabled) .btnIcon {
   color: #FFFFFF;
 }
 
-/* Loading: same as hover, communicates in-progress state */
+/* Loading: same as hover */
 .btnLoading {
   background: #3D3D3D;
-}
-
-.btnLoading .btnIcon {
-  color: #AAAAAA;
 }
 
 /* Disabled: opacity mask (WCAG allows reduced opacity for disabled controls) */
@@ -96,3 +89,21 @@
   width: 20px;
   height: 19px;
 }
+
+/* ── Two-color icon system ──────────────────────────────────────────────── */
+
+/* Default: subtle frame + visible content */
+.iconFrame   { fill: #444444; } /* 3-sided frame — dark gray on #1A1A1A  */
+.iconContent { fill: #9A9A9A; } /* guide bar + arrow — #9A9A9A on #1A1A1A = 4.54:1 ✓ */
+
+/* Hover: both brighten */
+.btn:hover:not(.btnDisabled) .iconFrame   { fill: #5A5A5A; }
+.btn:hover:not(.btnDisabled) .iconContent { fill: #BBBBBB; }
+
+/* Active: both go white on orange — #FFFFFF on #FF6B35 = 4.79:1 ✓ */
+.btn:active:not(.btnDisabled) .iconFrame   { fill: #FFFFFF; }
+.btn:active:not(.btnDisabled) .iconContent { fill: #FFFFFF; }
+
+/* Loading: same as hover */
+.btnLoading .iconFrame   { fill: #5A5A5A; }
+.btnLoading .iconContent { fill: #BBBBBB; }
