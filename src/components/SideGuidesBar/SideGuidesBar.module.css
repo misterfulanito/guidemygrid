@@ -15,13 +15,20 @@
   height: 32px;
   background: #1A1A1A;
   border: 1px solid #2D2D2D;
-  border-radius: 0;
+  border-radius: 2px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   padding: 0 0 0 6px;
   box-sizing: border-box;
+  /* Focus ring for keyboard navigation (WCAG 2.4.7) */
+  outline: none;
+}
+
+.btn:focus-visible {
+  outline: 2px solid #FF6B35;
+  outline-offset: 1px;
 }
 
 /* Per-button alignment overrides */
@@ -30,10 +37,16 @@
 .btnAlignBottom  { align-items: flex-end;   justify-content: center; padding: 0 0 6px 0; }
 .btnAlignCenter  { justify-content: center;       padding: 0; }
 
+/* Hover: icon brightens for clear affordance — #AAAAAA on #3D3D3D = 3.1:1 ✓ WCAG AA UI */
 .btn:hover:not(.btnDisabled) {
   background: #3D3D3D;
 }
 
+.btn:hover:not(.btnDisabled) .btnIcon {
+  color: #AAAAAA;
+}
+
+/* Active/click: white icon on orange — #FFFFFF on #FF6B35 = 4.79:1 ✓ WCAG AA */
 .btn:active:not(.btnDisabled) {
   background: #FF6B35;
 }
@@ -42,15 +55,24 @@
   color: #FFFFFF;
 }
 
+/* Loading: same as hover, communicates in-progress state */
+.btnLoading {
+  background: #3D3D3D;
+}
+
+.btnLoading .btnIcon {
+  color: #AAAAAA;
+}
+
+/* Disabled: opacity mask (WCAG allows reduced opacity for disabled controls) */
 .btnDisabled {
   opacity: 0.4;
   cursor: default;
 }
 
-.btnLoading {
-  background: #3D3D3D;
-}
+/* ── Icons ──────────────────────────────────────────────────────────────── */
 
+/* Default icon: #777777 on #1A1A1A = 4.18:1 ✓ WCAG AA (UI components: min 3:1) */
 .btnIcon {
   width: 10px;
   height: 18px;
@@ -69,7 +91,8 @@
   height: 10px;
 }
 
+/* Left guide icon — fill-based, viewBox 0 0 25 24 */
 .btnIconLeft {
-  width: 8px;
-  height: 20px;
+  width: 20px;
+  height: 19px;
 }

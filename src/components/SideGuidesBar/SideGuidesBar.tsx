@@ -30,8 +30,9 @@ const strokeProps = {
 
 function IconLeft() {
   return (
-    <svg className={`${styles.btnIcon} ${styles.btnIconLeft}`} viewBox="0 0 8 30" {...iconProps}>
-      <path d="M0.5 30V0M4.5 13L2.5 15M2.5 15L4.5 17M2.5 15H8" {...strokeProps} />
+    <svg className={`${styles.btnIcon} ${styles.btnIconLeft}`} viewBox="0 0 25 24" xmlns="http://www.w3.org/2000/svg" style={{ pointerEvents: 'none' }}>
+      {/* Arrow path only — border/frame handled by button CSS */}
+      <path d="M8.88394 9.72954C9.28685 9.35181 9.30727 8.71897 8.92954 8.31606C8.55181 7.91315 7.91897 7.89273 7.51606 8.27046L8.2 9L8.88394 9.72954ZM5 12L4.31606 11.2705C4.11441 11.4595 4 11.7236 4 12C4 12.2764 4.11441 12.5405 4.31606 12.7295L5 12ZM7.51606 15.7295C7.91897 16.1073 8.55181 16.0869 8.92954 15.6839C9.30727 15.281 9.28685 14.6482 8.88394 14.2705L8.2 15L7.51606 15.7295ZM11 13C11.5523 13 12 12.5523 12 12C12 11.4477 11.5523 11 11 11V12V13ZM1 0H0V24H1H2V0H1Z" fill="currentColor" />
     </svg>
   );
 }
