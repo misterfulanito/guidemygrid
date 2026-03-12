@@ -11,15 +11,15 @@
 .btn {
   width: 32px;
   height: 32px;
-  background: #2D2D2D;
-  border: none;
+  background: #1A1A1A;
+  border: 1px solid #2D2D2D;
   border-radius: 4px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: #FFFFFF;
-  padding: 0;
+  justify-content: flex-start;
+  padding: 0 0 0 4px;
+  box-sizing: border-box;
 }
 
 .btn:hover:not(.btnDisabled) {
@@ -40,8 +40,8 @@
 }
 
 .btnIcon {
-  width: 16px;
-  height: 16px;
+  width: 10px;
+  height: 20px;
   color: #888888;
   fill: #888888;
   display: block;
