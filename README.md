@@ -1,114 +1,126 @@
 # GuideMyGrid
 
-**Plugin de Adobe Photoshop para generar retículas y líneas guía con precisión.**
+**Adobe Photoshop plugin for generating grids and guide lines with precision.**
 
-Configura columnas, filas y márgenes en segundos — sin hacer cálculos manualmente.
+Set up columns, rows, and margins in seconds — no manual calculations required.
 
 <br>
 
-[![Version](https://img.shields.io/github/v/release/misterfulanito/guidemygrid?label=versión&style=flat-square&color=0066cc)](https://github.com/misterfulanito/guidemygrid/releases/latest)
+[![Version](https://img.shields.io/github/v/release/misterfulanito/guidemygrid?label=version&style=flat-square&color=0066cc)](https://github.com/misterfulanito/guidemygrid/releases/latest)
 [![Photoshop](https://img.shields.io/badge/Photoshop-22.0%2B-blue?style=flat-square&logo=adobe-photoshop&logoColor=white)](https://github.com/misterfulanito/guidemygrid/releases/latest)
-[![Platform](https://img.shields.io/badge/plataforma-macOS%20%7C%20Windows-lightgrey?style=flat-square)](https://github.com/misterfulanito/guidemygrid/releases/latest)
-[![License](https://img.shields.io/badge/licencia-MIT-green?style=flat-square)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Windows-lightgrey?style=flat-square)](https://github.com/misterfulanito/guidemygrid/releases/latest)
+[![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 
 ---
 
-## ¿Qué es GuideMyGrid?
+## What is GuideMyGrid?
 
-GuideMyGrid es un plugin UXP para Adobe Photoshop que genera automáticamente líneas guía basadas en una retícula configurable. Ideal para diseñadores UX, diseñadores gráficos y equipos de marketing que trabajan con sistemas de diseño y grids de columnas.
+GuideMyGrid is a UXP plugin for Adobe Photoshop that automatically generates guide lines based on a configurable grid. Ideal for UX designers, graphic designers, and marketing teams who work with design systems and column grids.
 
-En lugar de calcular y colocar cada guía a mano, defines tu retícula una vez y el plugin la aplica al documento en un clic.
+Instead of calculating and placing each guide by hand, you define your grid once and the plugin applies it to the document in one click.
 
 ---
 
-## Características
+## Features
 
-### Grid de columnas
-Configura la cantidad de columnas, el gutter entre ellas y los márgenes laterales. El plugin calcula y coloca todas las guías verticales automáticamente.
+### Column Grid
+Configure the number of columns, the gutter between them, and the side margins. The plugin calculates and places all vertical guides automatically.
 
-### Grid de filas
-Define filas con espaciado configurable para crear una retícula de baseline o una cuadrícula modular completa.
+### Row Grid
+Define rows with configurable spacing to create a baseline grid or a complete modular grid.
 
-### Márgenes independientes
-Establece márgenes superiores, inferiores, izquierdo y derecho de forma independiente, sin que afecten al cálculo de las columnas.
+### Independent Margins
+Set top, bottom, left, and right margins independently, without affecting the column calculation.
 
-### Modo Replace / Add
-- **Reemplazar**: borra las guías existentes y aplica las nuevas (flujo de trabajo limpio)
-- **Añadir**: suma las nuevas guías sobre las existentes (para combinar retículas)
+### Side Guides bar
+A quick-access toolbar with 6 buttons that place single guide lines at key positions on the document canvas:
+
+- **Left** — places a vertical guide at the left margin offset
+- **Right** — places a vertical guide at the right margin offset
+- **Top** — places a horizontal guide at the top margin offset
+- **Bottom** — places a horizontal guide at the bottom margin offset
+- **Center H** — places a horizontal guide at the vertical center of the canvas
+- **Center V** — places a vertical guide at the horizontal center of the canvas
+
+Each button respects the current Apply Mode (Replace / Add) and requires an open document.
+
+### Replace / Add Mode
+- **Replace**: clears existing guides and applies the new ones (clean workflow)
+- **Add**: adds the new guides on top of existing ones (for combining grids)
 
 ### Presets
-Guarda tus configuraciones más usadas con nombre propio y recupéralas en cualquier documento. Incluye dos presets predefinidos listos para usar:
-- **12-col Web** — retícula de 12 columnas con gutter 24px y márgenes 80px (compatible con Bootstrap y Material Design)
-- **8pt Grid** — retícula de filas fijas de 8px, el estándar para sistemas de diseño
+Save your most-used configurations with a custom name and restore them in any document. Includes two predefined presets ready to use:
+- **12-col Web** — 12-column grid with 24px gutter and 80px margins (compatible with Bootstrap and Material Design)
+- **8pt Grid** — fixed row grid of 8px, the standard for design systems
 
-### Aviso de actualización
-Cuando hay una nueva versión disponible, el plugin muestra un aviso en la parte superior del panel con un enlace directo a la descarga.
-
----
-
-## Instalación
-
-### Requisitos
-- Adobe Photoshop 22.0 o superior
-- Creative Cloud Desktop instalado
-
-### Pasos
-
-1. Ve a la sección **[Releases](https://github.com/misterfulanito/guidemygrid/releases/latest)** de este repositorio
-2. Descarga el archivo `guidemygrid-vX.X.X.ccx` de la última versión
-3. **Doble-clic** en el archivo `.ccx` — Creative Cloud Desktop abrirá un diálogo de confirmación
-4. Acepta la instalación
-5. Abre Photoshop y ve a **Plugins → GuideMyGrid**
-
-> El plugin aparece como panel flotante. Puedes acoplarlo junto a tus otros paneles de Photoshop.
+### Update Notice
+When a new version is available, the plugin displays a notice at the top of the panel with a direct link to the download.
 
 ---
 
-## Cómo usarlo
+## Installation
 
-### 1. Configura tu retícula
+### Requirements
+- Adobe Photoshop 22.0 or higher
+- Creative Cloud Desktop installed
 
-En la pestaña **Grid**, activa las secciones que necesites con el toggle de cada una:
+### Steps
 
-| Sección | Qué configura |
-|---------|--------------|
-| **Márgenes** | Offset desde cada borde del documento (Top, Right, Bottom, Left) |
-| **Columnas** | Número de columnas, gutter y margen lateral |
-| **Filas** | Número de filas y espaciado vertical |
+1. Go to the **[Releases](https://github.com/misterfulanito/guidemygrid/releases/latest)** section of this repository
+2. Download the `guidemygrid-vX.X.X.ccx` file from the latest release
+3. **Double-click** the `.ccx` file — Creative Cloud Desktop will open a confirmation dialog
+4. Accept the installation
+5. Open Photoshop and go to **Plugins → GuideMyGrid**
 
-Los inputs usan **píxeles** y se aplican sobre las dimensiones reales del documento activo.
-
-### 2. Elige el modo de aplicación
-
-- **Reemplazar** — limpia las guías existentes antes de aplicar (recomendado para empezar)
-- **Añadir** — acumula guías (útil para combinar una retícula de columnas con una de baseline)
-
-### 3. Aplica
-
-Clic en **Aplicar guías**. Las guías aparecen en el documento al instante.
-
-Si no tienes ningún documento abierto en Photoshop, el botón se desactiva automáticamente.
-
-### 4. Guarda como preset (opcional)
-
-Si vas a reutilizar esta configuración, ve a la pestaña **Saved**, escribe un nombre y haz clic en **Guardar**. El preset persiste entre sesiones de Photoshop.
+> The plugin appears as a floating panel. You can dock it alongside your other Photoshop panels.
 
 ---
 
-## Casos de uso típicos
+## How to use it
 
-- **Landing pages y webs** — retícula de 12 columnas con el margen del diseño sistema
-- **Apps móviles** — retícula de 4 u 8 columnas a partir de las guías de plataforma
-- **Materiales impresos** — retícula modular con columnas y filas de módulo fijo
-- **Sistemas de diseño** — baseline grid de 8pt para consistencia tipográfica
-- **Anuncios y banners** — márgenes de seguridad estandarizados por formato
+### 1. Configure your grid
+
+In the **Grid** tab, enable the sections you need using each section's toggle:
+
+| Section | What it configures |
+|---------|-------------------|
+| **Margins** | Offset from each document edge (Top, Right, Bottom, Left) |
+| **Columns** | Number of columns, gutter, and side margin |
+| **Rows** | Number of rows and vertical spacing |
+
+Inputs use **pixels** and are applied against the actual dimensions of the active document.
+
+### 2. Choose the apply mode
+
+- **Replace** — clears existing guides before applying (recommended to start fresh)
+- **Add** — accumulates guides (useful for combining a column grid with a baseline grid)
+
+### 3. Apply
+
+Click **Apply guides**. The guides appear in the document instantly.
+
+If you have no document open in Photoshop, the button is automatically disabled.
+
+### 4. Save as a preset (optional)
+
+If you plan to reuse this configuration, go to the **Saved** tab, type a name, and click **Save**. The preset persists across Photoshop sessions.
 
 ---
 
-## Desarrollo local
+## Typical use cases
 
-### Requisitos
-- Node.js 18 o superior
+- **Landing pages and websites** — 12-column grid with the design system margin
+- **Mobile apps** — 4 or 8-column grid based on platform guidelines
+- **Print materials** — modular grid with fixed-module columns and rows
+- **Design systems** — 8pt baseline grid for typographic consistency
+- **Ads and banners** — standardized safety margins per format
+
+---
+
+## Local development
+
+### Requirements
+- Node.js 18 or higher
 - npm
 
 ### Setup
@@ -119,74 +131,74 @@ cd guidemygrid
 npm install
 ```
 
-### Comandos
+### Commands
 
 ```bash
-npm run build      # Build de producción → dist/
-npm run dev        # Watch mode para desarrollo
-npm test           # Tests unitarios (Jest)
-npm run type-check # Verificar TypeScript sin compilar
+npm run build      # Production build → dist/
+npm run dev        # Watch mode for development
+npm test           # Unit tests (Jest)
+npm run type-check # Check TypeScript without compiling
 ```
 
-### Empaquetar .ccx para distribución
+### Package .ccx for distribution
 
 ```bash
 npm run build
 cd dist && zip -r ../guidemygrid-vX.X.X.ccx . && cd ..
 ```
 
-### Cargar en Photoshop durante desarrollo
+### Load in Photoshop during development
 
-En Photoshop: **Plugins → Development → Load Unsigned Plugin** → selecciona la carpeta `dist/`.
+In Photoshop: **Plugins → Development → Load Unsigned Plugin** → select the `dist/` folder.
 
 ---
 
-## Stack técnico
+## Tech stack
 
-| Tecnología | Uso |
-|-----------|-----|
-| [UXP](https://developer.adobe.com/photoshop/uxp/) | Runtime del plugin (APIs de Photoshop) |
-| React 18 | UI del panel |
-| TypeScript | Tipado estático |
+| Technology | Usage |
+|-----------|-------|
+| [UXP](https://developer.adobe.com/photoshop/uxp/) | Plugin runtime (Photoshop APIs) |
+| React 18 | Panel UI |
+| TypeScript | Static typing |
 | Zustand | State management |
-| Webpack 5 | Build y bundling |
-| Jest | Tests unitarios |
+| Webpack 5 | Build and bundling |
+| Jest | Unit tests |
 
 ---
 
-## Arquitectura
+## Architecture
 
 ```
 src/
 ├── components/
-│   ├── ColumnGrid/     # Panel principal (GridPanel)
-│   ├── Presets/        # Panel de presets guardados
-│   └── shared/         # Componentes reutilizables (NumberInput, Toggle…)
+│   ├── ColumnGrid/     # Main panel (GridPanel)
+│   ├── Presets/        # Saved presets panel
+│   └── shared/         # Reusable components (NumberInput, Toggle...)
 ├── services/
-│   ├── gridGenerator.ts     # Lógica pura de cálculo de guías (sin UXP)
-│   ├── photoshopBridge.ts   # Comunicación con PS via executeAsModal + batchPlay
-│   ├── presetStorage.ts     # Persistencia via localStorage
-│   └── updateChecker.ts     # Consulta GitHub API para versiones nuevas
+│   ├── gridGenerator.ts     # Pure guide calculation logic (no UXP)
+│   ├── photoshopBridge.ts   # Communication with PS via executeAsModal + batchPlay
+│   ├── presetStorage.ts     # Persistence via localStorage
+│   └── updateChecker.ts     # Queries GitHub API for new versions
 ├── store/              # Zustand stores (grid, presets, UI)
-├── hooks/              # useDocument (dimensiones del doc activo)
-└── types/              # Interfaces TypeScript compartidas
+├── hooks/              # useDocument (active document dimensions)
+└── types/              # Shared TypeScript interfaces
 ```
 
-La lógica de cálculo (`gridGenerator.ts`) está completamente desacoplada de UXP, lo que permite testearla con Jest sin dependencias de Photoshop.
+The calculation logic (`gridGenerator.ts`) is completely decoupled from UXP, which allows testing it with Jest without any Photoshop dependencies.
 
 ---
 
-## Contribuir
+## Contributing
 
-1. Fork del repositorio
-2. Crea una rama: `git checkout -b feature/mi-mejora`
-3. Haz tus cambios y añade tests si aplica
-4. Abre un Pull Request con descripción del cambio
+1. Fork the repository
+2. Create a branch: `git checkout -b feature/my-improvement`
+3. Make your changes and add tests if applicable
+4. Open a Pull Request with a description of the change
 
-Para bugs o sugerencias, abre un [Issue](https://github.com/misterfulanito/guidemygrid/issues).
+For bugs or suggestions, open an [Issue](https://github.com/misterfulanito/guidemygrid/issues).
 
 ---
 
-## Licencia
+## License
 
-MIT — libre para uso personal y comercial. Ver [LICENSE](LICENSE) para más detalles.
+MIT — free for personal and commercial use. See [LICENSE](LICENSE) for more details.

@@ -1,34 +1,34 @@
-# GuideMyGrid — Documentación
+# GuideMyGrid — Documentation
 
-Plugin UXP para Adobe Photoshop que genera retículas y líneas guía.
+UXP plugin for Adobe Photoshop that generates grids and guide lines.
 
-## Índice
+## Index
 
-### Referencia
-- [Technical Decisions](reference/technical-decisions.md) — Stack, arquitectura, decisiones clave
+### Reference
+- [Technical Decisions](reference/technical-decisions.md) — Stack, architecture, key decisions
 - [Competitive Analysis](reference/competitive-analysis.md) — GuideGuide, Grids for Designers, Grid Systems
-- [Implementation Plan](reference/implementation-plan.md) — Plan semana por semana (MVP 6-8 semanas)
+- [Implementation Plan](reference/implementation-plan.md) — Week-by-week plan (MVP 6-8 weeks)
 
-### Módulos (specs detalladas)
-- `reference/modules/` — Specs técnicas por módulo (pendiente)
+### Modules (detailed specs)
+- `reference/modules/` — Technical specs per module (pending)
 
-### Desarrollo
-- `development/current/` — Trabajo en progreso
-- `development/completed/` — Features completadas
+### Development
+- `development/current/` — Work in progress
+- `development/completed/` — Completed features
 
-## Estado del Proyecto
+## Project Status
 
-| Documento | Estado |
-|-----------|--------|
-| Technical Decisions | 🟡 En Progreso |
-| Competitive Analysis | 🔴 Pendiente |
-| Implementation Plan | 🔴 Pendiente |
-| Specs de Módulos | 🔴 Pendiente |
+| Document | Status |
+|----------|--------|
+| Technical Decisions | 🟡 In Progress |
+| Competitive Analysis | 🔴 Pending |
+| Implementation Plan | 🔴 Pending |
+| Module Specs | 🔴 Pending |
 
-## Próximo Paso
+## Next Step
 
 ```
 /oden:architect
 ```
 
-Completa la arquitectura detallada, specs de componentes y plan final.
+Complete the detailed architecture, component specs, and final plan.

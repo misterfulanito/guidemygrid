@@ -1,37 +1,37 @@
 # Implementation Plan — GuideMyGrid
 
-**Estado:** 🔴 Pendiente
-**Creado:** 2026-03-06T16:41:30Z
-**Timeline:** 6-8 semanas (MVP)
+**Status:** 🔴 Pending
+**Created:** 2026-03-06T16:41:30Z
+**Timeline:** 6-8 weeks (MVP)
 
 ---
 
-## Semanas Planificadas
+## Planned Weeks
 
-### Semana 1-2: Setup + Core
-- [ ] Configurar entorno UXP + React + TypeScript
-- [ ] Estructura base del plugin (manifest.json, webpack)
-- [ ] Panel UI básico (columnas + márgenes)
-- [ ] Primera integración con API de Photoshop (crear guías)
+### Weeks 1-2: Setup + Core
+- [ ] Configure UXP + React + TypeScript environment
+- [ ] Base plugin structure (manifest.json, webpack)
+- [ ] Basic panel UI (columns + margins)
+- [ ] First integration with Photoshop API (create guides)
 
-### Semana 3-4: Grid Completo
-- [ ] Grid de filas (cantidad, alto, gutter)
-- [ ] Márgenes avanzados (4 lados independientes)
-- [ ] Preview visual en el panel
-- [ ] Reemplazar vs. agregar guías existentes
+### Weeks 3-4: Full Grid
+- [ ] Row grid (count, height, gutter)
+- [ ] Advanced margins (4 independent sides)
+- [ ] Visual preview in the panel
+- [ ] Replace vs. add existing guides
 
-### Semana 5-6: Presets + Pulido
-- [ ] Sistema de presets (guardar, cargar, eliminar)
-- [ ] Presets predefinidos (1440px web, 375px mobile, etc.)
-- [ ] Freemium logic (límites en tier gratuito)
-- [ ] UI refinada con Adobe Spectrum
+### Weeks 5-6: Presets + Polish
+- [ ] Preset system (save, load, delete)
+- [ ] Predefined presets (1440px web, 375px mobile, etc.)
+- [ ] Freemium logic (limits on free tier)
+- [ ] Refined UI with Adobe Spectrum
 
-### Semana 7-8: Distribución
-- [ ] Testing en múltiples versiones de PS
-- [ ] Preparar assets para Adobe Exchange
-- [ ] Documentación de usuario
-- [ ] Publicación en marketplace
+### Weeks 7-8: Distribution
+- [ ] Testing on multiple PS versions
+- [ ] Prepare assets for Adobe Exchange
+- [ ] User documentation
+- [ ] Marketplace publication
 
 ---
 
-**Pendiente:** Completar con `/oden:plan`
+**Pending:** Complete with `/oden:plan`

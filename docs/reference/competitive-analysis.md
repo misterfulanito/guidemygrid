@@ -1,31 +1,31 @@
 # Competitive Analysis — GuideMyGrid
 
-**Estado:** 🔴 Pendiente
-**Creado:** 2026-03-06T16:41:30Z
+**Status:** 🔴 Pending
+**Created:** 2026-03-06T16:41:30Z
 
 ---
 
-## Competidores a Analizar
+## Competitors to Analyze
 
 1. **GuideGuide** — https://guideguide.me
 2. **Grids for Designers** — Adobe Exchange
 3. **Grid Systems** — Adobe Exchange
 
-## Dimensiones de Análisis
+## Analysis Dimensions
 
-Para cada competidor documentar:
+For each competitor document:
 
-- [ ] Precio y modelo de negocio
-- [ ] Features principales
-- [ ] UX del panel (capturas de pantalla)
-- [ ] Limitaciones y quejas de usuarios (reseñas)
-- [ ] Compatibilidad (PS, AI, XD, versiones)
-- [ ] Distribución (Exchange, web propia, etc.)
+- [ ] Price and business model
+- [ ] Main features
+- [ ] Panel UX (screenshots)
+- [ ] Limitations and user complaints (reviews)
+- [ ] Compatibility (PS, AI, XD, versions)
+- [ ] Distribution (Exchange, own website, etc.)
 
-## Oportunidades de Diferenciación
+## Differentiation Opportunities
 
-[Completar después del análisis]
+[Complete after analysis]
 
 ---
 
-**Pendiente:** Completar con `/oden:architect` o análisis manual
+**Pending:** Complete with `/oden:architect` or manual analysis
