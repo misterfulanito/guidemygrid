@@ -46,3 +46,13 @@
   display: block;
   flex-shrink: 0;
 }
+
+.btnIconSquare {
+  width: 18px;
+  height: 18px;
+}
+
+.btnIconWide {
+  width: 18px;
+  height: 10px;
+}
