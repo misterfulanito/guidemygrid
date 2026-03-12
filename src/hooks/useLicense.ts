@@ -1,8 +1,8 @@
 // src/hooks/useLicense.ts
 import { LicenseStatus } from '../types';
 
-// MVP: plugin es gratuito. Todo el mundo es Free tier.
-// Post-MVP: implementar uxp.entitlement.checkStatus()
+// MVP: plugin is free. Everyone is on the Free tier.
+// Post-MVP: implement uxp.entitlement.checkStatus()
 export function useLicense(): LicenseStatus {
   return {
     tier: 'free',

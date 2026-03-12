@@ -4,72 +4,72 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # GuideMyGrid — Plugin Adobe Photoshop (UXP)
 
-Plugin para generar retículas y líneas guía dentro de Photoshop. Target: Diseñadores, UXers, Marketing. Distribución: Adobe Creative Cloud Marketplace (freemium).
+Plugin for generating grids and guides inside Photoshop. Target: Designers, UXers, Marketing. Distribution: Adobe Creative Cloud Marketplace (freemium).
 
 ## Stack
 
 - **Plugin SDK**: UXP (Unified Extensibility Platform) — Photoshop 22.0+
-- **UI**: React 18 + TypeScript + Adobe Spectrum (sistema de diseño oficial de Adobe, incluido en UXP)
+- **UI**: React 18 + TypeScript + Adobe Spectrum (Adobe's official design system, included in UXP)
 - **Build**: Webpack 5
-- **Estado global**: Zustand
-- **Persistencia**: `localStorage` de UXP (presets locales, sin backend en MVP)
-- **Dev Tool**: Adobe UXP Developer Tool (para cargar y debuggear el plugin)
+- **Global state**: Zustand
+- **Persistence**: UXP `localStorage` (local presets, no backend in MVP)
+- **Dev Tool**: Adobe UXP Developer Tool (for loading and debugging the plugin)
 
-## Arquitectura del Plugin
+## Plugin Architecture
 
 ```
 guidemygrid/
-├── manifest.json          # Configuración del plugin UXP
-├── index.html             # Entry point del plugin
+├── manifest.json          # UXP plugin configuration
+├── index.html             # Plugin entry point
 ├── src/
 │   ├── index.tsx          # React entry point
-│   ├── components/        # Componentes UI (ColumnGrid, RowGrid, Margins, Presets)
+│   ├── components/        # UI components (ColumnGrid, RowGrid, Margins, Presets)
 │   ├── hooks/
-│   │   └── usePhotoshop.ts  # Hook para APIs de Photoshop
+│   │   └── usePhotoshop.ts  # Hook for Photoshop APIs
 │   ├── services/
-│   │   └── gridGenerator.ts # Lógica core: generación de líneas guía
-│   ├── store/             # Estado global (Zustand)
+│   │   └── gridGenerator.ts # Core logic: guide generation
+│   ├── store/             # Global state (Zustand)
 │   └── types/             # TypeScript types
 ├── webpack.config.js
 └── package.json
 ```
 
-## Comunicación con Photoshop
+## Photoshop Communication
 
-- Acceso a APIs: `require('photoshop')` desde UXP
-- Gestión de guías: `app.activeDocument.guides`
-- Operaciones complejas: `batchPlay`
+- API access: `require('photoshop')` from UXP
+- Guide management: `app.activeDocument.guides`
+- Complex operations: `batchPlay`
 
-## Comandos de Desarrollo
+## Development Commands
 
-> El proyecto aún está en fase de documentación. Cuando el código exista:
+> The project is still in the documentation phase. When the code exists:
 
 ```bash
-npm run build        # Build de producción
-npm run dev          # Watch mode para desarrollo
+npm run build        # Production build
+npm run dev          # Watch mode for development
 npm run lint         # Linting
 ```
 
-El plugin se carga en Photoshop via **Adobe UXP Developer Tool** (no via `npm start`).
+The plugin is loaded into Photoshop via **Adobe UXP Developer Tool** (not via `npm start`).
 
-## Reglas del Proyecto
+## Project Rules
 
-1. Documentar ANTES de codificar (Metodología Oden)
-2. Consultar `docs/reference/technical-decisions.md` antes de tomar decisiones de arquitectura
-3. Specs de módulos en `docs/reference/modules/` antes de implementar cada módulo
-4. Sin backends — toda la lógica es local al plugin (revisable post-MVP)
+1. Document BEFORE coding (Oden Methodology)
+2. Consult `docs/reference/technical-decisions.md` before making architecture decisions
+3. Module specs in `docs/reference/modules/` before implementing each module
+4. No backends — all logic is local to the plugin (revisable post-MVP)
 
 ## Docs
 
-- `docs/reference/technical-decisions.md` — Stack, arquitectura, features del MVP, decisiones clave
+- `docs/reference/technical-decisions.md` — Stack, architecture, MVP features, key decisions
 - `docs/reference/competitive-analysis.md` — GuideGuide, Grids for Designers, Grid Systems
-- `docs/reference/implementation-plan.md` — Plan semana por semana
-- `docs/reference/modules/` — Specs técnicas por módulo
-- `docs/development/current/` — Trabajo activo
+- `docs/reference/implementation-plan.md` — Week-by-week plan
+- `docs/reference/modules/` — Technical specs per module
+- `docs/development/current/` — Active work
 
-## Comandos Oden
+## Oden Commands
 
-- `/oden:architect` — Completar arquitectura y specs de componentes
-- `/oden:prd` — Crear PRD del producto
-- `/oden:tasks` — Descomponer en tareas
-- `/oden:sync` — Sincronizar con GitHub Issues
+- `/oden:architect` — Complete architecture and component specs
+- `/oden:prd` — Create product PRD
+- `/oden:tasks` — Decompose into tasks
+- `/oden:sync` — Sync with GitHub Issues

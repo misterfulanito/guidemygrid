@@ -40,9 +40,9 @@ export function useDocument(): UseDocumentResult {
     /* eslint-disable @typescript-eslint/no-var-requires */
     const photoshop = require('photoshop');
 
-    // 'select' cubre cambios de documento y selección de capas/objetos
-    // 'set' cubre cambios de selección de píxeles (marching ants)
-    // 'selectAllWithMask', 'deselect' cubren seleccionar todo / deseleccionar
+    // 'select' covers document changes and layer/object selection
+    // 'set' covers pixel selection changes (marching ants)
+    // 'selectAllWithMask', 'deselect' cover select all / deselect
     const events = ['select', 'open', 'close', 'set', 'deselect', 'selectAllWithMask'];
     const listener = () => { refresh(); };
     photoshop.action.addNotificationListener(events, listener);

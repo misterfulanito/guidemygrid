@@ -32,7 +32,7 @@ export async function checkForUpdates(): Promise<UpdateInfo | null> {
       releaseNotes: release.body,
     };
   } catch {
-    return null; // Falla silenciosa — nunca bloquear si no hay red
+    return null; // Silent failure — never block if there is no network
   }
 }
 

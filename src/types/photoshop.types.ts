@@ -7,7 +7,7 @@ export interface DocumentInfo {
   name: string;
   width: number;            // px
   height: number;           // px
-  resolution: number;       // ppp (dots per inch)
+  resolution: number;       // dpi (dots per inch)
   hasSelection: boolean;
 }
 

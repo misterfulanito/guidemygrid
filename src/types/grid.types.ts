@@ -8,19 +8,19 @@ export type ApplyMode = 'replace' | 'add';
 export interface ColumnConfig {
   enabled: boolean;
   columns: number;          // 1–24
-  columnWidth: WidthMode;   // 'auto' o valor fijo
-  columnWidthValue: number; // px, usado solo si columnWidth === 'fixed'
-  gutter: number;           // px entre columnas
-  marginLeft: number;       // offset desde borde izquierdo
-  marginRight: number;      // offset desde borde derecho
+  columnWidth: WidthMode;   // 'auto' or fixed value
+  columnWidthValue: number; // px, used only if columnWidth === 'fixed'
+  gutter: number;           // px between columns
+  marginLeft: number;       // offset from left edge
+  marginRight: number;      // offset from right edge
 }
 
 export interface RowConfig {
   enabled: boolean;
   rows: number;             // 1–100
   rowHeight: WidthMode;
-  rowHeightValue: number;   // px, usado solo si rowHeight === 'fixed'
-  gutter: number;           // px entre filas
+  rowHeightValue: number;   // px, used only if rowHeight === 'fixed'
+  gutter: number;           // px between rows
   marginTop: number;
   marginBottom: number;
 }
@@ -42,13 +42,13 @@ export interface GridConfig {
 }
 
 export interface GuidePosition {
-  position: number;         // px desde el origen del documento/selección
+  position: number;         // px from the document/selection origin
   orientation: GuideOrientation;
 }
 
 export interface GeneratedGuides {
-  vertical: number[];       // posiciones x absolutas (px)
-  horizontal: number[];     // posiciones y absolutas (px)
+  vertical: number[];       // absolute x positions (px)
+  horizontal: number[];     // absolute y positions (px)
 }
 
 export const DEFAULT_COLUMN_CONFIG: ColumnConfig = {

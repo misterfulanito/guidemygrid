@@ -1,5 +1,5 @@
 // src/services/photoshopBridge.ts
-// UXP provee estos módulos via require() — no son npm packages
+// UXP provides these modules via require() — they are not npm packages
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 const photoshop = require('photoshop');
@@ -9,7 +9,7 @@ import { DocumentInfo, SelectionBounds, GuideInfo, GeneratedGuides, ApplyMode, G
 
 export class PhotoshopBridge {
 
-  // --- Documento activo ---
+  // --- Active document ---
 
   async getActiveDocument(): Promise<DocumentInfo | null> {
     const doc = app.activeDocument;
@@ -24,7 +24,7 @@ export class PhotoshopBridge {
     };
   }
 
-  // --- Selección ---
+  // --- Selection ---
 
   async getSelectionBounds(): Promise<SelectionBounds | null> {
     const doc = app.activeDocument;
@@ -54,7 +54,7 @@ export class PhotoshopBridge {
     return bounds !== null;
   }
 
-  // --- Guías ---
+  // --- Guides ---
 
   async getAllGuides(): Promise<GuideInfo[]> {
     const doc = app.activeDocument;
@@ -174,11 +174,11 @@ export class PhotoshopBridge {
     }, { commandName: 'Add Guide' });
   }
 
-  // --- Aplicación de grids ---
+  // --- Grid application ---
 
   async applyGuides(guides: GeneratedGuides, mode: ApplyMode): Promise<void> {
     const doc = app.activeDocument;
-    if (!doc) throw new Error('No hay documento activo en Photoshop');
+    if (!doc) throw new Error('No active document in Photoshop');
 
     await photoshop.core.executeAsModal(async () => {
       // Clear existing guides first (ignore error if there are none)

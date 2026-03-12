@@ -1,5 +1,5 @@
-// Declaraciones de tipos para Adobe Spectrum Web Components (UXP)
-// Estos componentes son inyectados por el runtime de UXP — no son npm packages
+// Type declarations for Adobe Spectrum Web Components (UXP)
+// These components are injected by the UXP runtime — they are not npm packages
 
 declare namespace JSX {
   interface IntrinsicElements {

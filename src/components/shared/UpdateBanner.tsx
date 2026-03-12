@@ -51,9 +51,9 @@ export function UpdateBanner({ info, onDismiss }: UpdateBannerProps) {
 
   return (
     <div style={bannerStyle}>
-      <span>Nueva versión disponible: <strong>{info.latestVersion}</strong></span>
-      <span style={linkStyle} onClick={openRelease}>Descargar</span>
-      <button style={dismissStyle} onClick={onDismiss} title="Cerrar">×</button>
+      <span>New version available: <strong>{info.latestVersion}</strong></span>
+      <span style={linkStyle} onClick={openRelease}>Download</span>
+      <button style={dismissStyle} onClick={onDismiss} title="Close">×</button>
     </div>
   );
 }

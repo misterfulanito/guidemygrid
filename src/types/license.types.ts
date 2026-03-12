@@ -5,7 +5,7 @@ export type LicenseTier = 'free' | 'pro';
 export interface LicenseStatus {
   tier: LicenseTier;
   isActive: boolean;
-  expiresAt?: string;       // ISO 8601, solo para Pro con suscripción
+  expiresAt?: string;       // ISO 8601, only for Pro subscription
 }
 
 export interface FeatureGate {

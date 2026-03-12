@@ -9,7 +9,7 @@ export function ProBadge({ message = 'Feature Pro' }: ProBadgeProps) {
   return (
     <sp-badge
       variant="informative"
-      title="Disponible en la versión Pro"
+      title="Available in the Pro version"
       style={{ cursor: 'default', fontSize: '10px' }}
     >
       PRO

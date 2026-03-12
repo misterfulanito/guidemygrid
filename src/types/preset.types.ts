@@ -6,15 +6,15 @@ export type PresetId = string; // UUID v4
 
 export interface Preset {
   id: PresetId;
-  name: string;             // Nombre visible al usuario
-  description?: string;     // Opcional: descripción del preset
-  config: GridConfig;       // Snapshot completo de la configuración
+  name: string;             // User-visible name
+  description?: string;     // Optional: preset description
+  config: GridConfig;       // Full configuration snapshot
   createdAt: string;        // ISO 8601
   updatedAt: string;        // ISO 8601
-  isBuiltIn: boolean;       // true para presets pre-incluidos (no editables)
+  isBuiltIn: boolean;       // true for built-in presets (not editable)
 }
 
 export interface PresetsStorage {
-  version: number;          // Para migraciones futuras (inicialmente 1)
+  version: number;          // For future migrations (initially 1)
   presets: Preset[];
 }
