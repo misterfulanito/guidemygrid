@@ -61,9 +61,9 @@ function IconTop() {
 
 function IconBottom() {
   return (
-    <svg className={`${styles.btnIcon} ${styles.btnIconWide}`} viewBox="0 0 18 10" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style={{ pointerEvents: 'none' }}>
-      <path d="M17 7.99989C17.5523 7.99989 18 8.4476 18 8.99989C17.9999 9.55212 17.5522 9.99989 17 9.99989H1C0.447753 9.99989 5.9902e-05 9.55212 0 8.99989C2.41411e-08 8.4476 0.447716 7.99989 1 7.99989H17Z" fill="currentColor" />
-      <path d="M11.7217 0.292858C12.1122 -0.0975963 12.7452 -0.0976427 13.1357 0.292858C13.5261 0.68337 13.5262 1.31643 13.1357 1.70692L9.70703 5.13563C9.51951 5.32309 9.26516 5.4286 9 5.4286C8.73484 5.4286 8.48049 5.32309 8.29297 5.13563L4.86426 1.70692C4.47385 1.31643 4.47388 0.683369 4.86426 0.292858C5.25476 -0.0976423 5.88779 -0.0975954 6.27832 0.292858L9 3.01454L11.7217 0.292858Z" fill="currentColor" />
+    <svg className={`${styles.btnIcon} ${styles.btnIconWide}`} viewBox="0 0 18 10" {...iconProps}>
+      {/* Mirror of IconTop: bar at bottom (y=9), chevron pointing down */}
+      <path d="M1 9H17M5.57143 1L9 4.42857L12.4286 1" {...strokeProps} />
     </svg>
   );
 }
