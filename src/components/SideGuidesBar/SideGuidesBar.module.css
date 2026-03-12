@@ -15,7 +15,7 @@
   height: 32px;
   background: #1A1A1A;
   border: 1px solid #2D2D2D;
-  border-radius: 4px;
+  border-radius: 0;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -67,4 +67,9 @@
 .btnIconWide {
   width: 18px;
   height: 10px;
+}
+
+.btnIconLeft {
+  width: 8px;
+  height: 20px;
 }

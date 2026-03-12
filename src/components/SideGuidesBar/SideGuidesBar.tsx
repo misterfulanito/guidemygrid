@@ -30,8 +30,8 @@ const strokeProps = {
 
 function IconLeft() {
   return (
-    <svg className={styles.btnIcon} viewBox="0 0 10 18" {...iconProps}>
-      <path d="M1 17V1M9 5.57143L5.57143 9L9 12.4286" {...strokeProps} />
+    <svg className={`${styles.btnIcon} ${styles.btnIconLeft}`} viewBox="0 0 8 30" {...iconProps}>
+      <path d="M0.5 30V0M4.5 13L2.5 15M2.5 15L4.5 17M2.5 15H8" {...strokeProps} />
     </svg>
   );
 }
