@@ -95,9 +95,9 @@ type BarItem =
 
 const BAR_ITEMS: BarItem[] = [
   { kind: 'button', type: 'left',     Icon: IconLeft,    label: 'Add left guide' },
-  { kind: 'button', type: 'bottom',   Icon: IconBottom,  label: 'Add bottom guide',            align: 'bottom' },
-  { kind: 'button', type: 'top',      Icon: IconTop,     label: 'Add top guide',               align: 'top' },
   { kind: 'button', type: 'right',    Icon: IconRight,   label: 'Add right guide',             align: 'right' },
+  { kind: 'button', type: 'top',      Icon: IconTop,     label: 'Add top guide',               align: 'top' },
+  { kind: 'button', type: 'bottom',   Icon: IconBottom,  label: 'Add bottom guide',            align: 'bottom' },
   { kind: 'divider' },
   { kind: 'button', type: 'center-h', Icon: IconCenterH, label: 'Add horizontal center guide', align: 'center' },
   { kind: 'button', type: 'center-v', Icon: IconCenterV, label: 'Add vertical center guide',   align: 'center' },

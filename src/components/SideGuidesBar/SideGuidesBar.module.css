@@ -36,6 +36,7 @@
 
 .btn:active:not(.btnDisabled) {
   background: #FF6B35;
+  color: #FFFFFF;
 }
 
 .btnDisabled {
