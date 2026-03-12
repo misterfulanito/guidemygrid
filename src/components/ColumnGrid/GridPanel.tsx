@@ -5,6 +5,7 @@ import { useDocument } from '../../hooks/useDocument';
 import { photoshopBridge } from '../../services/photoshopBridge';
 import { generateColumnGuides, generateRowGuides, generateMarginGuides, GridGenerationError } from '../../services/gridGenerator';
 import { VERSION } from '../../version';
+import { SideGuidesBar } from '../SideGuidesBar/SideGuidesBar';
 import styles from './GridPanel.module.css';
 
 
@@ -193,6 +194,15 @@ export function GridPanel() {
         <span className={styles.contextSource}>{contextSource}: </span>
         <span className={styles.contextDims}>{contextDims}</span>
       </div>
+
+      {/* ── Side Guides Bar ── */}
+      <SideGuidesBar
+        containerWidth={containerWidth}
+        containerHeight={containerHeight}
+        offsetX={offsetX}
+        offsetY={offsetY}
+        disabled={!document}
+      />
 
       {/* ── Content ── */}
       <div className={styles.content}>

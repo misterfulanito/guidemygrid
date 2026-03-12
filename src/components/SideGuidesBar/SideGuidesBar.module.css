@@ -1,0 +1,70 @@
+.bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 6px 0;
+  background: #1A1A1A;
+  border-bottom: 1px solid #2A2A2A;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.btn {
+  width: 32px;
+  height: 32px;
+  background: #1A1A1A;
+  border: 1px solid #2D2D2D;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 0 0 6px;
+  box-sizing: border-box;
+}
+
+/* Per-button alignment overrides */
+.btnAlignRight   { justify-content: flex-end;    padding: 0 6px 0 0; }
+.btnAlignTop     { align-items: flex-start; justify-content: center; padding: 6px 0 0 0; }
+.btnAlignBottom  { align-items: flex-end;   justify-content: center; padding: 0 0 6px 0; }
+.btnAlignCenter  { justify-content: center;       padding: 0; }
+
+.btn:hover:not(.btnDisabled) {
+  background: #3D3D3D;
+}
+
+.btn:active:not(.btnDisabled) {
+  background: #FF6B35;
+}
+
+.btn:active:not(.btnDisabled) .btnIcon {
+  color: #FFFFFF;
+}
+
+.btnDisabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.btnLoading {
+  background: #3D3D3D;
+}
+
+.btnIcon {
+  width: 10px;
+  height: 18px;
+  color: #777777;
+  display: block;
+  flex-shrink: 0;
+}
+
+.btnIconSquare {
+  width: 18px;
+  height: 18px;
+}
+
+.btnIconWide {
+  width: 18px;
+  height: 10px;
+}

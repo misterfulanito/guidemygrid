@@ -166,9 +166,7 @@ export class PhotoshopBridge {
           new: {
             _obj: 'guide',
             position: { _unit: 'pixelsUnit', _value: position },
-            kind: orientation === 'vertical'
-              ? { _enum: 'orientation', _value: 'vertical' }
-              : { _enum: 'orientation', _value: 'horizontal' },
+            orientation: { _enum: 'orientation', _value: orientation },
           },
         }],
         {}
