@@ -10,44 +10,39 @@
   width: 100%;
 }
 
+/* Ghost button — no border, no background by default */
 .btn {
   width: 32px;
   height: 32px;
-  background: #1A1A1A;
-  border: 1px solid #2D2D2D;
+  background: transparent;
+  border: none;
   border-radius: 2px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding: 0 0 0 6px;
+  justify-content: center;
+  padding: 0;
   box-sizing: border-box;
-  /* Focus ring for keyboard navigation (WCAG 2.4.7) */
   outline: none;
 }
 
+/* Focus ring (WCAG 2.4.7) */
 .btn:focus-visible {
   outline: 2px solid #FF6B35;
   outline-offset: 1px;
 }
 
-/* Per-button alignment overrides */
-.btnAlignRight   { justify-content: flex-end;    padding: 0 6px 0 0; }
-.btnAlignTop     { align-items: flex-start; justify-content: center; padding: 6px 0 0 0; }
-.btnAlignBottom  { align-items: flex-end;   justify-content: center; padding: 0 0 6px 0; }
-.btnAlignCenter  { justify-content: center;       padding: 0; }
-
-/* Hover: background change */
+/* Hover: background appears */
 .btn:hover:not(.btnDisabled) {
   background: #3D3D3D;
 }
 
-/* Active/click: orange background — #FFFFFF on #FF6B35 = 4.79:1 ✓ WCAG AA */
+/* Active: orange fill — #FF6B35 */
 .btn:active:not(.btnDisabled) {
   background: #FF6B35;
 }
 
-/* Active: stroke-based icons (other 5 buttons) go white */
+/* Active: stroke-based icons (5 non-fill buttons) → white */
 .btn:active:not(.btnDisabled) .btnIcon {
   color: #FFFFFF;
 }
@@ -57,15 +52,14 @@
   background: #3D3D3D;
 }
 
-/* Disabled: opacity mask (WCAG allows reduced opacity for disabled controls) */
+/* Disabled */
 .btnDisabled {
   opacity: 0.4;
   cursor: default;
 }
 
-/* ── Icons ──────────────────────────────────────────────────────────────── */
+/* ── Icons (stroke-based) ───────────────────────────────────────────────── */
 
-/* Default icon: #777777 on #1A1A1A = 4.18:1 ✓ WCAG AA (UI components: min 3:1) */
 .btnIcon {
   width: 10px;
   height: 18px;
@@ -88,20 +82,22 @@
 .btnIconLeft {
   width: 20px;
   height: 19px;
+  display: block;
+  flex-shrink: 0;
 }
 
-/* ── Two-color icon system ──────────────────────────────────────────────── */
+/* ── Two-color fill icon system ─────────────────────────────────────────── */
 
-/* Default: subtle frame + visible content */
-.iconFrame   { fill: #444444; } /* 3-sided frame — dark gray on #1A1A1A  */
-.iconContent { fill: #9A9A9A; } /* guide bar + arrow — #9A9A9A on #1A1A1A = 4.54:1 ✓ */
+/* Default */
+.iconFrame   { fill: #444444; }
+.iconContent { fill: #9A9A9A; }
 
-/* Hover: both brighten */
+/* Hover: brighten both */
 .btn:hover:not(.btnDisabled) .iconFrame   { fill: #5A5A5A; }
 .btn:hover:not(.btnDisabled) .iconContent { fill: #BBBBBB; }
 
-/* Active: both go white on orange — #FFFFFF on #FF6B35 = 4.79:1 ✓ */
-.btn:active:not(.btnDisabled) .iconFrame   { fill: #FFFFFF; }
+/* Active: frame → light orange (two-color preserved), content → white */
+.btn:active:not(.btnDisabled) .iconFrame   { fill: #FFAA80; }
 .btn:active:not(.btnDisabled) .iconContent { fill: #FFFFFF; }
 
 /* Loading: same as hover */

@@ -102,17 +102,17 @@ function Divider() {
 // ── Bar items (order matches Pencil design) ────────────────────────────────
 
 type BarItem =
-  | { kind: 'button'; type: SideGuideType; Icon: () => React.ReactElement; label: string; align?: string }
+  | { kind: 'button'; type: SideGuideType; Icon: () => React.ReactElement; label: string }
   | { kind: 'divider' };
 
 const BAR_ITEMS: BarItem[] = [
   { kind: 'button', type: 'left',     Icon: IconLeft,    label: 'Add left guide' },
-  { kind: 'button', type: 'right',    Icon: IconRight,   label: 'Add right guide',             align: 'right' },
-  { kind: 'button', type: 'top',      Icon: IconTop,     label: 'Add top guide',               align: 'top' },
-  { kind: 'button', type: 'bottom',   Icon: IconBottom,  label: 'Add bottom guide',            align: 'bottom' },
+  { kind: 'button', type: 'right',    Icon: IconRight,   label: 'Add right guide' },
+  { kind: 'button', type: 'top',      Icon: IconTop,     label: 'Add top guide' },
+  { kind: 'button', type: 'bottom',   Icon: IconBottom,  label: 'Add bottom guide' },
   { kind: 'divider' },
-  { kind: 'button', type: 'center-h', Icon: IconCenterH, label: 'Add horizontal center guide', align: 'center' },
-  { kind: 'button', type: 'center-v', Icon: IconCenterV, label: 'Add vertical center guide',   align: 'center' },
+  { kind: 'button', type: 'center-h', Icon: IconCenterH, label: 'Add horizontal center guide' },
+  { kind: 'button', type: 'center-v', Icon: IconCenterV, label: 'Add vertical center guide' },
 ];
 
 // ── Component ──────────────────────────────────────────────────────────────
@@ -141,14 +141,13 @@ export function SideGuidesBar({ containerWidth, containerHeight, offsetX, offset
         if (item.kind === 'divider') {
           return <Divider key={`divider-${i}`} />;
         }
-        const { type, Icon, label, align } = item;
+        const { type, Icon, label } = item;
         const isLoading = loading === type;
         const isDisabled = disabled || loading !== null;
-        const alignClass = align ? (styles as Record<string, string>)[`btnAlign${align.charAt(0).toUpperCase() + align.slice(1)}`] : '';
         return (
           <div
             key={type}
-            className={`${styles.btn} ${alignClass} ${isLoading ? styles.btnLoading : ''} ${isDisabled ? styles.btnDisabled : ''}`}
+            className={`${styles.btn} ${isLoading ? styles.btnLoading : ''} ${isDisabled ? styles.btnDisabled : ''}`}
             onClick={!isDisabled ? () => handleClick(type) : undefined}
             role="button"
             aria-label={label}
