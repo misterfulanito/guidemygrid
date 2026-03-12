@@ -18,15 +18,15 @@ function IconGuideLeft() {
   return (
     <svg
       className={styles.btnIcon}
-      viewBox="0 0 10 20"
+      viewBox="0 0 8 16"
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
       style={{ pointerEvents: 'none' }}
     >
-      {/* Vertical bar */}
-      <rect x="0" y="0" width="2" height="20" />
-      {/* Left-pointing chevron */}
-      <path d="M9 4L5 10L9 16L7.5 16L3.5 10L7.5 4Z" />
+      {/* Vertical bar — x:0, y:0-14, 2px wide */}
+      <rect x="0" y="0" width="2" height="14" />
+      {/* Left-pointing chevron — tip at x:3, body at x:6-7, centered at y:7 */}
+      <path d="M7 4L4 7L7 10L6 10L3 7L6 4Z" />
     </svg>
   );
 }
