@@ -62,8 +62,8 @@ function IconTop() {
 function IconBottom() {
   return (
     <svg className={`${styles.btnIcon} ${styles.btnIconWide}`} viewBox="0 0 18 10" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style={{ pointerEvents: 'none' }}>
-      <path d="M17 7.99989C17.5523 7.99989 18 8.4476 18 8.99989C17.9999 9.55212 17.5522 9.99989 17 9.99989H1C0.447753 9.99989 5.9902e-05 9.55212 0 8.99989C2.41411e-08 8.4476 0.447716 7.99989 1 7.99989H17Z" />
-      <path d="M11.7217 0.292858C12.1122 -0.0975963 12.7452 -0.0976427 13.1357 0.292858C13.5261 0.68337 13.5262 1.31643 13.1357 1.70692L9.70703 5.13563C9.51951 5.32309 9.26516 5.4286 9 5.4286C8.73484 5.4286 8.48049 5.32309 8.29297 5.13563L4.86426 1.70692C4.47385 1.31643 4.47388 0.683369 4.86426 0.292858C5.25476 -0.0976423 5.88779 -0.0975954 6.27832 0.292858L9 3.01454L11.7217 0.292858Z" />
+      <path d="M17 7.99989C17.5523 7.99989 18 8.4476 18 8.99989C17.9999 9.55212 17.5522 9.99989 17 9.99989H1C0.447753 9.99989 5.9902e-05 9.55212 0 8.99989C2.41411e-08 8.4476 0.447716 7.99989 1 7.99989H17Z" fill="currentColor" />
+      <path d="M11.7217 0.292858C12.1122 -0.0975963 12.7452 -0.0976427 13.1357 0.292858C13.5261 0.68337 13.5262 1.31643 13.1357 1.70692L9.70703 5.13563C9.51951 5.32309 9.26516 5.4286 9 5.4286C8.73484 5.4286 8.48049 5.32309 8.29297 5.13563L4.86426 1.70692C4.47385 1.31643 4.47388 0.683369 4.86426 0.292858C5.25476 -0.0976423 5.88779 -0.0975954 6.27832 0.292858L9 3.01454L11.7217 0.292858Z" fill="currentColor" />
     </svg>
   );
 }
@@ -78,13 +78,13 @@ function IconCenterH() {
 
 // ── Button config ──────────────────────────────────────────────────────────
 
-const BUTTONS: { type: SideGuideType; Icon: () => React.ReactElement; label: string }[] = [
+const BUTTONS: { type: SideGuideType; Icon: () => React.ReactElement; label: string; align?: string }[] = [
   { type: 'left',     Icon: IconLeft,    label: 'Add left guide' },
-  { type: 'center-v', Icon: IconCenterV, label: 'Add vertical center guide' },
-  { type: 'right',    Icon: IconRight,   label: 'Add right guide' },
-  { type: 'top',      Icon: IconTop,     label: 'Add top guide' },
-  { type: 'bottom',   Icon: IconBottom,  label: 'Add bottom guide' },
-  { type: 'center-h', Icon: IconCenterH, label: 'Add horizontal center guide' },
+  { type: 'center-v', Icon: IconCenterV, label: 'Add vertical center guide',    align: 'center' },
+  { type: 'right',    Icon: IconRight,   label: 'Add right guide',              align: 'right' },
+  { type: 'top',      Icon: IconTop,     label: 'Add top guide',                align: 'top' },
+  { type: 'bottom',   Icon: IconBottom,  label: 'Add bottom guide',             align: 'bottom' },
+  { type: 'center-h', Icon: IconCenterH, label: 'Add horizontal center guide',  align: 'center' },
 ];
 
 // ── Component ──────────────────────────────────────────────────────────────
@@ -109,13 +109,14 @@ export function SideGuidesBar({ containerWidth, containerHeight, offsetX, offset
 
   return (
     <div className={styles.bar}>
-      {BUTTONS.map(({ type, Icon, label }) => {
+      {BUTTONS.map(({ type, Icon, label, align }) => {
         const isLoading = loading === type;
         const isDisabled = disabled || loading !== null;
+        const alignClass = align ? (styles as Record<string, string>)[`btnAlign${align.charAt(0).toUpperCase() + align.slice(1)}`] : '';
         return (
           <div
             key={type}
-            className={`${styles.btn} ${isLoading ? styles.btnLoading : ''} ${isDisabled ? styles.btnDisabled : ''}`}
+            className={`${styles.btn} ${alignClass} ${isLoading ? styles.btnLoading : ''} ${isDisabled ? styles.btnDisabled : ''}`}
             onClick={!isDisabled ? () => handleClick(type) : undefined}
             role="button"
             aria-label={label}
