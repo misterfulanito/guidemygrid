@@ -2,7 +2,7 @@
   "manifestVersion": 4,
   "id": "com.guidemygrid.plugin",
   "name": "GuideMyGrid",
-  "version": "1.5.6",
+  "version": "1.5.7",
   "main": "index.html",
   "host": [
     {

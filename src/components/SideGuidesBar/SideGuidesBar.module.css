@@ -40,10 +40,9 @@
 }
 
 .btnIcon {
-  width: 8px;
-  height: 16px;
+  width: 10px;
+  height: 18px;
   color: #777777;
-  fill: #777777;
   display: block;
   flex-shrink: 0;
 }
