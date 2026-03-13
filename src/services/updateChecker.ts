@@ -1,7 +1,9 @@
 // src/services/updateChecker.ts
 import { VERSION as PLUGIN_VERSION } from '../version';
 
-const GITHUB_REPO = 'misterfulanito/guidemygrid';
+const GITHUB_REPO  = 'misterfulanito/guidemygrid';
+const SEMVER_RE    = /^\d+\.\d+\.\d+$/;
+const ALLOWED_URL  = `https://github.com/${GITHUB_REPO}/`;
 
 export interface UpdateInfo {
   hasUpdate: boolean;
@@ -9,6 +11,36 @@ export interface UpdateInfo {
   downloadUrl: string;
   releaseNotes?: string;
 }
+
+// ── Schema validation ─────────────────────────────────────────────────────────
+
+function isSafeUrl(url: unknown): url is string {
+  return typeof url === 'string' && url.startsWith(ALLOWED_URL);
+}
+
+function validateRelease(data: unknown): {
+  tag_name: string;
+  html_url: string;
+  body?: string;
+  assets?: Array<{ name: string; browser_download_url: string }>;
+} {
+  if (!data || typeof data !== 'object') throw new Error('Invalid response shape');
+
+  const r = data as Record<string, unknown>;
+
+  if (typeof r.tag_name !== 'string') throw new Error('Missing tag_name');
+  if (typeof r.html_url !== 'string') throw new Error('Missing html_url');
+
+  const version = r.tag_name.replace(/^v/, '');
+  if (!SEMVER_RE.test(version))         throw new Error('tag_name is not semver');
+  if (!isSafeUrl(r.html_url))           throw new Error('html_url outside allowed domain');
+
+  if (r.assets !== undefined && !Array.isArray(r.assets)) throw new Error('assets must be an array');
+
+  return r as ReturnType<typeof validateRelease>;
+}
+
+// ── Public API ────────────────────────────────────────────────────────────────
 
 export async function checkForUpdates(): Promise<UpdateInfo | null> {
   try {
@@ -18,21 +50,21 @@ export async function checkForUpdates(): Promise<UpdateInfo | null> {
     );
     if (!response.ok) return null;
 
-    const release = await response.json();
+    const release = validateRelease(await response.json());
+
     const latestVersion = release.tag_name.replace(/^v/, '');
-    const hasUpdate = compareVersions(latestVersion, PLUGIN_VERSION) > 0;
-    const ccxAsset = release.assets?.find((a: { name: string; browser_download_url: string }) =>
-      a.name.endsWith('.ccx')
+    const hasUpdate     = compareVersions(latestVersion, PLUGIN_VERSION) > 0;
+
+    const ccxAsset = release.assets?.find(
+      (a) => a.name.endsWith('.ccx') && isSafeUrl(a.browser_download_url)
     );
 
-    return {
-      hasUpdate,
-      latestVersion,
-      downloadUrl: ccxAsset?.browser_download_url ?? release.html_url,
-      releaseNotes: release.body,
-    };
+    // Only use asset URL if it passes the domain check; fall back to html_url (already validated)
+    const downloadUrl = ccxAsset?.browser_download_url ?? release.html_url;
+
+    return { hasUpdate, latestVersion, downloadUrl, releaseNotes: release.body };
   } catch {
-    return null; // Silent failure — never block if there is no network
+    return null; // Silent failure — never block the UI on network issues
   }
 }
 
