@@ -30,4 +30,27 @@
 
   /* Typography */
   --gmg-font: 'PT Sans', ui-sans-serif, system-ui, sans-serif;
+
+  /* Ghost buttons (eye, remove, lock, side-guide) */
+  --btn-ghost-bg-hover:          #3D3D3D;
+  --btn-ghost-bg-active:         #FF6B35;
+  --btn-ghost-color:             #FFFFFF;
+  --btn-ghost-radius:            2px;
+  --btn-ghost-disabled-opacity:  0.4;
+
+  /* Primary CTA button (Add guides) */
+  --btn-primary-color:  #0D0D0D;
+  --btn-primary-radius: 2px;
+
+  /* Two-color fill icons (directional guide buttons) */
+  --icon-frame:          #444444;
+  --icon-content:        #9A9A9A;
+  --icon-frame-hover:    #5A5A5A;
+  --icon-content-hover:  #BBBBBB;
+  --icon-frame-active:   #FFAA80;
+  --icon-content-active: #FFFFFF;
+
+  /* Static section icons (Margins / Columns / Rows headers) */
+  --icon-section-frame:   #444444;
+  --icon-section-content: #888888;
 }

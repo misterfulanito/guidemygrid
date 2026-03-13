@@ -53,14 +53,78 @@
   margin-bottom: 4px;
 }
 
+/* ── Margin controls group (right-aligned in Margins header) ─────────────── */
+.marginControls {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+/* Link / Unlink button (24×24px) */
+.linkBtn {
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  border-radius: var(--btn-ghost-radius);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex-shrink: 0;
+  outline: none;
+}
+
+.linkBtn:hover {
+  background: var(--btn-ghost-bg-hover);
+}
+
+.linkBtn:active {
+  background: var(--btn-ghost-bg-active);
+}
+
+.linkBtn:active .linkIcon {
+  color: var(--btn-ghost-color);
+}
+
+.linkIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--btn-ghost-color);
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Use Margin Bounds checkbox row */
+.marginUsage {
+  display: flex;
+  align-items: center;
+}
+
+.marginUsage input[type="checkbox"] {
+  accent-color: var(--gmg-accent);
+  cursor: pointer;
+}
+
+.marginUsageLabel {
+  font-size: 12px;
+  font-family: var(--gmg-font);
+  color: var(--gmg-text-secondary);
+  cursor: pointer;
+  margin-left: 4px;
+}
+
 .sectionIcon {
   width: 16px;
   height: 16px;
-  color: #FFFFFF;
-  fill: #FFFFFF;
   flex-shrink: 0;
   margin-right: 8px;
 }
+
+/* Two-color section icon system (static, no interaction) */
+.sectionIconFrame   { stroke: var(--icon-section-frame); fill: none; }
+.sectionIconContent { stroke: var(--icon-section-content); fill: none; }
 
 .sectionLabel {
   font-size: 12px;
@@ -154,54 +218,112 @@
 .footerRow {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
 }
 
 /* ── Add guides button ───────────────────────────────────────────────────── */
 .addBtn {
-  flex: 1;
-  height: 36px;
-  font-size: 12px;
+  height: 32px;
+  padding: 0 12px;
+  font-size: 14px;
   font-family: var(--gmg-font);
   font-weight: 700;
-  color: #0D0D0D;
+  color: var(--btn-primary-color);
   background: var(--gmg-accent);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--btn-primary-radius);
   cursor: pointer;
   transition: background 0.1s;
+  white-space: nowrap;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  user-select: none;
 }
 
-.addBtn:hover:not(:disabled) {
+.addBtn:hover:not(.addBtnDisabled) {
   background: var(--gmg-accent-hover);
 }
 
-.addBtn:active:not(:disabled) {
+.addBtn:active:not(.addBtnDisabled) {
   background: var(--gmg-accent-active);
 }
 
-.addBtn:disabled {
+.addBtnDisabled {
   opacity: 0.4;
   cursor: default;
 }
 
-/* ── Remove button ───────────────────────────────────────────────────────── */
-.removeBtn {
-  height: 36px;
-  padding: 0 16px;
-  font-size: 12px;
-  font-family: var(--gmg-font);
-  font-weight: 700;
-  color: var(--gmg-text-primary);
-  background: var(--gmg-bg-input);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.1s;
+/* ── Footer right-side actions group ─────────────────────────────────────── */
+.footerActions {
+  display: flex;
+  align-items: center;
 }
 
-.removeBtn:hover {
-  background: var(--gmg-bg-hover);
+/* ── Clear Guides ghost text button ──────────────────────────────────────── */
+.clearBtn {
+  height: 32px;
+  padding: 0 12px;
+  font-size: 12px;
+  font-family: var(--gmg-font);
+  font-weight: 400;
+  color: var(--gmg-text-primary);
+  background: transparent;
+  border: none;
+  border-radius: var(--btn-ghost-radius);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  user-select: none;
+  margin-right: 4px;
+}
+
+.clearBtn:hover {
+  background: var(--btn-ghost-bg-hover);
+}
+
+.clearBtn:active {
+  background: var(--btn-ghost-bg-active);
+  color: var(--btn-ghost-color);
+}
+
+/* ── Reset button ────────────────────────────────────────────────────────── */
+.resetBtn {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  border-radius: var(--btn-ghost-radius);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex-shrink: 0;
+  outline: none;
+}
+
+.resetBtn:hover {
+  background: var(--btn-ghost-bg-hover);
+}
+
+.resetBtn:active {
+  background: var(--btn-ghost-bg-active);
+}
+
+.resetBtn:active .resetIcon {
+  color: var(--btn-ghost-color);
+}
+
+.resetIcon {
+  width: 24px;
+  height: 24px;
+  color: var(--btn-ghost-color);
+  display: block;
+  flex-shrink: 0;
 }
 
 /* ── Error message ───────────────────────────────────────────────────────── */
