@@ -1,5 +1,5 @@
 // src/hooks/useDocument.ts
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { photoshopBridge } from '../services/photoshopBridge';
 import { DocumentInfo, SelectionBounds } from '../types';
 
@@ -10,10 +10,13 @@ interface UseDocumentResult {
   refresh: () => void;
 }
 
+const DEBOUNCE_MS = 150;
+
 export function useDocument(): UseDocumentResult {
   const [document, setDocument] = useState<DocumentInfo | null>(null);
   const [selection, setSelection] = useState<SelectionBounds | null>(null);
   const [loading, setLoading] = useState(true);
+  const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const refresh = useCallback(async () => {
     setLoading(true);
@@ -26,7 +29,8 @@ export function useDocument(): UseDocumentResult {
       } else {
         setSelection(null);
       }
-    } catch {
+    } catch (err) {
+      console.error('[GMG] useDocument refresh failed:', err);
       setDocument(null);
       setSelection(null);
     } finally {
@@ -44,10 +48,17 @@ export function useDocument(): UseDocumentResult {
     // 'set' covers pixel selection changes (marching ants)
     // 'selectAllWithMask', 'deselect' cover select all / deselect
     const events = ['select', 'open', 'close', 'set', 'deselect', 'selectAllWithMask'];
-    const listener = () => { refresh(); };
+
+    // Debounce to avoid flooding batchPlay on rapid events (e.g. layer selections)
+    const listener = () => {
+      if (debounceTimer.current) clearTimeout(debounceTimer.current);
+      debounceTimer.current = setTimeout(refresh, DEBOUNCE_MS);
+    };
+
     photoshop.action.addNotificationListener(events, listener);
 
     return () => {
+      if (debounceTimer.current) clearTimeout(debounceTimer.current);
       photoshop.action.removeNotificationListener(events, listener);
     };
   }, [refresh]);

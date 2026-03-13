@@ -67,7 +67,6 @@ export class PhotoshopBridge {
 
   // Returns true if guides were cleared, false if there was nothing to remove.
   async clearAllGuides(): Promise<boolean> {
-    console.log('[GMG] clearAllGuides — start');
     const result = await photoshop.core.executeAsModal(async () => {
       return await photoshop.action.batchPlay(
         [{
@@ -77,16 +76,13 @@ export class PhotoshopBridge {
         { synchronousExecution: false }
       );
     }, { commandName: 'Clear Guides' });
-    console.log('[GMG] clearAllGuides — OK', JSON.stringify(result));
     // PS returns an error descriptor when there are no guides to delete
     if (result?.[0]?._obj === 'error') return false;
     return true;
   }
 
   async toggleGuidesVisibility(visible: boolean): Promise<void> {
-    console.log('[GMG] toggleGuidesVisibility — start, visible:', visible);
     await photoshop.core.executeAsModal(async () => {
-      // Read current state via uiInfo (real-time, uncached)
       const stateResult = await photoshop.action.batchPlay(
         [{
           _obj: 'uiInfo',
@@ -97,13 +93,11 @@ export class PhotoshopBridge {
         { synchronousExecution: false }
       );
       const currentlyVisible = stateResult[0]?.result?.checked ?? false;
-      console.log('[GMG] toggleGuidesVisibility — currentlyVisible:', currentlyVisible, 'want:', visible);
       // Only invoke if state actually needs to change
       if (currentlyVisible !== visible) {
         await (photoshop.core as any).performMenuCommand({ commandID: 3503 });
       }
     }, { commandName: 'Toggle Guides Visibility' });
-    console.log('[GMG] toggleGuidesVisibility — OK');
   }
 
   async getGuidesVisible(): Promise<boolean> {
@@ -121,18 +115,14 @@ export class PhotoshopBridge {
         );
       }, { commandName: 'Get Guides Visibility' });
 
-      // The descriptor returns an object with a guideLine property containing visible.
       if (result?.[0]?.guideLine?.visible !== undefined) {
         return Boolean(result[0].guideLine.visible);
       }
-    } catch {
-      // Property may not be readable on older PS versions — fall back to guide count heuristic.
+    } catch (err) {
+      // Property may not be readable on older PS versions — fall back to true.
+      console.error('[GMG] getGuidesVisible fallback:', err);
     }
 
-    // Fallback: if there are no guides in the document, treat as effectively "visible"
-    // (there is nothing to show/hide). Return true as a safe default.
-    const doc = app.activeDocument;
-    if (!doc) return true;
     return true;
   }
 
@@ -181,17 +171,17 @@ export class PhotoshopBridge {
     if (!doc) throw new Error('No active document in Photoshop');
 
     await photoshop.core.executeAsModal(async () => {
-      // Clear existing guides first (ignore error if there are none)
       if (mode === 'replace') {
         try {
           await photoshop.action.batchPlay(
             [{ _obj: 'clearGuides', _target: [{ _ref: 'document', _enum: 'ordinal', _value: 'targetEnum' }] }],
             { synchronousExecution: false }
           );
-        } catch { /* no guides to clear */ }
+        } catch {
+          // Expected when the document has no existing guides — safe to ignore.
+        }
       }
 
-      // Build all guide descriptors in one batch call
       const descriptors = [
         ...guides.vertical.map((x) => ({
           _obj: 'make',

@@ -63,7 +63,8 @@ export async function checkForUpdates(): Promise<UpdateInfo | null> {
     const downloadUrl = ccxAsset?.browser_download_url ?? release.html_url;
 
     return { hasUpdate, latestVersion, downloadUrl, releaseNotes: release.body };
-  } catch {
+  } catch (err) {
+    console.error('[GMG] checkForUpdates failed:', err);
     return null; // Silent failure — never block the UI on network issues
   }
 }
