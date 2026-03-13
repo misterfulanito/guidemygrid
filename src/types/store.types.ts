@@ -30,7 +30,9 @@ export interface UIStore {
   guidesVisible: boolean;
   isApplying: boolean;
   lastError: string | null;
+  marginsLocked: boolean;
   setGuidesVisible: (v: boolean) => void;
   setApplying: (state: boolean) => void;
   setError: (message: string | null) => void;
+  setMarginsLocked: (v: boolean) => void;
 }

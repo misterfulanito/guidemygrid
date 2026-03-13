@@ -36,29 +36,49 @@
 }
 
 .eyeBtn {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  border-radius: var(--btn-ghost-radius);
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 8px;
-  height: 100%;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: var(--gmg-font);
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--gmg-accent);
-  transition: color 0.1s;
+  padding: 0;
+  flex-shrink: 0;
+  outline: none;
 }
 
-.eyeBtn:hover {
-  color: var(--gmg-text-primary);
+.eyeBtn:hover:not(:disabled) {
+  background: var(--btn-ghost-bg-hover);
 }
 
-.eyeBtn:disabled {
+.eyeBtn:active:not(:disabled) {
+  background: var(--btn-ghost-bg-active);
+}
+
+.eyeBtn:active:not(:disabled) .eyeIcon {
+  color: var(--btn-ghost-color);
+}
+
+.eyeBtnDisabled {
   opacity: 0.35;
   cursor: default;
   pointer-events: none;
+}
+
+/* Guides hidden: dim icon */
+.eyeBtnOff .eyeIcon {
+  opacity: 0.4;
+}
+
+.eyeIcon {
+  width: 24px;
+  height: 24px;
+  color: var(--btn-ghost-color);
+  display: block;
+  flex-shrink: 0;
 }
 
 /* ── No-document notice ──────────────────────────────────────────────────── */

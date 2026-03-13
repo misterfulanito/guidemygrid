@@ -16,7 +16,7 @@
   height: 32px;
   background: transparent;
   border: none;
-  border-radius: 2px;
+  border-radius: var(--btn-ghost-radius);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -28,33 +28,33 @@
 
 /* Focus ring (WCAG 2.4.7) */
 .btn:focus-visible {
-  outline: 2px solid #FF6B35;
+  outline: 2px solid var(--gmg-border-focus);
   outline-offset: 1px;
 }
 
 /* Hover: background appears */
 .btn:hover:not(.btnDisabled) {
-  background: #3D3D3D;
+  background: var(--btn-ghost-bg-hover);
 }
 
-/* Active: orange fill — #FF6B35 */
+/* Active: orange fill */
 .btn:active:not(.btnDisabled) {
-  background: #FF6B35;
+  background: var(--btn-ghost-bg-active);
 }
 
-/* Active: stroke-based icons (5 non-fill buttons) → white */
+/* Active: stroke-based icons → white */
 .btn:active:not(.btnDisabled) .btnIcon {
-  color: #FFFFFF;
+  color: var(--btn-ghost-color);
 }
 
 /* Loading: same as hover */
 .btnLoading {
-  background: #3D3D3D;
+  background: var(--btn-ghost-bg-hover);
 }
 
 /* Disabled */
 .btnDisabled {
-  opacity: 0.4;
+  opacity: var(--btn-ghost-disabled-opacity);
   cursor: default;
 }
 
@@ -63,7 +63,7 @@
 .btnIcon {
   width: 10px;
   height: 18px;
-  color: #777777;
+  color: var(--btn-ghost-color);
   display: block;
   flex-shrink: 0;
 }
@@ -78,9 +78,34 @@
   height: 10px;
 }
 
-/* Left guide icon — fill-based, viewBox 0 0 25 24 */
-.btnIconLeft {
+/* Left / Right guide icons — fill-based, viewBox 0 0 25 24 */
+.btnIconLeft,
+.btnIconRight {
   width: 20px;
+  height: 19px;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Up guide icon — fill-based, viewBox 0 0 24 25 */
+.btnIconUp {
+  width: 19px;
+  height: 20px;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Down guide icon — fill-based, viewBox 0 0 24 25 */
+.btnIconDown {
+  width: 19px;
+  height: 20px;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Center guide icons — stroke-based, viewBox 0 0 24 24 */
+.btnIconCenter {
+  width: 19px;
   height: 19px;
   display: block;
   flex-shrink: 0;
@@ -89,17 +114,35 @@
 /* ── Two-color fill icon system ─────────────────────────────────────────── */
 
 /* Default */
-.iconFrame   { fill: #444444; }
-.iconContent { fill: #9A9A9A; }
+.iconFrame   { fill: var(--icon-frame); }
+.iconContent { fill: var(--icon-content); }
 
 /* Hover: brighten both */
-.btn:hover:not(.btnDisabled) .iconFrame   { fill: #5A5A5A; }
-.btn:hover:not(.btnDisabled) .iconContent { fill: #BBBBBB; }
+.btn:hover:not(.btnDisabled) .iconFrame   { fill: var(--icon-frame-hover); }
+.btn:hover:not(.btnDisabled) .iconContent { fill: var(--icon-content-hover); }
 
 /* Active: frame → light orange (two-color preserved), content → white */
-.btn:active:not(.btnDisabled) .iconFrame   { fill: #FFAA80; }
-.btn:active:not(.btnDisabled) .iconContent { fill: #FFFFFF; }
+.btn:active:not(.btnDisabled) .iconFrame   { fill: var(--icon-frame-active); }
+.btn:active:not(.btnDisabled) .iconContent { fill: var(--icon-content-active); }
 
 /* Loading: same as hover */
-.btnLoading .iconFrame   { fill: #5A5A5A; }
-.btnLoading .iconContent { fill: #BBBBBB; }
+.btnLoading .iconFrame   { fill: var(--icon-frame-hover); }
+.btnLoading .iconContent { fill: var(--icon-content-hover); }
+
+/* ── Two-color stroke icon system (center-v, center-h) ──────────────────── */
+
+/* Default */
+.iconFrameStroke   { stroke: var(--icon-frame); fill: none; }
+.iconContentStroke { stroke: var(--icon-content); fill: none; }
+
+/* Hover */
+.btn:hover:not(.btnDisabled) .iconFrameStroke   { stroke: var(--icon-frame-hover); }
+.btn:hover:not(.btnDisabled) .iconContentStroke { stroke: var(--icon-content-hover); }
+
+/* Active */
+.btn:active:not(.btnDisabled) .iconFrameStroke   { stroke: var(--icon-frame-active); }
+.btn:active:not(.btnDisabled) .iconContentStroke { stroke: var(--icon-content-active); }
+
+/* Loading: same as hover */
+.btnLoading .iconFrameStroke   { stroke: var(--icon-frame-hover); }
+.btnLoading .iconContentStroke { stroke: var(--icon-content-hover); }

@@ -9,35 +9,70 @@ import { SideGuidesBar } from '../SideGuidesBar/SideGuidesBar';
 import styles from './GridPanel.module.css';
 
 
-// ── Margins icon (SVG in div — renders fine in UXP) ───────────────────────
+// ── Link icons (16px inside 24px button, two-color fill) ─────────────────
 
-function IconMargins() {
+function IconLink() {
   return (
-    <svg className={styles.sectionIcon} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg">
-      <rect x="1.5" y="1.5" width="13" height="13" rx="0.5"/>
-      <rect x="4" y="4" width="8" height="8" rx="0.5"/>
+    <svg className={styles.linkIcon} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={{ pointerEvents: 'none' }}>
+      <path
+        d="M9.6 16H8C6.93913 16 5.92172 15.5786 5.17157 14.8284C4.42143 14.0783 4 13.0609 4 12C4 10.9391 4.42143 9.92172 5.17157 9.17157C5.92172 8.42143 6.93913 8 8 8H9.6M14.4 8H16C17.0609 8 18.0783 8.42143 18.8284 9.17157C19.5786 9.92172 20 10.9391 20 12C20 13.0609 19.5786 14.0783 18.8284 14.8284C18.0783 15.5786 17.0609 16 16 16H14.4M8.8 12H15.2"
+        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"
+      />
     </svg>
   );
 }
 
-// ── Columns icon (SVG in div — renders fine in UXP) ───────────────────────
+function IconLinkOff() {
+  return (
+    <svg className={styles.linkIcon} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={{ pointerEvents: 'none' }}>
+      <path
+        d="M9.6 16H8C6.93913 16 5.92172 15.5786 5.17157 14.8284C4.42143 14.0783 4 13.0609 4 12C4 10.9391 4.42143 9.92172 5.17157 9.17157C5.92172 8.42143 6.93913 8 8 8M14.4 8H16C16.7428 8 17.471 8.20686 18.1029 8.5974C18.7348 8.98794 19.2455 9.54672 19.5777 10.2111C19.9099 10.8756 20.0505 11.6194 19.9838 12.3592C19.9171 13.0991 19.6457 13.8057 19.2 14.4M8.8 12H12M4 4L20 20"
+        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"
+      />
+    </svg>
+  );
+}
+
+// ── Action icons (24px, stroke="currentColor") ───────────────────────────
+
+function IconReset() {
+  return (
+    <svg className={styles.resetIcon} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={{ pointerEvents: 'none' }}>
+      <path
+        d="M3 12C3 13.78 3.52784 15.5201 4.51677 17.0001C5.50571 18.4802 6.91131 19.6337 8.55585 20.3149C10.2004 20.9961 12.01 21.1743 13.7558 20.8271C15.5016 20.4798 17.1053 19.6226 18.364 18.364C19.6226 17.1053 20.4798 15.5016 20.8271 13.7558C21.1743 12.01 20.9961 10.2004 20.3149 8.55585C19.6337 6.91131 18.4802 5.50571 17.0001 4.51677C15.5201 3.52784 13.78 3 12 3C9.48395 3.00947 7.06897 3.99122 5.26 5.74L3 8M3 8V3M3 8H8"
+        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"
+      />
+    </svg>
+  );
+}
+
+// ── Section icons (visual only, 16px, two-color stroke system) ───────────
+
+function IconMargins() {
+  return (
+    <svg className={styles.sectionIcon} viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style={{ pointerEvents: 'none' }}>
+      {/* Frame: rectangle border */}
+      <path className={styles.sectionIconFrame} d="M1.00334 1V15H15.0033V1H1.00334Z" strokeWidth="2" />
+      {/* Content: 4 margin guide lines */}
+      <path className={styles.sectionIconContent} d="M16 3.33333L0 3.33333M16 12.6667H0M12.6667 16V0M3.33333 16L3.33333 0" strokeWidth="2" />
+    </svg>
+  );
+}
 
 function IconColumns() {
   return (
-    <svg className={styles.sectionIcon} viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-      <rect x="1" y="2" width="3.5" height="12" rx="0.5"/>
-      <rect x="6.25" y="2" width="3.5" height="12" rx="0.5"/>
-      <rect x="11.5" y="2" width="3.5" height="12" rx="0.5"/>
+    <svg className={styles.sectionIcon} viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style={{ pointerEvents: 'none' }}>
+      <path className={styles.sectionIconFrame} d="M1.00334 1V15H15.0033V1H1.00334Z" strokeWidth="2" />
+      <path className={styles.sectionIconContent} d="M1.00001 16L1.00001 -3.49691e-07M8.00001 16L8.00001 -1.74846e-07M15 16L15 0" strokeWidth="2" />
     </svg>
   );
 }
 
 function IconRows() {
   return (
-    <svg className={styles.sectionIcon} viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-      <rect x="2" y="1" width="12" height="3.5" rx="0.5"/>
-      <rect x="2" y="6.25" width="12" height="3.5" rx="0.5"/>
-      <rect x="2" y="11.5" width="12" height="3.5" rx="0.5"/>
+    <svg className={styles.sectionIcon} viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style={{ pointerEvents: 'none' }}>
+      <path className={styles.sectionIconFrame} d="M1.00334 1V15H15.0033V1H1.00334Z" strokeWidth="2" />
+      <path className={styles.sectionIconContent} d="M16 15H0M16 8H0M16 1H0" strokeWidth="2" />
     </svg>
   );
 }
@@ -90,7 +125,7 @@ function NumInput({ placeholder, value, disabled, onChange }: NumInputProps) {
 
 export function GridPanel() {
   const { columns, setColumns, rows, setRows, margins, setMargins } = useGridStore();
-  const { isApplying, lastError, setApplying, setError } = useUIStore();
+  const { isApplying, lastError, setApplying, setError, marginsLocked, setMarginsLocked } = useUIStore();
   const { document, selection } = useDocument();
   const countNum = parseFloat(columns.count);
   const gutterNum = parseFloat(columns.gutter) || 0;
@@ -118,8 +153,14 @@ export function GridPanel() {
   const rightVal  = parseMargin(margins.right);
   const hasAnyMargin = topVal != null || bottomVal != null || leftVal != null || rightVal != null;
 
-  const computedHeightPx = hasRowCount && containerHeight > 0
-    ? (containerHeight - (rowCountNum - 1) * rowGutterNum) / rowCountNum
+  // Margin-adjusted container — only when locked (marginsLocked = true)
+  const colOffsetX = marginsLocked ? offsetX + (leftVal ?? 0) : offsetX;
+  const colWidth   = marginsLocked ? containerWidth - (leftVal ?? 0) - (rightVal ?? 0) : containerWidth;
+  const rowOffsetY = marginsLocked ? offsetY + (topVal ?? 0) : offsetY;
+  const rowHeight  = marginsLocked ? containerHeight - (topVal ?? 0) - (bottomVal ?? 0) : containerHeight;
+
+  const computedHeightPx = hasRowCount && rowHeight > 0
+    ? (rowHeight - (rowCountNum - 1) * rowGutterNum) / rowCountNum
     : NaN;
   const heightDisplay = !isNaN(computedHeightPx) && computedHeightPx > 0
     ? String(Math.round(computedHeightPx * 100) / 100)
@@ -131,9 +172,9 @@ export function GridPanel() {
     ? `${Math.round(containerWidth)} × ${Math.round(containerHeight)} px`
     : '';
 
-  // Width display
-  const computedWidthPx = hasCount && containerWidth > 0
-    ? (containerWidth - (countNum - 1) * gutterNum) / countNum
+  // Width display (uses margin-adjusted width)
+  const computedWidthPx = hasCount && colWidth > 0
+    ? (colWidth - (countNum - 1) * gutterNum) / countNum
     : NaN;
   const widthDisplay = !isNaN(computedWidthPx) && computedWidthPx > 0
     ? String(Math.round(computedWidthPx * 100) / 100)
@@ -147,10 +188,10 @@ export function GridPanel() {
     setError(null);
     try {
       const colVertical = hasCount
-        ? generateColumnGuides({ columns: countNum, gutter: gutterNum, containerWidth, offsetX })
+        ? generateColumnGuides({ columns: countNum, gutter: gutterNum, containerWidth: colWidth, offsetX: colOffsetX })
         : [];
       const rowHorizontal = hasRowCount
-        ? generateRowGuides({ rows: rowCountNum, gutter: rowGutterNum, containerHeight, offsetY })
+        ? generateRowGuides({ rows: rowCountNum, gutter: rowGutterNum, containerHeight: rowHeight, offsetY: rowOffsetY })
         : [];
       const marginGuides = hasAnyMargin
         ? generateMarginGuides({
@@ -170,20 +211,31 @@ export function GridPanel() {
     }
   };
 
-  const [removeMsg, setRemoveMsg] = useState<string | null>(null);
+  const [marginsLinked, setMarginsLinked] = useState(false);
 
-  const handleRemove = async () => {
-    setError(null);
-    setRemoveMsg(null);
-    try {
-      const cleared = await photoshopBridge.clearAllGuides();
-      if (!cleared) {
-        setRemoveMsg('Nothing to remove');
-        setTimeout(() => setRemoveMsg(null), 2000);
-      }
-    } catch {
-      setError('Error removing guides');
+  const handleMarginChange = (field: 'top' | 'bottom' | 'left' | 'right', v: string) => {
+    if (marginsLinked && v !== '') {
+      setMargins({ top: v, bottom: v, left: v, right: v });
+    } else {
+      setMargins({ [field]: v });
     }
+  };
+
+  const handleClear = async () => {
+    try {
+      await photoshopBridge.clearAllGuides();
+    } catch {
+      setError('Error clearing guides');
+    }
+  };
+
+  const handleReset = () => {
+    setColumns({ count: '', gutter: '' });
+    setRows({ count: '', gutter: '' });
+    setMargins({ top: '', bottom: '', left: '', right: '' });
+    setMarginsLocked(true);
+    setMarginsLinked(false);
+    setError(null);
   };
 
   return (
@@ -211,32 +263,60 @@ export function GridPanel() {
         <div className={styles.section}>
           <div className={styles.sectionHead}>
             <IconMargins />
-            <span className={styles.sectionLabel}>margins</span>
+            <span className={styles.sectionLabel}>Margins</span>
+            <div className={styles.marginControls}>
+              <div
+                className={styles.linkBtn}
+                onClick={() => setMarginsLinked(!marginsLinked)}
+                role="button"
+                aria-label={marginsLinked ? 'Unlink margin fields' : 'Link all margin fields'}
+                title={marginsLinked ? 'Unlink margin fields' : 'Link all margin fields'}
+              >
+                {marginsLinked ? <IconLink /> : <IconLinkOff />}
+              </div>
+            </div>
           </div>
 
           <div className={styles.row2}>
             <NumInput
-              placeholder="Top"
-              value={margins.top}
-              onChange={(v) => setMargins({ top: v })}
-            />
-            <NumInput
               placeholder="Left"
               value={margins.left}
-              onChange={(v) => setMargins({ left: v })}
-            />
-          </div>
-          <div className={styles.row2}>
-            <NumInput
-              placeholder="Bottom"
-              value={margins.bottom}
-              onChange={(v) => setMargins({ bottom: v })}
+              onChange={(v) => handleMarginChange('left', v)}
             />
             <NumInput
               placeholder="Right"
               value={margins.right}
-              onChange={(v) => setMargins({ right: v })}
+              onChange={(v) => handleMarginChange('right', v)}
             />
+          </div>
+          <div className={styles.row2}>
+            <NumInput
+              placeholder="Top"
+              value={margins.top}
+              onChange={(v) => handleMarginChange('top', v)}
+            />
+            <NumInput
+              placeholder="Bottom"
+              value={margins.bottom}
+              onChange={(v) => handleMarginChange('bottom', v)}
+            />
+          </div>
+
+          <div className={styles.marginUsage}>
+            <input
+              type="checkbox"
+              id="marginsLocked"
+              checked={marginsLocked}
+              onChange={(e) => setMarginsLocked((e.target as HTMLInputElement).checked)}
+              title="When checked, columns and rows are placed within margin bounds. When unchecked, they use the full canvas or selection."
+            />
+            <label
+              htmlFor="marginsLocked"
+              className={styles.marginUsageLabel}
+              title="When checked, columns and rows are placed within margin bounds. When unchecked, they use the full canvas or selection."
+            >
+              Use Margin Bounds
+            </label>
           </div>
         </div>
 
@@ -271,7 +351,7 @@ export function GridPanel() {
         <div className={styles.section}>
           <div className={styles.sectionHead}>
             <IconRows />
-            <span className={styles.sectionLabel}>rows</span>
+            <span className={styles.sectionLabel}>Rows</span>
           </div>
 
           <div className={styles.row3}>
@@ -299,25 +379,38 @@ export function GridPanel() {
       {/* ── Footer ── */}
       <div className={styles.footer}>
         <div className={styles.footerRow}>
-          <button
-            className={styles.addBtn}
-            disabled={addDisabled}
-            onClick={handleAdd}
+          <div
+            className={`${styles.addBtn} ${addDisabled ? styles.addBtnDisabled : ''}`}
+            onClick={!addDisabled ? handleAdd : undefined}
+            role="button"
+            aria-disabled={addDisabled}
+            title="Apply column, row, and margin guides"
           >
-            {isApplying ? 'Applying\u2026' : '+ Add guides'}
-          </button>
-          <button
-            className={styles.removeBtn}
-            onClick={handleRemove}
-          >
-            Remove
-          </button>
+            {isApplying ? 'Applying\u2026' : 'Add guides'}
+          </div>
+          <div className={styles.footerActions}>
+            <div
+              className={styles.clearBtn}
+              onClick={handleClear}
+              role="button"
+              aria-label="Clear all guides"
+              title="Remove all guides from the document"
+            >
+              Clear Guides
+            </div>
+            <div
+              className={styles.resetBtn}
+              onClick={handleReset}
+              role="button"
+              aria-label="Reset all fields to default"
+              title="Reset all fields to their default values"
+            >
+              <IconReset />
+            </div>
+          </div>
         </div>
         {lastError && (
           <div className={styles.errorMsg}>{lastError}</div>
-        )}
-        {!lastError && removeMsg && (
-          <div className={styles.infoMsg}>{removeMsg}</div>
         )}
       </div>
 
