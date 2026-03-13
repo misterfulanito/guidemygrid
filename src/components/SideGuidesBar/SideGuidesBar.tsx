@@ -132,7 +132,7 @@ function Divider() {
   return (
     <svg viewBox="0 0 1 17" width="1" height="17" fill="none"
       xmlns="http://www.w3.org/2000/svg" style={{ pointerEvents: 'none', flexShrink: 0 }}>
-      <path d="M0.5 0.5V16.5" stroke="#2D2D2D" strokeLinecap="round" />
+      <path d="M0.5 0.5V16.5" stroke="var(--gmg-border)" strokeLinecap="round" />
     </svg>
   );
 }

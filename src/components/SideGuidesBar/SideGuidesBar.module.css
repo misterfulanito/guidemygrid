@@ -4,8 +4,8 @@
   justify-content: space-evenly;
   align-items: center;
   padding: 6px 0;
-  background: #1A1A1A;
-  border-bottom: 1px solid #2A2A2A;
+  background: var(--gmg-bg-panel);
+  border-bottom: 1px solid var(--gmg-border);
   flex-shrink: 0;
   width: 100%;
 }

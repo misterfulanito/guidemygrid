@@ -42,8 +42,12 @@
 .section {
   display: flex;
   flex-direction: column;
-  gap: 8px;
   padding-bottom: 24px;
+}
+
+/* gap unreliable in UXP flex containers — use adjacent sibling margin instead */
+.section > * + * {
+  margin-top: 8px;
 }
 
 .sectionHead {
@@ -135,25 +139,35 @@
 /* ── 3-column input row ──────────────────────────────────────────────────── */
 .row3 {
   display: flex;
-  gap: 8px;
   width: 100%;
 }
 
+/* gap unreliable in UXP flex containers — use margin-right instead */
 .row3 > * {
   flex: 1 1 0%;
   min-width: 0;
+  margin-right: 8px;
+}
+
+.row3 > *:last-child {
+  margin-right: 0;
 }
 
 /* ── 2-column input row ──────────────────────────────────────────────────── */
 .row2 {
   display: flex;
-  gap: 8px;
   width: 100%;
 }
 
+/* gap unreliable in UXP flex containers — use margin-right instead */
 .row2 > * {
   flex: 1 1 0%;
   min-width: 0;
+  margin-right: 8px;
+}
+
+.row2 > *:last-child {
+  margin-right: 0;
 }
 
 /* ── Inputs ──────────────────────────────────────────────────────────────── */
@@ -164,7 +178,7 @@
   font-family: var(--gmg-font);
   color: var(--gmg-text-primary);
   background: var(--gmg-bg-input);
-  border: 1px solid #444;
+  border: 1px solid var(--gmg-border);
   border-radius: 4px;
   box-sizing: border-box;
   -webkit-appearance: none;
@@ -173,7 +187,7 @@
 }
 
 .input::placeholder {
-  color: #999999;
+  color: var(--gmg-text-secondary);
 }
 
 .input:hover:not(:disabled) {
@@ -187,13 +201,13 @@
 
 .inputDisabled {
   background: var(--gmg-bg-input-disabled);
-  color: #888888;
+  color: var(--gmg-text-input-disabled);
   border-color: var(--gmg-bg-input-disabled);
   cursor: default;
 }
 
 .inputDisabled::placeholder {
-  color: #888888;
+  color: var(--gmg-text-input-disabled);
 }
 
 /* ── Selection note ──────────────────────────────────────────────────────── */
@@ -212,7 +226,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 4px;
 }
 
 .footerRow {
@@ -331,6 +344,7 @@
   font-size: 10px;
   color: var(--gmg-error);
   text-align: center;
+  margin-top: 4px;
 }
 
 /* ── Info message ────────────────────────────────────────────────────────── */
