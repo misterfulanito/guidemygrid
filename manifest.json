@@ -18,17 +18,59 @@
       "label": {
         "default": "GuideMyGrid"
       },
-      "minimumSize": { "width": 240, "height": 280 },
-      "maximumSize": { "width": 400, "height": 800 },
-      "preferredDockedSize": { "width": 280, "height": 320 },
+      "minimumSize": {
+        "width": 240,
+        "height": 280
+      },
+      "maximumSize": {
+        "width": 400,
+        "height": 800
+      },
+      "preferredDockedSize": {
+        "width": 280,
+        "height": 320
+      },
       "icons": [
-        { "width": 23, "height": 23, "path": "icons/icon-23.png", "scale": [1, 2], "theme": ["all"] }
+        {
+          "width": 23,
+          "height": 23,
+          "path": "icons/icon-23.png",
+          "scale": [
+            1,
+            2
+          ],
+          "theme": [
+            "all"
+          ]
+        }
       ]
     }
   ],
   "icons": [
-    { "width": 23, "height": 23, "path": "icons/icon-23.png", "scale": [1, 2], "theme": ["all"] },
-    { "width": 96, "height": 96, "path": "icons/icon-96.png", "scale": [1, 2], "theme": ["all"] }
+    {
+      "width": 23,
+      "height": 23,
+      "path": "icons/icon-23.png",
+      "scale": [
+        1,
+        2
+      ],
+      "theme": [
+        "all"
+      ]
+    },
+    {
+      "width": 96,
+      "height": 96,
+      "path": "icons/icon-96.png",
+      "scale": [
+        1,
+        2
+      ],
+      "theme": [
+        "all"
+      ]
+    }
   ],
   "requiredPermissions": {
     "network": {
