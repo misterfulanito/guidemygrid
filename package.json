@@ -13,7 +13,10 @@
     "package": "npm run build && node scripts/package.js",
     "release:patch": "npm version patch && npm run package",
     "release:minor": "npm version minor && npm run package",
-    "release:major": "npm version major && npm run package"
+    "release:major": "npm version major && npm run package",
+    "publish:patch": "npm run release:patch && git push && git push --tags",
+    "publish:minor": "npm run release:minor && git push && git push --tags",
+    "publish:major": "npm run release:major && git push && git push --tags"
   },
   "dependencies": {
     "lucide-react": "^0.577.0",
