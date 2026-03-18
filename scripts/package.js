@@ -71,5 +71,13 @@ console.log(`✅  Installer: releases/GuideMyGrid-v${version}-installer.zip`);
 console.log('\n→  .ccx            — install via Creative Cloud (double-click)');
 console.log('→  -installer.zip  — install directly, no Creative Cloud needed\n');
 
-// ── 3. Stage release files so the publish script can commit + push them ───────
-execSync(`git add "${ccxFile}" "${installerFile}"`, { stdio: 'inherit', cwd: root });
+// ── 3. macOS PKG installer (no terminal, no Creative Cloud needed) ────────────
+if (process.platform === 'darwin') {
+  execSync('node scripts/build-mac-pkg.js', { stdio: 'inherit', cwd: root });
+}
+
+// ── 4. Stage all release files so the publish script can commit + push them ───
+const toStage = [ccxFile, installerFile];
+const pkgFile = path.join(outDir, `GuideMyGrid-v${version}.pkg`);
+if (fs.existsSync(pkgFile)) toStage.push(pkgFile);
+execSync(`git add ${toStage.map(f => `"${f}"`).join(' ')}`, { stdio: 'inherit', cwd: root });

@@ -1,0 +1,37 @@
+#!/bin/bash
+# Runs automatically after the PKG installs files.
+# Copies the plugin from the staging area to every Photoshop version found.
+
+set -eu
+
+PLUGIN_ID="com.guidemygrid.plugin"
+PLUGIN_SRC="/Library/Application Support/GuideMyGrid/plugin"
+
+# Resolve the actual logged-in user (postinstall runs as root)
+CONSOLE_USER=$(stat -f%Su /dev/console 2>/dev/null || echo "${SUDO_USER:-$USER}")
+USER_HOME=$(dscl . -read /Users/"$CONSOLE_USER" NFSHomeDirectory 2>/dev/null | awk '{print $2}')
+[ -z "$USER_HOME" ] && USER_HOME="/Users/$CONSOLE_USER"
+
+UXP_BASE="$USER_HOME/Library/Application Support/Adobe/UXP/PluginsStorage/PHSP"
+
+if [ ! -d "$UXP_BASE" ]; then
+  # Photoshop hasn't been opened yet — installer will still succeed,
+  # user just needs to open Photoshop once before the plugin appears.
+  rm -rf "/Library/Application Support/GuideMyGrid"
+  exit 0
+fi
+
+for PS_DIR in "$UXP_BASE"/*/; do
+  [ -d "$PS_DIR" ] || continue
+  PLUGIN_DIR="${PS_DIR}Plugin/$PLUGIN_ID"
+  mkdir -p "$PLUGIN_DIR"
+  cp -r "$PLUGIN_SRC/." "$PLUGIN_DIR/"
+  find "$PLUGIN_DIR" -name ".DS_Store" -delete 2>/dev/null || true
+  chown -R "$CONSOLE_USER" "$PLUGIN_DIR"
+done
+
+# Clean up staging area
+rm -rf "/Library/Application Support/GuideMyGrid"
+rmdir "/Library/Application Support/GuideMyGrid" 2>/dev/null || true
+
+exit 0

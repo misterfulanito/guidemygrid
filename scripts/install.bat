@@ -1,6 +1,6 @@
 @echo off
 :: GuideMyGrid — Direct Installer (Windows)
-:: Right-click this file and select "Run as administrator"
+:: Double-click this file to install. No administrator rights needed.
 
 echo GuideMyGrid -- Direct Installer (Windows)
 echo ------------------------------------------

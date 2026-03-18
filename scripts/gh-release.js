@@ -14,16 +14,20 @@ const root    = path.resolve(__dirname, '..');
 const pkg     = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
 const version = pkg.version;
 const tag     = `v${version}`;
-const ccx     = path.join(root, 'releases', `GuideMyGrid-v${version}.ccx`);
-const zip     = path.join(root, 'releases', `GuideMyGrid-v${version}-installer.zip`);
+
+const files = [
+  path.join(root, 'releases', `GuideMyGrid-v${version}.ccx`),
+  path.join(root, 'releases', `GuideMyGrid-v${version}-installer.zip`),
+  path.join(root, 'releases', `GuideMyGrid-v${version}.pkg`),
+].filter(f => fs.existsSync(f));
 
 // Commit the release files (already staged by package.js)
 execSync(`git commit -m "chore: release v${version}"`, { stdio: 'inherit', cwd: root });
 console.log(`✅  Committed release files`);
 
-// Create GitHub Release with both artifacts — instant, no CI needed
+// Create GitHub Release — instant, no CI needed
 execSync(
-  `gh release create ${tag} "${ccx}" "${zip}" --title "GuideMyGrid v${version}" --generate-notes`,
+  `gh release create ${tag} ${files.map(f => `"${f}"`).join(' ')} --title "GuideMyGrid v${version}" --generate-notes`,
   { stdio: 'inherit', cwd: root }
 );
 console.log(`✅  GitHub Release published: ${tag}`);
