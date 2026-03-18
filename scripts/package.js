@@ -70,3 +70,6 @@ console.log(`✅  Installer: releases/GuideMyGrid-v${version}-installer.zip`);
 
 console.log('\n→  .ccx            — install via Creative Cloud (double-click)');
 console.log('→  -installer.zip  — install directly, no Creative Cloud needed\n');
+
+// ── 3. Stage release files so the publish script can commit + push them ───────
+execSync(`git add "${ccxFile}" "${installerFile}"`, { stdio: 'inherit', cwd: root });

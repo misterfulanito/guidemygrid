@@ -1,9 +1,10 @@
 name: Release
 
+# Disabled — releases are published instantly from local machine
+# via `npm run publish:patch` which uses the gh CLI directly.
+# This workflow is kept as a fallback only.
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: write
