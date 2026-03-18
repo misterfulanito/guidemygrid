@@ -26,6 +26,11 @@ const files = [
 execSync(`git commit -m "chore: release v${version}"`, { stdio: 'inherit', cwd: root });
 console.log(`✅  Committed release files`);
 
+// Push commits and tag BEFORE creating the release (gh needs the tag on GitHub)
+execSync('git push', { stdio: 'inherit', cwd: root });
+execSync('git push --tags', { stdio: 'inherit', cwd: root });
+console.log(`✅  Pushed to GitHub`);
+
 // Create GitHub Release — instant, no CI needed
 execSync(
   `gh release create ${tag} ${files.map(f => `"${f}"`).join(' ')} --title "GuideMyGrid v${version}" --generate-notes`,
