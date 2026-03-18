@@ -56,7 +56,7 @@ if (fs.existsSync(tmpDir)) fs.rmSync(tmpDir, { recursive: true });
 
 copyDir(distDir, path.join(tmpDir, 'dist'));
 
-const scripts = ['install.sh', 'install.bat', 'install.ps1'];
+const scripts = ['install.sh', 'install.bat', 'install.ps1', 'uninstall.bat', 'uninstall.ps1'];
 for (const s of scripts) {
   fs.copyFileSync(path.join(root, 'scripts', s), path.join(tmpDir, s));
 }
@@ -71,13 +71,16 @@ console.log(`✅  Installer: releases/GuideMyGrid-v${version}-installer.zip`);
 console.log('\n→  .ccx            — install via Creative Cloud (double-click)');
 console.log('→  -installer.zip  — install directly, no Creative Cloud needed\n');
 
-// ── 3. macOS PKG installer (no terminal, no Creative Cloud needed) ────────────
+// ── 3. macOS PKG installer + uninstaller (no terminal, no Creative Cloud) ─────
 if (process.platform === 'darwin') {
   execSync('node scripts/build-mac-pkg.js', { stdio: 'inherit', cwd: root });
+  execSync('node scripts/build-mac-uninstaller.js', { stdio: 'inherit', cwd: root });
 }
 
 // ── 4. Stage all release files so the publish script can commit + push them ───
 const toStage = [ccxFile, installerFile];
-const pkgFile = path.join(outDir, `GuideMyGrid-v${version}.pkg`);
-if (fs.existsSync(pkgFile)) toStage.push(pkgFile);
+const pkgFile        = path.join(outDir, `GuideMyGrid-v${version}.pkg`);
+const uninstallerFile = path.join(outDir, `GuideMyGrid-v${version}-uninstaller.pkg`);
+if (fs.existsSync(pkgFile))         toStage.push(pkgFile);
+if (fs.existsSync(uninstallerFile)) toStage.push(uninstallerFile);
 execSync(`git add ${toStage.map(f => `"${f}"`).join(' ')}`, { stdio: 'inherit', cwd: root });

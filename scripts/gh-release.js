@@ -19,6 +19,7 @@ const files = [
   path.join(root, 'releases', `GuideMyGrid-v${version}.ccx`),
   path.join(root, 'releases', `GuideMyGrid-v${version}-installer.zip`),
   path.join(root, 'releases', `GuideMyGrid-v${version}.pkg`),
+  path.join(root, 'releases', `GuideMyGrid-v${version}-uninstaller.pkg`),
 ].filter(f => fs.existsSync(f));
 
 // Commit the release files (already staged by package.js)
