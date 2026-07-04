@@ -25,6 +25,7 @@ Requirements for this milestone. Each maps to a roadmap phase.
 - [ ] **WIN-02**: Installer writes an install-time manifest listing every file/folder it creates
 - [ ] **WIN-03**: Installer detects if Photoshop is running and asks the user to quit it first
 - [ ] **WIN-04**: Uninstaller registers under `HKEY_CURRENT_USER` only — no admin required to uninstall
+- [ ] **WIN-05**: Installer and uninstaller are verified automatically via CI on a real Windows environment (GitHub Actions `windows-latest` runner) — confirms no elevation prompt, correct install path, and clean uninstall, since the developer has no physical Windows machine to test manually
 
 ### Integrity & Uninstall
 
@@ -93,39 +94,38 @@ Explicitly excluded. Documented to prevent scope creep.
 
 ## Traceability
 
-Populated during roadmap creation.
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | Pending | Pending |
-| FOUND-02 | Pending | Pending |
-| MAC-01 | Pending | Pending |
-| MAC-02 | Pending | Pending |
-| MAC-03 | Pending | Pending |
-| MAC-04 | Pending | Pending |
-| WIN-01 | Pending | Pending |
-| WIN-02 | Pending | Pending |
-| WIN-03 | Pending | Pending |
-| WIN-04 | Pending | Pending |
-| INTEG-01 | Pending | Pending |
-| INTEG-02 | Pending | Pending |
-| INTEG-03 | Pending | Pending |
-| INTEG-04 | Pending | Pending |
-| UPD-01 | Pending | Pending |
-| UPD-02 | Pending | Pending |
-| UPD-03 | Pending | Pending |
-| DIST-01 | Pending | Pending |
-| DIST-02 | Pending | Pending |
-| DIST-03 | Pending | Pending |
-| DOCS-01 | Pending | Pending |
-| DOCS-02 | Pending | Pending |
-| DOCS-03 | Pending | Pending |
+| FOUND-01 | Phase 1 | Pending |
+| FOUND-02 | Phase 1 | Pending |
+| MAC-01 | Phase 1 | Pending |
+| MAC-02 | Phase 1 | Pending |
+| MAC-03 | Phase 1 | Pending |
+| MAC-04 | Phase 1 | Pending |
+| WIN-01 | Phase 2 | Pending |
+| WIN-02 | Phase 2 | Pending |
+| WIN-03 | Phase 2 | Pending |
+| WIN-04 | Phase 2 | Pending |
+| WIN-05 | Phase 2 | Pending |
+| INTEG-01 | Phase 3 | Pending |
+| INTEG-02 | Phase 3 | Pending |
+| INTEG-03 | Phase 3 | Pending |
+| INTEG-04 | Phase 3 | Pending |
+| UPD-01 | Phase 4 | Pending |
+| UPD-02 | Phase 4 | Pending |
+| UPD-03 | Phase 4 | Pending |
+| DIST-01 | Phase 4 | Pending |
+| DIST-02 | Phase 4 | Pending |
+| DIST-03 | Phase 4 | Pending |
+| DOCS-01 | Phase 5 | Pending |
+| DOCS-02 | Phase 5 | Pending |
+| DOCS-03 | Phase 5 | Pending |
 
 **Coverage:**
-- v1 requirements: 23 total
-- Mapped to phases: 0 (pending roadmap creation)
-- Unmapped: 23 ⚠️ (expected at this stage)
+- v1 requirements: 24 total
+- Mapped to phases: 24/24 ✓
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-07-04*
-*Last updated: 2026-07-04 after initial definition*
+*Last updated: 2026-07-04 after roadmap creation*
