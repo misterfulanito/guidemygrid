@@ -161,3 +161,7 @@ None — no external service configuration required.
 ---
 *Phase: 01-foundation-macos-installer-rework*
 *Completed: 2026-07-04*
+
+## Self-Check: PASSED
+
+All modified files (manifest.json, package.json, src/version.ts, webpack.config.js, .gitignore, this SUMMARY.md) confirmed present on disk. All commit hashes (62c3d47, 5d4e618, f62a76a) confirmed present in git log.
