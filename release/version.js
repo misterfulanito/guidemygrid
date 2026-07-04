@@ -1,7 +1,10 @@
 /**
- * sync-version.js
+ * release/version.js
  * Reads version from package.json and writes it to manifest.json + src/version.ts.
  * Runs automatically before every build (prebuild hook).
+ *
+ * This is the release-automation-scripts directory. Built binary artifacts
+ * live in releases/ (plural) — do not confuse the two.
  */
 
 const fs   = require('fs');

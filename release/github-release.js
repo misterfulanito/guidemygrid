@@ -1,9 +1,12 @@
 /**
- * gh-release.js
+ * release/github-release.js
  * Commits the new release files and creates a GitHub Release instantly
  * using the local `gh` CLI — no CI wait.
  *
  * Called automatically by publish:patch / publish:minor / publish:major
+ *
+ * This is the release-automation-scripts directory. Built binary artifacts
+ * live in releases/ (plural) — do not confuse the two.
  */
 
 const { execSync } = require('child_process');

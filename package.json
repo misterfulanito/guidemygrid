@@ -4,7 +4,7 @@
   "description": "Plugin UXP para Adobe Photoshop — generador de retículas de columnas",
   "private": true,
   "scripts": {
-    "prebuild": "node scripts/sync-version.js",
+    "prebuild": "node release/version.js",
     "build": "webpack --mode production",
     "dev": "webpack --mode development --watch",
     "lint": "eslint src --ext .ts,.tsx",
@@ -14,9 +14,9 @@
     "release:patch": "npm version patch && npm run package",
     "release:minor": "npm version minor && npm run package",
     "release:major": "npm version major && npm run package",
-    "publish:patch": "npm run release:patch && node scripts/gh-release.js",
-    "publish:minor": "npm run release:minor && node scripts/gh-release.js",
-    "publish:major": "npm run release:major && node scripts/gh-release.js"
+    "publish:patch": "npm run release:patch && node release/github-release.js",
+    "publish:minor": "npm run release:minor && node release/github-release.js",
+    "publish:major": "npm run release:major && node release/github-release.js"
   },
   "dependencies": {
     "lucide-react": "^0.577.0",
