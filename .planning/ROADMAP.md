@@ -30,7 +30,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. If Photoshop is running, the installer detects it and asks the user to quit before proceeding, rather than risking a partial install
   4. After installing, an install-time manifest file exists listing every file/folder the installer created
   5. The installer script uses only absolute binary paths and never relies on inherited `$PATH` or shell rc files
-**Plans**: TBD
+**Plans**: 4 plans
+- [ ] 01-01-PLAN.md — Merge origin/main into epic/ui-icons (+ manifest schema decision) [FOUND-01]
+- [ ] 01-02-PLAN.md — Establish distribution/photoshop/{macos,windows} + release/ directory split [FOUND-02]
+- [ ] 01-03-PLAN.md — Unprivileged install-payload core + manifest + Nyquist validation harness [MAC-01, MAC-02, MAC-04]
+- [ ] 01-04-PLAN.md — Installer .app + DMG build + Photoshop hard block + end-to-end QA [MAC-01, MAC-03, MAC-04]
 
 ### Phase 2: Windows Installer Rework
 **Goal**: A designer can install GuideMyGrid on Windows at user level without any admin/UAC elevation, following the same manifest-based pattern established on macOS
@@ -85,7 +89,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & macOS Installer Rework | 0/TBD | Not started | - |
+| 1. Foundation & macOS Installer Rework | 0/4 | Not started | - |
 | 2. Windows Installer Rework | 0/TBD | Not started | - |
 | 3. Manifest-Driven Uninstall & Checksum Integrity | 0/TBD | Not started | - |
 | 4. Release Automation & Distribution | 0/TBD | Not started | - |
