@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 01
 current_phase_name: foundation-macos-installer-rework
 status: executing
-stopped_at: Completed 01-02-PLAN.md
-last_updated: "2026-07-04T22:24:16.734Z"
+stopped_at: Completed 01-03-PLAN.md
+last_updated: "2026-07-04T22:33:19.928Z"
 last_activity: 2026-07-04
 last_activity_desc: Phase 01 execution started
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 4
-  completed_plans: 2
+  completed_plans: 3
   percent: 0
 ---
 
@@ -29,7 +29,7 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 ## Current Position
 
 Phase: 01 (foundation-macos-installer-rework) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 Status: Ready to execute
 Last activity: 2026-07-04 — Phase 01 execution started
 
@@ -57,6 +57,7 @@ Progress: [░░░░░░░░░░] 0%
 *Updated after each plan completion*
 | Phase 01 P01 | 20min | 3 tasks | 6 files |
 | Phase 01 P02 | 12min | 3 tasks | 11 files |
+| Phase 01 P03 | 12min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -71,6 +72,7 @@ Recent decisions affecting current work:
 - [Phase 01]: D-01a: keep-v4 (manifestVersion 4, apiVersion 2, minVersion 22.0.0) — decided via orchestrator/user consultation before execution
 - [Phase 01]: release/ scoped to only version.js and github-release.js this plan (FOUND-02) — checksums.js/gumroad-sync.js not stubbed until Phases 3/4 need them
 - [Phase 01]: scripts/package.js's Windows-script copy step repointed to distribution/photoshop/windows/ (Rule 3 auto-fix for the Task 2 relocation)
+- [Phase 01]: installer-static.test.ts MAC-01 token scan scoped to .sh/.applescript files only, excluding README prose
 
 ### Pending Todos
 
@@ -92,6 +94,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-04T22:24:16.729Z
-Stopped at: Completed 01-02-PLAN.md
+Last session: 2026-07-04T22:33:19.922Z
+Stopped at: Completed 01-03-PLAN.md
 Resume file: None

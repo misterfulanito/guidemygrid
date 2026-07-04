@@ -14,10 +14,10 @@ Requirements for this milestone. Each maps to a roadmap phase.
 
 ### macOS Installer
 
-- [ ] **MAC-01**: Replace the root-requiring `pkgbuild` `.pkg` installer with a user-level installer (no admin/root privileges) that copies the plugin into `~/Library/Application Support/Adobe/UXP/PluginsStorage/PHSP/...`
-- [ ] **MAC-02**: Installer writes an install-time manifest listing every file/folder it creates (foundation for the uninstaller's "no breadcrumbs" guarantee)
+- [x] **MAC-01**: Replace the root-requiring `pkgbuild` `.pkg` installer with a user-level installer (no admin/root privileges) that copies the plugin into `~/Library/Application Support/Adobe/UXP/PluginsStorage/PHSP/...`
+- [x] **MAC-02**: Installer writes an install-time manifest listing every file/folder it creates (foundation for the uninstaller's "no breadcrumbs" guarantee)
 - [ ] **MAC-03**: Installer detects if Photoshop is running and asks the user to quit it first, rather than risking a partial install
-- [ ] **MAC-04**: Installer scripts use absolute binary paths and never trust inherited `$PATH`/implicit shell rc files
+- [x] **MAC-04**: Installer scripts use absolute binary paths and never trust inherited `$PATH`/implicit shell rc files
 
 ### Windows Installer
 
@@ -98,10 +98,10 @@ Explicitly excluded. Documented to prevent scope creep.
 |-------------|-------|--------|
 | FOUND-01 | Phase 1 | Complete |
 | FOUND-02 | Phase 1 | Complete |
-| MAC-01 | Phase 1 | Pending |
-| MAC-02 | Phase 1 | Pending |
+| MAC-01 | Phase 1 | Complete |
+| MAC-02 | Phase 1 | Complete |
 | MAC-03 | Phase 1 | Pending |
-| MAC-04 | Phase 1 | Pending |
+| MAC-04 | Phase 1 | Complete |
 | WIN-01 | Phase 2 | Pending |
 | WIN-02 | Phase 2 | Pending |
 | WIN-03 | Phase 2 | Pending |
