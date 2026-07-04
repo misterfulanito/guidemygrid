@@ -10,7 +10,7 @@ Requirements for this milestone. Each maps to a roadmap phase.
 ### Foundation
 
 - [x] **FOUND-01**: Merge `origin/main`'s existing installer work (v1.6.1-1.6.2) into the current working branch before building on top of it
-- [ ] **FOUND-02**: Establish a `distribution/photoshop/{macos,windows}` (host-specific packaging/install) + `release/` (host-agnostic checksum/GitHub-publish/Gumroad-sync automation) directory split, so a future Illustrator/Figma expansion never requires touching shared release scripts
+- [x] **FOUND-02**: Establish a `distribution/photoshop/{macos,windows}` (host-specific packaging/install) + `release/` (host-agnostic checksum/GitHub-publish/Gumroad-sync automation) directory split, so a future Illustrator/Figma expansion never requires touching shared release scripts
 
 ### macOS Installer
 
@@ -97,7 +97,7 @@ Explicitly excluded. Documented to prevent scope creep.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | FOUND-01 | Phase 1 | Complete |
-| FOUND-02 | Phase 1 | Pending |
+| FOUND-02 | Phase 1 | Complete |
 | MAC-01 | Phase 1 | Pending |
 | MAC-02 | Phase 1 | Pending |
 | MAC-03 | Phase 1 | Pending |
