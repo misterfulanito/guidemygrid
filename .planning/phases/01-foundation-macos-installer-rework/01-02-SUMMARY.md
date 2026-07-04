@@ -166,3 +166,7 @@ None - no external service configuration required.
 ---
 *Phase: 01-foundation-macos-installer-rework*
 *Completed: 2026-07-04*
+
+## Self-Check: PASSED
+
+All created files (distribution/README.md, distribution/photoshop/macos/README.md, distribution/photoshop/windows/README.md, release/version.js, release/github-release.js, this SUMMARY.md) confirmed present on disk. All task commit hashes (2430c8d, 9ef8f46, 31897c7, 707cc13) confirmed present in git log.
