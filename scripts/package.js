@@ -57,8 +57,9 @@ if (fs.existsSync(tmpDir)) fs.rmSync(tmpDir, { recursive: true });
 copyDir(distDir, path.join(tmpDir, 'dist'));
 
 const scripts = ['install.sh', 'install.bat', 'install.ps1', 'uninstall.bat', 'uninstall.ps1'];
+const windowsScriptsDir = path.join(root, 'distribution', 'photoshop', 'windows');
 for (const s of scripts) {
-  fs.copyFileSync(path.join(root, 'scripts', s), path.join(tmpDir, s));
+  fs.copyFileSync(path.join(windowsScriptsDir, s), path.join(tmpDir, s));
 }
 
 // Preserve executable bit on the shell script
