@@ -6,10 +6,6 @@
   "brave_search": false,
   "firecrawl": false,
   "exa_search": false,
-  "tavily_search": false,
-  "ref_search": false,
-  "perplexity": false,
-  "jina": false,
   "git": {
     "branching_strategy": "none",
     "create_tag": true,
@@ -45,7 +41,9 @@
     "post_planning_gaps": true,
     "security_enforcement": true,
     "security_asvs_level": 1,
-    "security_block_on": "high"
+    "security_block_on": "high",
+    "ui_review": true,
+    "use_worktrees": true
   },
   "ship": {
     "pr_body_sections": [
