@@ -4,9 +4,9 @@ milestone: v1.6.1
 milestone_name: milestone
 current_phase: 1
 current_phase_name: Foundation & macOS Installer Rework
-status: planning
+status: executing
 stopped_at: Phase 1 context gathered
-last_updated: "2026-07-04T19:02:41.906Z"
+last_updated: "2026-07-04T21:55:51.762Z"
 last_activity: 2026-07-04
 last_activity_desc: ROADMAP.md created, 24/24 v1 requirements mapped
 progress:
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 
 Phase: 1 of 5 (Foundation & macOS Installer Rework)
 Plan: 0 of TBD in current phase
-Status: Ready to plan
+Status: Ready to execute
 Last activity: 2026-07-04 — ROADMAP.md created, 24/24 v1 requirements mapped
 
 Progress: [░░░░░░░░░░] 0%
