@@ -1,6 +1,6 @@
 {
   "name": "guidemygrid",
-  "version": "1.6.0",
+  "version": "1.6.2",
   "description": "Plugin UXP para Adobe Photoshop — generador de retículas de columnas",
   "private": true,
   "scripts": {
@@ -13,7 +13,10 @@
     "package": "npm run build && node scripts/package.js",
     "release:patch": "npm version patch && npm run package",
     "release:minor": "npm version minor && npm run package",
-    "release:major": "npm version major && npm run package"
+    "release:major": "npm version major && npm run package",
+    "publish:patch": "npm run release:patch && node scripts/gh-release.js",
+    "publish:minor": "npm run release:minor && node scripts/gh-release.js",
+    "publish:major": "npm run release:major && node scripts/gh-release.js"
   },
   "dependencies": {
     "lucide-react": "^0.577.0",

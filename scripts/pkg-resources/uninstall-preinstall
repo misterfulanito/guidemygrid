@@ -1,0 +1,28 @@
+#!/bin/bash
+# Runs automatically when the uninstaller PKG is executed.
+# Removes the GuideMyGrid plugin from every Photoshop version found.
+
+set -eu
+
+PLUGIN_ID="com.guidemygrid.plugin"
+
+# Resolve the actual logged-in user (runs as root)
+CONSOLE_USER=$(stat -f%Su /dev/console 2>/dev/null || echo "${SUDO_USER:-$USER}")
+USER_HOME=$(dscl . -read /Users/"$CONSOLE_USER" NFSHomeDirectory 2>/dev/null | awk '{print $2}')
+[ -z "$USER_HOME" ] && USER_HOME="/Users/$CONSOLE_USER"
+
+UXP_BASE="$USER_HOME/Library/Application Support/Adobe/UXP/PluginsStorage/PHSP"
+
+if [ ! -d "$UXP_BASE" ]; then
+  exit 0
+fi
+
+for PS_DIR in "$UXP_BASE"/*/; do
+  [ -d "$PS_DIR" ] || continue
+  PLUGIN_DIR="${PS_DIR}Plugin/$PLUGIN_ID"
+  if [ -d "$PLUGIN_DIR" ]; then
+    rm -rf "$PLUGIN_DIR"
+  fi
+done
+
+exit 0
