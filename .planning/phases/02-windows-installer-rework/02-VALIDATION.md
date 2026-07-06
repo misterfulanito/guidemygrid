@@ -40,11 +40,11 @@ created: 2026-07-06
 
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| TBD | TBD | TBD | WIN-01 | — | Built `.ccx`'s `manifest.json` has no `requiredPermissions` block (no-elevation guarantee) | unit (static) + CI | `npx jest installer-retirement` / `windows-ccx-verify.yml` CI job | ❌ Wave 0 | ⬜ pending |
-| TBD | TBD | TBD | WIN-05 (rescoped) | — | `.ccx` unpacks as a valid zip with expected `dist/` structure on a real Windows runner; retired scripts absent from built artifact | CI (artifact-level) | `.github/workflows/windows-ccx-verify.yml` | ❌ Wave 0 | ⬜ pending |
-| TBD | TBD | TBD | (regression) | — | Retired script files do not reappear in `distribution/photoshop/windows/` | unit (static) | `npx jest installer-retirement` | ❌ Wave 0 | ⬜ pending |
-| TBD | TBD | TBD | (regression) | — | `scripts/package.js` no longer references any of the 5 deleted files | unit (static) | `npx jest installer-retirement` | ❌ Wave 0 | ⬜ pending |
-| TBD | TBD | TBD | WIN-02 / WIN-03 / WIN-04 | — | N/A — superseded per D-02/D-05; no custom install/uninstall code exists to test | n/a (superseded) | — | N/A | ⬜ pending |
+| 02-01 T1 (Jest) / 02-02 T2 (CI) | 01 / 02 | 1 / 2 | WIN-01 | T-02-01 / T-02-04 | Built `.ccx`'s `manifest.json` has no `requiredPermissions` block (no-elevation guarantee) | unit (static) + CI | `npx jest installer-retirement` / `windows-ccx-verify.yml` CI job | ❌ Wave 0 (created by 02-01 T1) | ⬜ pending |
+| 02-02 T2 | 02 | 2 | WIN-05 (rescoped) | T-02-05 | `.ccx` unpacks as a valid zip with expected `dist/` structure on a real Windows runner; retired scripts absent from built artifact | CI (artifact-level) | `.github/workflows/windows-ccx-verify.yml` | ❌ Wave 0 (created by 02-02 T2) | ⬜ pending |
+| 02-01 T1 (guard) / 02-01 T2 (satisfies) | 01 | 1 | (regression) | T-02-02 | Retired script files do not reappear in `distribution/photoshop/windows/` | unit (static) | `npx jest installer-retirement` | ❌ Wave 0 (created by 02-01 T1) | ⬜ pending |
+| 02-01 T1 (guard) / 02-01 T2 (satisfies) | 01 | 1 | (regression) | T-02-02 | `scripts/package.js` no longer references any of the 5 deleted files | unit (static) | `npx jest installer-retirement` | ❌ Wave 0 (created by 02-01 T1) | ⬜ pending |
+| 02-01 T2 (retire) / 02-02 T1 (document) | 01 / 02 | 1 / 2 | WIN-02 / WIN-03 / WIN-04 | — | N/A — superseded per D-02/D-05; no custom install/uninstall code exists to test (retirement realizes it; READMEs document it) | n/a (superseded) | — | N/A | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 *Task ID / Plan / Wave columns are TBD until the planner assigns tasks — update once PLAN.md exists.*

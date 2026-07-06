@@ -65,7 +65,17 @@ Decimal phases appear between their surrounding integers in numeric order.
   5. The uninstaller registers under `HKEY_CURRENT_USER` only, so uninstalling never requires admin rights
   6. A GitHub Actions `windows-latest` CI job runs the installer and uninstaller non-interactively and confirms: no UAC/elevation prompt occurs, files land in the expected `%APPDATA%\...` path, and the uninstaller cleanly removes them — substituting for manual testing since the developer has no physical Windows machine
 
-**Plans**: TBD
+**Note (2026-07-06, re-verified in planning):** Windows uses the identical `.ccx` + Creative Cloud Desktop mechanism as macOS (D-01), so success criteria #2–#5 are re-interpreted, not literally satisfied: there is no custom installer (WIN-01 met by the existing `.ccx` builder), no install-time manifest (WIN-02 superseded), no "Photoshop is running" detection (WIN-03 superseded), and no custom uninstaller/HKCU registration (WIN-04 superseded — Creative Cloud Desktop's "Manage Plugins" owns uninstall). Criterion #6 is rescoped: CC Desktop cannot be driven headlessly, so the CI job validates the built `.ccx` artifact (no `requiredPermissions`, retired scripts absent) rather than a live install/uninstall — real device verification is deferred to before ship (D-06).
+
+**Plans**: 2 plans
+
+**Wave 1**
+
+- [ ] 02-01-PLAN.md — Retire the 5 raw-copy Windows scripts, fix `scripts/package.js`, add the installer-retirement regression guard [WIN-01, WIN-02, WIN-03, WIN-04]
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 02-02-PLAN.md — Correct distribution docs to Windows/macOS parity + add the `windows-latest` `.ccx` CI verification job [WIN-05]
 
 ### Phase 3: Manifest-Driven Uninstall & Checksum Integrity
 
@@ -117,7 +127,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & macOS Installer Rework | 4/4 | Complete    | 2026-07-06 |
-| 2. Windows Installer Rework | 0/TBD | Not started | - |
+| 2. Windows Installer Rework | 0/2 | Not started | - |
 | 3. Manifest-Driven Uninstall & Checksum Integrity | 0/TBD | Not started | - |
 | 4. Release Automation & Distribution | 0/TBD | Not started | - |
 | 5. Trust & Documentation Polish | 0/TBD | Not started | - |
