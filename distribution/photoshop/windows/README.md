@@ -1,25 +1,42 @@
 # distribution/photoshop/windows/
 
-The Windows installer/uninstaller scripts for GuideMyGrid, as a Photoshop
-plugin.
+This directory no longer contains any installer logic.
 
-## Status: relocated as-is, not yet reworked
+## What used to be here
 
-The scripts in this folder (`install.sh`, `install.bat`, `install.ps1`,
-`uninstall.bat`, `uninstall.ps1`) were moved here unmodified from
-`scripts/` during Phase 1's directory restructure (FOUND-02). **Their
-internal logic has not been touched.**
+Five raw-copy install/uninstall scripts (`install.bat`, `install.ps1`,
+`install.sh`, `uninstall.bat`, `uninstall.ps1`) that copied the built
+plugin directly into:
 
-The actual Windows installer rework — a no-elevation installer targeting
-the user-level `%APPDATA%\...` plugin folder, an install-time manifest,
-and the other improvements this milestone makes for macOS — **lands in
-Phase 2 (requirements WIN-01 through WIN-05)**. Do not modify the logic
-of these scripts in Phase 1; this directory only needed to *exist* and
-have a stable home for Phase 2 to build on, not be rewritten yet.
+```
+%APPDATA%\Adobe\UXP\PluginsStorage\PHSP\<version>\Plugin\<id>\
+```
 
-## Naming reminder
+Manual QA (mirroring Phase 1's macOS finding, an architectural property
+of Creative Cloud Desktop itself, not OS-specific) confirms a raw file
+copy into `PluginsStorage` does not make Photoshop list the plugin.
+Photoshop's Plugins panel only shows what Creative Cloud Desktop's own
+install agent (UPIA) has registered, and UPIA only registers what it
+installed itself.
 
-Don't confuse this `release`-adjacent tree with the top-level `releases/`
-directory (plural) — see `../../README.md` for the full disambiguation.
-`release/` (singular, sibling of `distribution/`) is script automation;
-`releases/` (plural, repo root) is built binary output.
+## The actual install mechanism
+
+GuideMyGrid is installed via the same `.ccx` file mechanism as macOS —
+a plain zip of the plugin's built `dist/` output — that the user
+double-clicks. This launches Creative Cloud Desktop, which installs the
+plugin at user level (no admin prompt).
+
+The `.ccx` is built by `distribution/photoshop/build-ccx.js`, one
+directory level up from here — not inside `windows/`, because `.ccx`
+packaging is identical on macOS and Windows and is not an OS-specific
+mechanism.
+
+## Why this directory still exists
+
+This directory is kept (rather than deleted) only in case something
+genuinely Windows-specific is needed later. Windows parity with the
+macOS install mechanism is now confirmed (D-01) — this phase's own
+CI verification (`.github/workflows/windows-ccx-verify.yml`) proves the
+`.ccx` build pipeline works on a real Windows runner. Real end-to-end
+install/uninstall verification via Creative Cloud Desktop itself
+remains deferred to D-06, before ship.

@@ -13,10 +13,10 @@ The actual macOS install mechanism is a `.ccx` file (a plain zip of the
 built plugin) processed by Creative Cloud Desktop — this is a
 cross-platform packaging format, not an OS-specific mechanism, so `.ccx`
 packaging lives directly under `photoshop/` (`build-ccx.js`), not inside
-`macos/`. Windows retains its own script-based install path today
-(`windows/install.bat`/`install.ps1`), split out because Windows has no
-equivalent Creative Cloud Desktop dependency for this — though
-`REQUIREMENTS.md` flags this for re-verification in Phase 2.
+`macos/`. Windows uses the identical `.ccx` + Creative Cloud Desktop mechanism as
+macOS (confirmed in Phase 2) — there is no OS-specific installer script
+directory anymore; `distribution/photoshop/windows/` is kept only as a
+placeholder for any genuinely Windows-specific future need.
 
 ## What does NOT live here
 
