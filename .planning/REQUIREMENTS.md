@@ -27,7 +27,7 @@ Requirements for this milestone. Each maps to a roadmap phase.
 - [x] **WIN-02**: Installer writes an install-time manifest listing every file/folder it creates
 - [x] **WIN-03**: Installer detects if Photoshop is running and asks the user to quit it first
 - [x] **WIN-04**: Uninstaller registers under `HKEY_CURRENT_USER` only — no admin required to uninstall
-- [ ] **WIN-05**: Installer and uninstaller are verified automatically via CI on a real Windows environment (GitHub Actions `windows-latest` runner) — confirms no elevation prompt, correct install path, and clean uninstall, since the developer has no physical Windows machine to test manually
+- [x] **WIN-05**: Installer and uninstaller are verified automatically via CI on a real Windows environment (GitHub Actions `windows-latest` runner) — confirms no elevation prompt, correct install path, and clean uninstall, since the developer has no physical Windows machine to test manually
 
 ### Integrity & Uninstall
 
@@ -108,7 +108,7 @@ Explicitly excluded. Documented to prevent scope creep.
 | WIN-02 | Phase 2 | Complete |
 | WIN-03 | Phase 2 | Complete |
 | WIN-04 | Phase 2 | Complete |
-| WIN-05 | Phase 2 | Pending |
+| WIN-05 | Phase 2 | Complete |
 | INTEG-01 | Phase 3 | Pending |
 | INTEG-02 | Phase 3 | Pending |
 | INTEG-03 | Phase 3 | Pending |

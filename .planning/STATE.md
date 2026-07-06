@@ -4,17 +4,17 @@ milestone: v1.6.1
 milestone_name: milestone
 current_phase: 02
 current_phase_name: windows-installer-rework
-status: executing
+status: verifying
 stopped_at: Completed 02-01-PLAN.md
-last_updated: "2026-07-06T21:59:29.465Z"
+last_updated: "2026-07-06T22:04:31.855Z"
 last_activity: 2026-07-06
 last_activity_desc: Phase 02 execution started
 progress:
   total_phases: 5
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 6
-  completed_plans: 5
-  percent: 20
+  completed_plans: 6
+  percent: 40
 ---
 
 # Project State
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 
 Phase: 02 (windows-installer-rework) — EXECUTING
 Plan: 2 of 2
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-07-06 — Phase 02 execution started
 
 Progress: [██████████] 100%
@@ -61,6 +61,7 @@ Progress: [██████████] 100%
 | Phase 01 P03 | 15min | 3 tasks | 9 files |
 | Phase 01 P04 | 25min | 2 tasks | 7 files |
 | Phase 02 P01 | 6min | 2 tasks | 7 files |
+| Phase 02 P02 | 4min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -81,6 +82,8 @@ Recent decisions affecting current work:
 - [Phase 01]: All five disproven raw-copy/native-dialog installer files deleted outright (not replaced) — manual QA already proved none could work
 - [Phase 01]: Removed manifest.json's requiredPermissions.network block after live A/B test proved it triggers Creative Cloud Desktop's admin-password prompt on install — The update checker it was declared for is currently disconnected dead code (Phase 4's UPD-03); re-adding it later is a conscious Phase 4 decision, not a silent default
 - [Phase 02]: Removed scripts/package.js's now-orphaned helpers (copyDir, JUNK, shouldSkip, EXCLUDE, distDir) after the -installer.zip build step removal, confirmed via grep they had zero remaining callers
+- [Phase 02]: WIN-05 rescoped: CI cannot drive Creative Cloud Desktop's GUI/Adobe-login headlessly, so windows-ccx-verify.yml verifies artifact regressions (no requiredPermissions, no retired scripts) on windows-latest instead of a literal end-to-end install/uninstall; real device verification deferred to D-06 before ship
+- [Phase 02]: windows-ccx-verify.yml carries no top-level permissions block (least privilege, build-and-assert only)
 
 ### Pending Todos
 
@@ -105,6 +108,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-06T21:59:29.459Z
+Last session: 2026-07-06T22:04:09.323Z
 Stopped at: Completed 02-01-PLAN.md
 Resume file: None

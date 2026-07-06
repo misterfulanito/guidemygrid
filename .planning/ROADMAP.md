@@ -14,7 +14,7 @@ This milestone takes GuideMyGrid from a root-requiring, unsigned macOS installer
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation & macOS Installer Rework** - Merge existing installer work, establish the host-agnostic directory split, and replace the root-requiring `.pkg` with a user-level macOS installer (completed 2026-07-06)
-- [ ] **Phase 2: Windows Installer Rework** - Replace the bare `.bat` script with a proper unelevated Windows installer using the same manifest pattern
+- [x] **Phase 2: Windows Installer Rework** - Replace the bare `.bat` script with a proper unelevated Windows installer using the same manifest pattern (completed 2026-07-06)
 - [ ] **Phase 3: Manifest-Driven Uninstall & Checksum Integrity** - Symmetric, breadcrumb-free uninstall on both platforms plus published, verifiable release checksums
 - [ ] **Phase 4: Release Automation & Distribution** - GitHub Release + Gumroad sync, and a working (not dead) in-app update checker
 - [ ] **Phase 5: Trust & Documentation Polish** - Plain-language warning explainers, accurate README, and expectation-setting release notes
@@ -67,7 +67,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Note (2026-07-06, re-verified in planning):** Windows uses the identical `.ccx` + Creative Cloud Desktop mechanism as macOS (D-01), so success criteria #2–#5 are re-interpreted, not literally satisfied: there is no custom installer (WIN-01 met by the existing `.ccx` builder), no install-time manifest (WIN-02 superseded), no "Photoshop is running" detection (WIN-03 superseded), and no custom uninstaller/HKCU registration (WIN-04 superseded — Creative Cloud Desktop's "Manage Plugins" owns uninstall). Criterion #6 is rescoped: CC Desktop cannot be driven headlessly, so the CI job validates the built `.ccx` artifact (no `requiredPermissions`, retired scripts absent) rather than a live install/uninstall — real device verification is deferred to before ship (D-06).
 
-**Plans**: 1/2 plans executed
+**Plans**: 2/2 plans complete
 
 **Wave 1**
 
@@ -75,7 +75,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 02-02-PLAN.md — Correct distribution docs to Windows/macOS parity + add the `windows-latest` `.ccx` CI verification job [WIN-05]
+- [x] 02-02-PLAN.md — Correct distribution docs to Windows/macOS parity + add the `windows-latest` `.ccx` CI verification job [WIN-05]
 
 ### Phase 3: Manifest-Driven Uninstall & Checksum Integrity
 
@@ -127,7 +127,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & macOS Installer Rework | 4/4 | Complete    | 2026-07-06 |
-| 2. Windows Installer Rework | 1/2 | In Progress|  |
+| 2. Windows Installer Rework | 2/2 | Complete   | 2026-07-06 |
 | 3. Manifest-Driven Uninstall & Checksum Integrity | 0/TBD | Not started | - |
 | 4. Release Automation & Distribution | 0/TBD | Not started | - |
 | 5. Trust & Documentation Polish | 0/TBD | Not started | - |
