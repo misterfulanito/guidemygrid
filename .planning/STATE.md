@@ -5,16 +5,16 @@ milestone_name: milestone
 current_phase: 01
 current_phase_name: foundation-macos-installer-rework
 status: executing
-stopped_at: Completed 01-03-PLAN.md (manifest fix + disproven installer retirement)
-last_updated: "2026-07-06T17:57:01.633Z"
+stopped_at: Completed 01-04-PLAN.md (.ccx packaging + Creative Cloud Desktop install QA verified — Phase 1 complete, 4/4 plans)
+last_updated: "2026-07-06T18:47:52.339Z"
 last_activity: 2026-07-06
 last_activity_desc: Plans 01-03/01-04 rewritten for .ccx/Creative Cloud Desktop distribution
 progress:
   total_phases: 5
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 4
-  completed_plans: 3
-  percent: 0
+  completed_plans: 4
+  percent: 20
 ---
 
 # Project State
@@ -28,12 +28,12 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 
 ## Current Position
 
-Phase: 01 (foundation-macos-installer-rework) — EXECUTING
-Plan: 4 of 4 (rewritten — original 01-03/01-04 execution voided, see Decisions)
-Status: Ready to execute revised 01-03 (starts with a blocking human-action checkpoint: Developer Distribution portal ID registration)
-Last activity: 2026-07-06 — Plans 01-03/01-04 rewritten for .ccx/Creative Cloud Desktop distribution
+Phase: 01 (foundation-macos-installer-rework) — COMPLETE
+Plan: 4 of 4 (all plans executed and verified)
+Status: Phase complete — ready for verification
+Last activity: 2026-07-06 — Completed 01-04 (.ccx packaging + Creative Cloud Desktop install QA verified end-to-end)
 
-Progress: [█████░░░░░] 50%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -59,6 +59,7 @@ Progress: [█████░░░░░] 50%
 | Phase 01 P02 | 12min | 3 tasks | 11 files |
 | Phase 01 P03 | 12min | 2 tasks | 5 files |
 | Phase 01 P03 | 15min | 3 tasks | 9 files |
+| Phase 01 P04 | 25min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -77,6 +78,7 @@ Recent decisions affecting current work:
 - [Phase 01, 2026-07-06]: **Major pivot** — manual QA on the original Plan 01-04 revealed raw file-copy into PluginsStorage never makes Photoshop list a plugin; the only working mechanism is a `.ccx` package installed via Creative Cloud Desktop (confirmed via official docs + direct inspection of a real competing product's `.ccx` + this project's own git history, which shipped this way before v1.6.x's `.pkg` installer). MAC-02/MAC-03 marked superseded in REQUIREMENTS.md (no longer implementable — CC Desktop owns the install sequence). D-01a (manifestVersion 4) unaffected. Plans 01-03/01-04 rewritten accordingly; original 01-03/01-04 SUMMARY.md files deleted (documented an approach that didn't work). Full detail in 01-RESEARCH.md's two addenda.
 - [Phase 01]: Portal-issued plugin id 53e308e0 obtained directly via orchestrator/user exchange; manifest.json host array->object, id->53e308e0, manifestVersion stays 4 (D-01a)
 - [Phase 01]: All five disproven raw-copy/native-dialog installer files deleted outright (not replaced) — manual QA already proved none could work
+- [Phase 01]: Removed manifest.json's requiredPermissions.network block after live A/B test proved it triggers Creative Cloud Desktop's admin-password prompt on install — The update checker it was declared for is currently disconnected dead code (Phase 4's UPD-03); re-adding it later is a conscious Phase 4 decision, not a silent default
 
 ### Pending Todos
 
@@ -101,6 +103,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-06T17:57:01.627Z
-Stopped at: Completed 01-03-PLAN.md (manifest fix + disproven installer retirement)
+Last session: 2026-07-06T18:47:52.333Z
+Stopped at: Completed 01-04-PLAN.md (.ccx packaging + Creative Cloud Desktop install QA verified — Phase 1 complete, 4/4 plans)
 Resume file: None

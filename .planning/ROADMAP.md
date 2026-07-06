@@ -13,7 +13,7 @@ This milestone takes GuideMyGrid from a root-requiring, unsigned macOS installer
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation & macOS Installer Rework** - Merge existing installer work, establish the host-agnostic directory split, and replace the root-requiring `.pkg` with a user-level macOS installer
+- [x] **Phase 1: Foundation & macOS Installer Rework** - Merge existing installer work, establish the host-agnostic directory split, and replace the root-requiring `.pkg` with a user-level macOS installer (completed 2026-07-06)
 - [ ] **Phase 2: Windows Installer Rework** - Replace the bare `.bat` script with a proper unelevated Windows installer using the same manifest pattern
 - [ ] **Phase 3: Manifest-Driven Uninstall & Checksum Integrity** - Symmetric, breadcrumb-free uninstall on both platforms plus published, verifiable release checksums
 - [ ] **Phase 4: Release Automation & Distribution** - GitHub Release + Gumroad sync, and a working (not dead) in-app update checker
@@ -34,7 +34,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. ~~After installing, an install-time manifest file exists listing every file/folder the installer created~~ — **superseded 2026-07-06:** Creative Cloud Desktop owns its own install registry for a `.ccx`-distributed plugin; a custom manifest has no install code left to attach to (see REQUIREMENTS.md MAC-02)
   5. After install, the plugin appears in Photoshop's Plugins menu (Plugins → GuideMyGrid) and opens as a working panel — the outcome the original installer approach never actually reached
 
-**Plans**: 3/4 plans executed
+**Plans**: 4/4 plans complete
 **Wave 1**
 
 - [x] 01-01-PLAN.md — Merge origin/main into epic/ui-icons (+ manifest schema decision) [FOUND-01]
@@ -49,7 +49,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 01-04-PLAN.md — .ccx packaging script + GitHub Release wiring + Creative Cloud Desktop install QA [MAC-01, MAC-04]
+- [x] 01-04-PLAN.md — .ccx packaging script + GitHub Release wiring + Creative Cloud Desktop install QA [MAC-01, MAC-04]
 
 ### Phase 2: Windows Installer Rework
 
@@ -116,7 +116,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & macOS Installer Rework | 3/4 | In Progress|  |
+| 1. Foundation & macOS Installer Rework | 4/4 | Complete   | 2026-07-06 |
 | 2. Windows Installer Rework | 0/TBD | Not started | - |
 | 3. Manifest-Driven Uninstall & Checksum Integrity | 0/TBD | Not started | - |
 | 4. Release Automation & Distribution | 0/TBD | Not started | - |
