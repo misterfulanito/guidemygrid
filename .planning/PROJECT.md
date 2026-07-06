@@ -18,19 +18,20 @@ A designer with zero terminal experience can install GuideMyGrid on macOS or Win
 - ✓ macOS `.pkg` installer via `pkgbuild`, copies plugin into Photoshop's UXP `PluginsStorage` folder — existing (unsigned, requires root — being replaced this milestone with a user-level installer)
 - ✓ macOS/Windows uninstallers — existing
 - ✓ In-app update checker against GitHub Releases API, with response validation and domain allowlisting — existing
-- ✓ `manifest.json` v5, network permissions restricted to `api.github.com` — existing
+- ✓ `manifest.json` v5, network permissions restricted to `api.github.com` — existing (Phase 1 dropped this permission entirely for now — see Phase 1 decisions below; will need conscious re-evaluation when Phase 4 reconnects the update checker)
+- ✓ Redesigned the macOS installer to run at user-level only, no root/admin privileges — validated Phase 1. **Not via a custom installer app** (the original plan) — manual QA proved a raw file-copy into Photoshop's `PluginsStorage` never makes Photoshop list a plugin at all. The working mechanism is a `.ccx` package installed through Creative Cloud Desktop (the same mechanism GuideGuide already uses per the Context note below, and the same mechanism this project itself used before v1.6.x's `.pkg` installer). Verified end-to-end on a real Mac with zero admin/root prompt, contingent on `manifest.json` declaring no elevated `requiredPermissions` — declaring network/filesystem access permissions was empirically confirmed to reintroduce an admin-password prompt.
+- ✓ Merged `origin/main`'s installer work (v1.6.1-1.6.2) into the working branch, and established the `distribution/photoshop/{macos,windows}` + `release/` directory split — validated Phase 1
 
 ### Active
 
-- [ ] Redesign the macOS installer to run at user-level only (no root/admin privileges) — the UXP plugin destination folder is already inside `~/Library/...`, so root was never structurally necessary
-- [ ] Build an equivalent no-elevation Windows installer (currently only a bare `.bat` script) targeting the user-level `%APPDATA%\...` plugin folder
+- [ ] Build an equivalent no-elevation Windows installer (currently only a bare `.bat` script) targeting the user-level `%APPDATA%\...` plugin folder — **Phase 1 finding to carry forward:** Windows UXP plugins very likely face the identical Creative Cloud Desktop registry requirement macOS did (see Validated below); re-verify before assuming a raw file-copy installer works there either
 - [ ] Publish checksums (SHA256) for release artifacts so integrity can be verified independently of OS-level signing
 - [ ] Security review of installer/uninstaller scripts on both platforms — least privilege, no leftover temp files/logs, safe failure handling
 - [ ] Add automated checks that catch security regressions before a release ships (manifest network permissions stay restricted, no secrets committed, installer scripts leave no residue)
-- [ ] Update README to describe the actual current install flow (it still documents the obsolete Creative Cloud Desktop `.ccx` flow)
-- [ ] Sync local repo — merge `origin/main`'s installer work into the current working branch before building on top of it
+- [ ] Update README to describe the actual current install flow — **reversed by Phase 1's finding:** the `.ccx`/Creative Cloud Desktop flow is being *reinstated*, not removed (see Validated below)
 - [ ] Set up a free Gumroad listing as the distribution front-end (download page + email capture); GitHub Releases remains the source of truth for versioned installer files, with the in-app update checker continuing to point at GitHub
 - [ ] Decide how Gumroad and GitHub Releases stay in sync on each new version (manual re-upload vs. scripted) — needs a plan during phase planning
+- [ ] Reconnect the in-app update checker (Phase 4, UPD-03) — **new constraint from Phase 1:** re-adding `manifest.json`'s `requiredPermissions.network` (needed for the checker to call GitHub's API) will likely reintroduce the admin-password prompt on install/update, per Phase 1's empirical A/B test. This is a real tradeoff to decide consciously during Phase 4 planning, not a silent regression.
 
 ### Out of Scope
 
@@ -68,6 +69,9 @@ A designer with zero terminal experience can install GuideMyGrid on macOS or Win
 | Support macOS **and** Windows this milestone | User corrected earlier macOS-only assumption | ✓ Confirmed |
 | Plugin remains free — no Gumroad monetization/license-key features needed | User confirmed it's free | ✓ Confirmed |
 | Use Gumroad as the distribution front-end | User's choice over a self-hosted page, for its built-in download page + email capture | ✓ Confirmed |
+| Accept Creative Cloud Desktop as a required install-time dependency (via `.ccx` packaging), reversing this project's own earlier move away from it | Manual QA on the real dev Mac proved a raw file-copy installer (the original Phase 1 plan) never makes Photoshop list a plugin at all — Photoshop's Plugins panel only shows what CC Desktop's own install agent has registered. This project shipped via `.ccx`+CC Desktop once before (v1.0.x), then deliberately moved to a `.pkg` installer specifically to drop that dependency — which is exactly what introduced the root-elevation problem this milestone exists to fix. "No admin password" and "no Creative Cloud dependency" already conflicted once in this project's history; user chose "no admin password" this time, informed by the full history. | ✓ Confirmed — Phase 1 |
+| Register a free plugin ID via Adobe's Developer Distribution portal (Draft listing only, never submitted for review) | Real-world inspection of a competitor's `.ccx` showed the `id` field must be a portal-issued opaque string, not a self-chosen name — required for CC Desktop to install the plugin at all | ✓ Confirmed — Phase 1, ID obtained (`53e308e0`) |
+| Keep `manifest.json` free of `requiredPermissions` (network/filesystem) until actually needed | Empirical A/B test found declaring these permissions triggers CC Desktop's admin-password prompt for non-Marketplace plugins; omitting them keeps the install password-free | ✓ Confirmed — Phase 1. Re-evaluate consciously in Phase 4 when the update checker needs network access again |
 
 ## Evolution
 
@@ -87,4 +91,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-04 after initialization*
+*Last updated: 2026-07-06 after Phase 1 completion*
