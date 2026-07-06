@@ -1,8 +1,7 @@
 /**
  * package.js
- * Creates two release artifacts in releases/:
+ * Creates the release artifact in releases/:
  *   1. GuideMyGrid-vX.Y.Z.ccx          — Creative Cloud installation (double-click)
- *   2. GuideMyGrid-vX.Y.Z-installer.zip — Direct installation, no Creative Cloud needed
  *
  * Usage: node scripts/package.js  (or via `npm run package`)
  */
@@ -14,36 +13,12 @@ const path = require('path');
 const root    = path.resolve(__dirname, '..');
 const pkg     = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
 const version = pkg.version;
-const distDir = path.join(root, 'dist');
 const outDir  = path.join(root, 'releases');
 
-const ccxFile       = path.join(outDir, `GuideMyGrid-v${version}.ccx`);
-const installerFile = path.join(outDir, `GuideMyGrid-v${version}-installer.zip`);
-
-// Files to skip in all packages
-const JUNK = new Set(['.DS_Store', '__MACOSX', 'Thumbs.db', '.gitkeep']);
-function shouldSkip(name) { return JUNK.has(name) || name.startsWith('.'); }
-
-// Recursively copy a directory, skipping junk files
-function copyDir(src, dest) {
-  fs.mkdirSync(dest, { recursive: true });
-  for (const entry of fs.readdirSync(src)) {
-    if (shouldSkip(entry)) continue;
-    const srcPath  = path.join(src, entry);
-    const destPath = path.join(dest, entry);
-    if (fs.statSync(srcPath).isDirectory()) {
-      copyDir(srcPath, destPath);
-    } else {
-      fs.copyFileSync(srcPath, destPath);
-    }
-  }
-}
+const ccxFile = path.join(outDir, `GuideMyGrid-v${version}.ccx`);
 
 if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
-if (fs.existsSync(ccxFile))       fs.unlinkSync(ccxFile);
-if (fs.existsSync(installerFile)) fs.unlinkSync(installerFile);
-
-const EXCLUDE = '-x "*.DS_Store" -x "*/__MACOSX" -x "*/Thumbs.db"';
+if (fs.existsSync(ccxFile)) fs.unlinkSync(ccxFile);
 
 // ── 1. CCX (Creative Cloud) ───────────────────────────────────────────────────
 // Delegates to distribution/photoshop/build-ccx.js, which stages dist/ under
@@ -51,28 +26,6 @@ const EXCLUDE = '-x "*.DS_Store" -x "*/__MACOSX" -x "*/Thumbs.db"';
 // Cloud Desktop actually expects (see 01-RESEARCH.md's follow-up addendum).
 execSync('npm run package:ccx', { stdio: 'inherit', cwd: root });
 console.log(`✅  CCX:       releases/GuideMyGrid-v${version}.ccx`);
-
-// ── 2. Installer zip (no Creative Cloud required) ────────────────────────────
-const tmpDir = path.join(root, '.tmp-installer');
-if (fs.existsSync(tmpDir)) fs.rmSync(tmpDir, { recursive: true });
-
-copyDir(distDir, path.join(tmpDir, 'dist'));
-
-const scripts = ['install.sh', 'install.bat', 'install.ps1', 'uninstall.bat', 'uninstall.ps1'];
-const windowsScriptsDir = path.join(root, 'distribution', 'photoshop', 'windows');
-for (const s of scripts) {
-  fs.copyFileSync(path.join(windowsScriptsDir, s), path.join(tmpDir, s));
-}
-
-// Preserve executable bit on the shell script
-try { fs.chmodSync(path.join(tmpDir, 'install.sh'), 0o755); } catch (_) {}
-
-execSync(`cd "${tmpDir}" && zip -r "${installerFile}" . ${EXCLUDE}`, { stdio: 'inherit' });
-fs.rmSync(tmpDir, { recursive: true });
-console.log(`✅  Installer: releases/GuideMyGrid-v${version}-installer.zip`);
-
-console.log('\n→  .ccx            — install via Creative Cloud (double-click)');
-console.log('→  -installer.zip  — install directly, no Creative Cloud needed\n');
 
 // ── 3. Legacy macOS uninstaller (kept until Phase 3's manifest-driven rework) ─
 // The unprivileged app-bundle installer this used to build alongside is
@@ -85,7 +38,7 @@ if (process.platform === 'darwin') {
 }
 
 // ── 4. Stage all release files so the publish script can commit + push them ───
-const toStage = [ccxFile, installerFile];
+const toStage = [ccxFile];
 const uninstallerFile = path.join(outDir, `GuideMyGrid-v${version}-uninstaller.pkg`);
 if (fs.existsSync(uninstallerFile)) toStage.push(uninstallerFile);
 execSync(`git add ${toStage.map(f => `"${f}"`).join(' ')}`, { stdio: 'inherit', cwd: root });
