@@ -1,0 +1,60 @@
+# Source: 02-RESEARCH.md's `## CI Job Design (WIN-05 Rescoped)` — built and
+# inspected the .ccx locally; Expand-Archive extension-check gotcha per
+# github.com/actions/runner#1883 discussion.
+name: Windows CCX Verification
+
+on:
+  push:
+    branches: [ main, epic/ui-icons ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify-windows-ccx:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build plugin
+        run: npm run build
+
+      - name: Package .ccx
+        run: npm run package:ccx
+
+      - name: Extract .ccx and validate contents
+        shell: pwsh
+        run: |
+          $ccx = Get-ChildItem -Path "releases" -Filter "*.ccx" | Select-Object -First 1
+          if (-not $ccx) { throw "No .ccx artifact found in releases/ after packaging" }
+
+          $extractDir = "ccx-extracted"
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          [System.IO.Compression.ZipFile]::ExtractToDirectory($ccx.FullName, $extractDir)
+
+          $manifestPath = Join-Path $extractDir "dist/manifest.json"
+          if (-not (Test-Path $manifestPath)) {
+            throw "manifest.json not found at expected path dist/manifest.json inside the .ccx"
+          }
+          $manifest = Get-Content $manifestPath -Raw | ConvertFrom-Json
+
+          if ($manifest.PSObject.Properties.Name -contains "requiredPermissions") {
+            throw "manifest.json declares requiredPermissions -- this triggers Creative Cloud Desktop's admin-password prompt on non-Marketplace installs (see 01-RESEARCH.md). Remove it unless this is an intentional, reviewed tradeoff (relevant to Phase 4's UPD-03)."
+          }
+          Write-Host "OK: manifest.json has no requiredPermissions block"
+
+          $retiredNames = @("install.bat", "install.ps1", "install.sh", "uninstall.bat", "uninstall.ps1")
+          foreach ($name in $retiredNames) {
+            $found = Get-ChildItem -Path $extractDir -Recurse -Filter $name -ErrorAction SilentlyContinue
+            if ($found) {
+              throw "Retired raw-copy script '$name' found inside the built .ccx -- should have been deleted per Phase 2's D-03"
+            }
+          }
+          Write-Host "OK: no retired raw-copy installer scripts found in the .ccx"
