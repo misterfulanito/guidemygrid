@@ -103,6 +103,17 @@ execSync(`/usr/bin/iconutil -c icns "${iconsetDir}" -o "${icnsPath}"`, { stdio: 
 const defaultIcnsPath = path.join(resourcesDir, 'applet.icns');
 fs.copyFileSync(icnsPath, defaultIcnsPath);
 
+// On macOS 10.15+, osacompile also emits a compiled asset catalog
+// (Assets.car) referenced via Info.plist's CFBundleIconName. When both
+// CFBundleIconName/Assets.car and CFBundleIconFile/applet.icns are present,
+// the system prefers the asset catalog — so overwriting applet.icns alone
+// is silently ignored. Remove Assets.car and the CFBundleIconName key so
+// the legacy CFBundleIconFile/applet.icns pairing is the only icon source.
+const assetsCarPath = path.join(resourcesDir, 'Assets.car');
+if (fs.existsSync(assetsCarPath)) fs.rmSync(assetsCarPath);
+const infoPlistPath = path.join(appPath, 'Contents', 'Info.plist');
+execSync(`/usr/libexec/PlistBuddy -c "Delete :CFBundleIconName" "${infoPlistPath}"`, { stdio: 'inherit' });
+
 // ── 5. Ad-hoc sign (no paid Apple Developer cert needed) ────────────────────
 execSync(`/usr/bin/codesign --force --sign - "${appPath}"`, { stdio: 'inherit' });
 
