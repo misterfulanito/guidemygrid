@@ -10,6 +10,7 @@
     "lint": "eslint src --ext .ts,.tsx",
     "type-check": "tsc --noEmit",
     "test": "jest",
+    "build:mac-installer": "node distribution/photoshop/macos/build-installer.js",
     "package": "npm run build && node scripts/package.js",
     "release:patch": "npm version patch && npm run package",
     "release:minor": "npm version minor && npm run package",
@@ -31,6 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "copy-webpack-plugin": "^11.0.0",
+    "create-dmg": "^8.1.0",
     "css-loader": "^6.8.0",
     "eslint": "^8.0.0",
     "html-webpack-plugin": "^5.5.0",
@@ -47,7 +49,12 @@
     "preset": "ts-jest",
     "testEnvironment": "node",
     "transform": {
-      "^.+\\.tsx?$": ["ts-jest", { "tsconfig": "tsconfig.jest.json" }]
+      "^.+\\.tsx?$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.jest.json"
+        }
+      ]
     },
     "testMatch": [
       "**/__tests__/**/*.test.ts",

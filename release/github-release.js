@@ -21,7 +21,7 @@ const tag     = `v${version}`;
 const files = [
   path.join(root, 'releases', `GuideMyGrid-v${version}.ccx`),
   path.join(root, 'releases', `GuideMyGrid-v${version}-installer.zip`),
-  path.join(root, 'releases', `GuideMyGrid-v${version}.pkg`),
+  path.join(root, 'releases', `GuideMyGrid-v${version}.dmg`),
   path.join(root, 'releases', `GuideMyGrid-v${version}-uninstaller.pkg`),
 ].filter(f => fs.existsSync(f));
 
