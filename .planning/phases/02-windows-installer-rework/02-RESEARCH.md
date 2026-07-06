@@ -410,14 +410,14 @@ unzip -p releases/GuideMyGrid-v0.1.0.ccx dist/manifest.json
 
 **If this table is empty:** N/A — see rows above; none of these block planning, all are either self-mitigating (A1) or zero-risk for this phase's actual scope (A2, A3).
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Should the new `windows-ccx-verify.yml` workflow also run on `macos-latest`/`ubuntu-latest` as a cross-check that the assertions themselves are OS-independent?**
+1. **Should the new `windows-ccx-verify.yml` workflow also run on `macos-latest`/`ubuntu-latest` as a cross-check that the assertions themselves are OS-independent?** — RESOLVED: kept Windows-only, per the recommendation below, and implemented that way in `02-02-PLAN.md`.
    - What we know: The manifest/retired-file assertions are logically OS-agnostic (they inspect a zip's contents, not anything Windows-specific).
    - What's unclear: Whether adding a second OS to the matrix adds meaningful signal or just CI runtime cost, given `windows-latest` is the OS that actually matters for WIN-05's intent.
    - Recommendation: Keep the job Windows-only for this phase — it directly satisfies WIN-05's "real Windows environment" ask. Consider a matrix expansion only if a future phase's release process needs broader OS coverage for other reasons.
 
-2. **Should `scripts/package.js`'s reference to `-installer.zip` in `release/github-release.js`'s file list be actively removed, or left as a harmless dead reference?**
+2. **Should `scripts/package.js`'s reference to `-installer.zip` in `release/github-release.js`'s file list be actively removed, or left as a harmless dead reference?** — RESOLVED: left as-is, per the recommendation below, as documented in `02-01-PLAN.md`.
    - What we know: `release/github-release.js` already uses `.filter(f => fs.existsSync(f))`, so a missing `-installer.zip` doesn't break anything — confirmed by direct code reading this session.
    - What's unclear: Whether leaving the reference in place (vs. actively removing the array entry) is confusing for a future reader who doesn't know the file will never exist again.
    - Recommendation: Leave as-is for this phase (it's harmless and self-documenting via the `.filter`), but flag as a minor cleanup opportunity if `release/github-release.js` is next touched for other reasons (e.g., Phase 3's checksum work).
