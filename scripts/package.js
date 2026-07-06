@@ -46,8 +46,10 @@ if (fs.existsSync(installerFile)) fs.unlinkSync(installerFile);
 const EXCLUDE = '-x "*.DS_Store" -x "*/__MACOSX" -x "*/Thumbs.db"';
 
 // ── 1. CCX (Creative Cloud) ───────────────────────────────────────────────────
-// Zip dist/ contents directly so manifest.json sits at the zip root
-execSync(`cd "${distDir}" && zip -r "${ccxFile}" . ${EXCLUDE}`, { stdio: 'inherit' });
+// Delegates to distribution/photoshop/build-ccx.js, which stages dist/ under
+// a top-level dist/ folder before zipping — matching the structure Creative
+// Cloud Desktop actually expects (see 01-RESEARCH.md's follow-up addendum).
+execSync('npm run package:ccx', { stdio: 'inherit', cwd: root });
 console.log(`✅  CCX:       releases/GuideMyGrid-v${version}.ccx`);
 
 // ── 2. Installer zip (no Creative Cloud required) ────────────────────────────

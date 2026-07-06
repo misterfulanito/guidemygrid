@@ -10,6 +10,7 @@
     "lint": "eslint src --ext .ts,.tsx",
     "type-check": "tsc --noEmit",
     "test": "jest",
+    "package:ccx": "node distribution/photoshop/build-ccx.js",
     "package": "npm run build && node scripts/package.js",
     "release:patch": "npm version patch && npm run package",
     "release:minor": "npm version minor && npm run package",
