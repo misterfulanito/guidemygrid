@@ -72,20 +72,18 @@ console.log(`✅  Installer: releases/GuideMyGrid-v${version}-installer.zip`);
 console.log('\n→  .ccx            — install via Creative Cloud (double-click)');
 console.log('→  -installer.zip  — install directly, no Creative Cloud needed\n');
 
-// ── 3. macOS installer (unprivileged .app + .dmg) + legacy uninstaller ───────
-// The installer side is now the no-root osacompile/create-dmg build
-// (distribution/photoshop/macos/build-installer.js). The uninstaller stays
-// on the legacy pkgbuild-based script until Phase 3's manifest-driven
-// rework (INTEG-01) — documented technical debt, not a Phase 1 regression.
+// ── 3. Legacy macOS uninstaller (kept until Phase 3's manifest-driven rework) ─
+// The unprivileged app-bundle installer this used to build alongside is
+// retired — the actual install mechanism is now the ccx built above
+// (Creative Cloud Desktop-processed). Only the legacy pkgbuild-based
+// uninstaller remains here pending Phase 3's INTEG-01 rework —
+// documented technical debt, not a Phase 1 regression.
 if (process.platform === 'darwin') {
-  execSync('npm run build:mac-installer', { stdio: 'inherit', cwd: root });
   execSync('node scripts/build-mac-uninstaller.js', { stdio: 'inherit', cwd: root });
 }
 
 // ── 4. Stage all release files so the publish script can commit + push them ───
 const toStage = [ccxFile, installerFile];
-const dmgFile         = path.join(outDir, `GuideMyGrid-v${version}.dmg`);
 const uninstallerFile = path.join(outDir, `GuideMyGrid-v${version}-uninstaller.pkg`);
-if (fs.existsSync(dmgFile))         toStage.push(dmgFile);
 if (fs.existsSync(uninstallerFile)) toStage.push(uninstallerFile);
 execSync(`git add ${toStage.map(f => `"${f}"`).join(' ')}`, { stdio: 'inherit', cwd: root });

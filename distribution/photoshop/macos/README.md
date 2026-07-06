@@ -1,34 +1,49 @@
 # distribution/photoshop/macos/
 
-The macOS installer for GuideMyGrid, as a Photoshop plugin.
+This directory no longer contains any installer logic.
 
-## What it does
+## What used to be here
 
-Installs GuideMyGrid into Photoshop's per-user UXP plugin folder:
+An unprivileged `.app`/`.dmg` installer (`install-payload.sh`,
+`installer.applescript`, `build-installer.js`) that copied the built
+plugin directly into:
 
 ```
-~/Library/Application Support/Adobe/UXP/PluginsStorage/PHSP/<version>/Plugin/com.guidemygrid.plugin/
+~/Library/Application Support/Adobe/UXP/PluginsStorage/PHSP/<version>/Plugin/<id>/
 ```
 
-That path is entirely inside the current user's home directory — it does
-**not** require admin or root privileges to write to, and this installer
-never asks for them.
+Manual QA on a real dev machine proved this approach never works: a raw
+file copy into `PluginsStorage` does not make Photoshop list the plugin.
+Photoshop's Plugins panel only shows what Creative Cloud Desktop's own
+install agent (UPIA) has registered, and UPIA only registers what it
+installed itself. See `01-RESEARCH.md`'s CRITICAL ADDENDUM (and its
+follow-up, both right after `## Summary`) for the full investigation.
 
-## How it's packaged
+## The actual install mechanism
 
-The installer is built as an unprivileged `.app` (via `osacompile`,
-ad-hoc signed with `codesign --sign -`), then wrapped in a `.dmg` (via
-`create-dmg`) for distribution. Building the `.app`/`.dmg` is what
-`build-installer.js` in this directory does; the actual installer
-behavior (confirmation dialog, Photoshop-running check, copy, manifest
-write, success dialog) lives in the AppleScript source it compiles.
+GuideMyGrid is installed via a `.ccx` file — a plain zip of the plugin's
+built `dist/` output — that the user double-clicks. This launches
+Creative Cloud Desktop, which shows an "unverified third-party developer"
+warning and then installs the plugin at user level (no admin/root
+prompt, same as before).
 
-No `sudo`, no `pkgbuild`, no admin password prompt — that's the entire
-point of this rework (replacing the old root-requiring `.pkg` installer).
+The `.ccx` is built by `distribution/photoshop/build-ccx.js`, one
+directory level up from here — not inside `macos/`, because `.ccx`
+packaging is identical on macOS and Windows and is not an OS-specific
+mechanism.
+
+## Why this directory still exists
+
+This directory is kept (rather than deleted) only because Phase 2 still
+needs a home for anything genuinely macOS-specific. Note that
+`REQUIREMENTS.md` already flags that Phase 2 must re-verify whether
+Windows needs the same `.ccx` pivot before assuming its own installer
+work is unaffected.
 
 ## Naming reminder
 
-Don't confuse this `release`-adjacent tree with the top-level `releases/`
-directory (plural) — see `../../README.md` for the full disambiguation.
-`release/` (singular, sibling of `distribution/`) is script automation;
-`releases/` (plural, repo root) is built binary output.
+Don't confuse this `distribution`-adjacent tree with the top-level
+`releases/` directory (plural) — see `../../README.md` for the full
+disambiguation. `release/` (singular, sibling of `distribution/`) is
+script automation; `releases/` (plural, repo root) is built binary
+output.

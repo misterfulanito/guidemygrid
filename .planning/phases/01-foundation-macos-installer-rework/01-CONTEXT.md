@@ -29,6 +29,10 @@ This phase syncs the stale local repo with `origin/main`'s existing installer wo
 ### Visual Design / Branding
 - **D-06:** Reuse the existing icon system, colors, and UI already built in the `ui-icons` epic. Do NOT design new visuals for the installer — no new icon, no new color scheme. Whatever installer chrome/branding is needed should draw from what already exists in the plugin.
 
+### Superseded (2026-07-06, post-.ccx-pivot)
+- **D-02, D-03, D-04, D-05 are no longer implementable.** Manual QA proved a raw file-copy installer never registers a plugin with Photoshop; the only working mechanism is a `.ccx` file installed through Creative Cloud Desktop. Creative Cloud Desktop owns 100% of a `.ccx`'s install UX — its own warning dialog, its own install sequence — leaving no hook for a custom confirmation dialog (D-02), custom app labeling shown during install (D-03), a custom Photoshop-running hard block (D-04), or a custom success dialog (D-05). None of these can be built as originally decided; see `01-RESEARCH.md`'s CRITICAL ADDENDUM and its follow-up for the full investigation, and `REQUIREMENTS.md`'s MAC-02/MAC-03 notes for the parallel requirements-level supersession.
+- **D-01, D-01a, and D-06 are unaffected and still stand.** The branch-merge strategy (D-01), the manifestVersion-4 decision (D-01a), and the reuse-existing-visuals constraint (D-06) have no dependency on the retired installer UX and remain fully valid.
+
 ### Claude's Discretion
 - Exact merge conflict resolution mechanics between `epic/ui-icons` and `origin/main` (the user approved the merge direction, not the mechanics).
 - Directory structure implementation details within `distribution/photoshop/macos/` and `release/` (per ARCHITECTURE.md research — not re-litigated here).

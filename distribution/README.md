@@ -9,11 +9,14 @@ Figma support, those would become sibling folders (`illustrator/`,
 logic. Nothing about this milestone's installer work should make that
 harder later.
 
-Inside each host folder, installer/packaging logic is split further by
-operating system (`macos/`, `windows/`) because the actual mechanics of
-"install without asking for admin/root" are completely different on each
-platform (an AppleScript `.app`/`.dmg` on macOS vs. a batch/PowerShell
-script on Windows).
+The actual macOS install mechanism is a `.ccx` file (a plain zip of the
+built plugin) processed by Creative Cloud Desktop — this is a
+cross-platform packaging format, not an OS-specific mechanism, so `.ccx`
+packaging lives directly under `photoshop/` (`build-ccx.js`), not inside
+`macos/`. Windows retains its own script-based install path today
+(`windows/install.bat`/`install.ps1`), split out because Windows has no
+equivalent Creative Cloud Desktop dependency for this — though
+`REQUIREMENTS.md` flags this for re-verification in Phase 2.
 
 ## What does NOT live here
 
