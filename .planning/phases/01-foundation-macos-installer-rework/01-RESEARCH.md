@@ -58,6 +58,49 @@ Merging `origin/main` (FOUND-01) is a small, well-scoped git operation: five fil
 
 **Primary recommendation:** Merge `origin/main` first (small, mechanical, documented conflicts below), then replace `pkgbuild`+root-postinstall with an `osacompile`-built, ad-hoc-signed, unprivileged `.app` wrapped in a `create-dmg` DMG — do not attempt to patch the existing `.pkg` flow, since root elevation is structural to `.pkg`, not a bug in this specific script.
 
+## CRITICAL ADDENDUM (2026-07-06, post-Wave-4 manual QA): Plugin Discovery Requires Creative Cloud Desktop
+
+**This addendum supersedes the file-copy assumptions baked into "Architectural Responsibility Map," "Standard Stack," "Architecture Patterns," and Assumption A1 below.** It was discovered empirically during Plan 01-04's Task 3 human-verify checkpoint — original research assumed a raw file-copy into `PluginsStorage/PHSP/<ver>/Plugin/<id>/` would be sufficient for Photoshop to list the plugin. **This assumption is wrong.**
+
+### What was empirically observed
+
+- `install-payload.sh` (Plan 03) correctly copied all plugin files into `~/Library/Application Support/Adobe/UXP/PluginsStorage/PHSP/27/Plugin/com.guidemygrid.plugin/` on the actual dev machine (Photoshop 2026, host version 27).
+- After multiple full Quit+relaunch cycles, Photoshop's own Plugins panel/menu showed nothing — GuideMyGrid never appeared.
+- Manually editing the installed `manifest.json` (testing `manifestVersion: 5`/`minVersion: 23.0.0` in place of the shipped v4, purely as a live diagnostic) was silently reverted back to v4 after a Photoshop relaunch — evidence some other registry is authoritative, not the raw file.
+- Creative Cloud Desktop's own "Manage Plugins" screen (filtered to Photoshop) showed "No results found" — the plugin was never registered anywhere Adobe's tooling looks, despite files being correctly present on disk.
+
+### Root cause (confirmed via official docs + real-world precedent)
+
+Adobe's UXP plugin distribution model has exactly two supported paths, and both route through Creative Cloud Desktop's install agent (UPIA):
+
+1. **Marketplace** — requires Developer Distribution portal submission/review. Out of scope per PROJECT.md (explicitly rejected, no change).
+2. **Direct distribution via a `.ccx` file** — officially documented: "email the file or put it on a cloud folder... double-click to install through Creative Cloud... requires clicking through 'do you trust this?' warning dialogs." No Marketplace review, no Developer ID requirement found for this specific path. **This is the free, no-approval path this milestone needs.**
+
+There is no third, Adobe-uninvolved path. Raw filesystem placement into `PluginsStorage/.../Plugin/<id>/` — what MAC-01/MAC-02 assumed — does not get a plugin listed in Photoshop's UI by itself; CC Desktop maintains its own plugin registry that Photoshop's Plugins panel actually queries, populated only by CC Desktop's own install flow (Marketplace or `.ccx`).
+
+**Real-world confirmation:** GuideGuide (guideguide.me) — an established, non-Marketplace-reviewed Photoshop plugin doing nearly the same job as GuideMyGrid — distributes exactly this way: a `.ccx` file that launches CC Desktop and shows the same "unverified third-party developer" warning ours would show.
+
+### What does NOT change
+
+- **D-01a (manifestVersion 4, keep Photoshop 2022 support) stands.** Manifest schema version is unrelated to this finding — CC Desktop's install agent processes v4 and v5 alike; the blocker was never the schema, it was the install *mechanism* (raw copy vs. CC-Desktop-processed `.ccx`). No need to revisit D-01a.
+- **MAC-01 (no admin/root password)** should still hold — UPIA/CC-Desktop-installed UXP plugins are user-level by design, same as Marketplace installs.
+
+### What changes (requires re-planning)
+
+- **Plan 01-03's `install-payload.sh`** (raw file copy) is no longer the mechanism that makes the plugin usable in Photoshop. Superseded by packaging `dist/` into a `.ccx`.
+- **MAC-03 ("hard block if Photoshop running")** can no longer be enforced by our own code — CC Desktop controls the install sequence, not us. Needs rescoping (advisory documentation only, or dropped from Phase 1's enforceable scope) — flagged for a planning-time decision, not silently resolved.
+- **MAC-02 (our own install-time manifest for a future custom uninstaller)** may be largely unnecessary — CC Desktop already tracks what it installed and provides its own uninstall via the Plugins panel. This likely simplifies or eliminates Phase 3's planned INTEG-01 custom uninstaller — flagged for Phase 3 planning to revisit, not this phase's concern to solve now.
+- **Packaging mechanism:** a `.ccx` is fundamentally a zip of the plugin's built output + manifest.json. Adobe's own tooling — the UXP Developer Tool (GUI) or its CLI counterpart, the `@adobe/uxp-devtools-cli` npm package — is the documented way to build one. This should be scriptable in our own release process the same way `create-dmg` already is (added as an npm devDependency, invoked from a Node build script), preserving the "fully automated release, no manual GUI steps" property Phase 1 has maintained so far. Exact CLI packaging command needs hands-on verification during the Plan 01-03/01-04 rework — not yet confirmed.
+
+### Sources for this addendum
+
+- [Distribution Options — Adobe UXP docs](https://developer.adobe.com/photoshop/uxp/2022/guides/distribution/distribution-options/) — direct distribution via `.ccx`, no Marketplace required
+- [Install GuideGuide](https://guideguide.me/documentation/installation) — real-world precedent: GuideGuide's actual install flow (`.ccx` → CC Desktop → "third-party developer" warning → Plugins > GuideGuide)
+- [How to successfully package and install self developed plugins? — Adobe CC Developer Forums](https://forums.creativeclouddeveloper.com/t/how-to-successfully-package-and-install-self-developed-plugins/7245) — `.ccx` is "fundamentally a ZIP archive"; UXP Developer Tool is the documented packaging path
+- Live empirical testing on the dev machine this session (manifest revert, empty CC Desktop registry, empty Plugins panel after repeated relaunches)
+
+**Confidence:** HIGH on the root cause (multiple independent confirmations: official docs, a real shipped competing product, and direct empirical testing on the actual target machine this session). MEDIUM on the exact `.ccx` build mechanics (CLI command not yet hands-on verified) — treat as an open item for the revised Plan 01-03.
+
 ## Architectural Responsibility Map
 
 | Capability | Primary Tier | Secondary Tier | Rationale |
