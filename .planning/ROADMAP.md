@@ -67,11 +67,11 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Note (2026-07-06, re-verified in planning):** Windows uses the identical `.ccx` + Creative Cloud Desktop mechanism as macOS (D-01), so success criteria #2–#5 are re-interpreted, not literally satisfied: there is no custom installer (WIN-01 met by the existing `.ccx` builder), no install-time manifest (WIN-02 superseded), no "Photoshop is running" detection (WIN-03 superseded), and no custom uninstaller/HKCU registration (WIN-04 superseded — Creative Cloud Desktop's "Manage Plugins" owns uninstall). Criterion #6 is rescoped: CC Desktop cannot be driven headlessly, so the CI job validates the built `.ccx` artifact (no `requiredPermissions`, retired scripts absent) rather than a live install/uninstall — real device verification is deferred to before ship (D-06).
 
-**Plans**: 2 plans
+**Plans**: 1/2 plans executed
 
 **Wave 1**
 
-- [ ] 02-01-PLAN.md — Retire the 5 raw-copy Windows scripts, fix `scripts/package.js`, add the installer-retirement regression guard [WIN-01, WIN-02, WIN-03, WIN-04]
+- [x] 02-01-PLAN.md — Retire the 5 raw-copy Windows scripts, fix `scripts/package.js`, add the installer-retirement regression guard [WIN-01, WIN-02, WIN-03, WIN-04]
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -127,7 +127,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & macOS Installer Rework | 4/4 | Complete    | 2026-07-06 |
-| 2. Windows Installer Rework | 0/2 | Not started | - |
+| 2. Windows Installer Rework | 1/2 | In Progress|  |
 | 3. Manifest-Driven Uninstall & Checksum Integrity | 0/TBD | Not started | - |
 | 4. Release Automation & Distribution | 0/TBD | Not started | - |
 | 5. Trust & Documentation Polish | 0/TBD | Not started | - |

@@ -23,10 +23,10 @@ Requirements for this milestone. Each maps to a roadmap phase.
 
 **Note (2026-07-06):** WIN-01/02/03 below assume the same raw-file-copy install model that MAC-01/02/03 assumed and which Phase 1 empirically disproved (see 01-RESEARCH.md addendum) — Windows UXP plugins use the same PluginsStorage/Creative-Cloud-Desktop-registry architecture. Phase 2 planning should re-verify this before assuming WIN-01..03 are buildable as literally written; likely the same `.ccx` pivot applies.
 
-- [ ] **WIN-01**: Replace the bare `.bat` script with a proper unelevated installer (`RequestExecutionLevel user`) targeting `%APPDATA%\Adobe\UXP\PluginsStorage\...` only
-- [ ] **WIN-02**: Installer writes an install-time manifest listing every file/folder it creates
-- [ ] **WIN-03**: Installer detects if Photoshop is running and asks the user to quit it first
-- [ ] **WIN-04**: Uninstaller registers under `HKEY_CURRENT_USER` only — no admin required to uninstall
+- [x] **WIN-01**: Replace the bare `.bat` script with a proper unelevated installer (`RequestExecutionLevel user`) targeting `%APPDATA%\Adobe\UXP\PluginsStorage\...` only
+- [x] **WIN-02**: Installer writes an install-time manifest listing every file/folder it creates
+- [x] **WIN-03**: Installer detects if Photoshop is running and asks the user to quit it first
+- [x] **WIN-04**: Uninstaller registers under `HKEY_CURRENT_USER` only — no admin required to uninstall
 - [ ] **WIN-05**: Installer and uninstaller are verified automatically via CI on a real Windows environment (GitHub Actions `windows-latest` runner) — confirms no elevation prompt, correct install path, and clean uninstall, since the developer has no physical Windows machine to test manually
 
 ### Integrity & Uninstall
@@ -104,10 +104,10 @@ Explicitly excluded. Documented to prevent scope creep.
 | MAC-02 | Phase 1 | Complete |
 | MAC-03 | Phase 1 | Complete |
 | MAC-04 | Phase 1 | Complete |
-| WIN-01 | Phase 2 | Pending |
-| WIN-02 | Phase 2 | Pending |
-| WIN-03 | Phase 2 | Pending |
-| WIN-04 | Phase 2 | Pending |
+| WIN-01 | Phase 2 | Complete |
+| WIN-02 | Phase 2 | Complete |
+| WIN-03 | Phase 2 | Complete |
+| WIN-04 | Phase 2 | Complete |
 | WIN-05 | Phase 2 | Pending |
 | INTEG-01 | Phase 3 | Pending |
 | INTEG-02 | Phase 3 | Pending |

@@ -2,18 +2,18 @@
 gsd_state_version: 1.0
 milestone: v1.6.1
 milestone_name: milestone
-current_phase: 2
-current_phase_name: Windows Installer Rework
+current_phase: 02
+current_phase_name: windows-installer-rework
 status: executing
-stopped_at: Phase 2 context gathered
-last_updated: "2026-07-06T21:50:06.307Z"
+stopped_at: Completed 02-01-PLAN.md
+last_updated: "2026-07-06T21:59:29.465Z"
 last_activity: 2026-07-06
-last_activity_desc: Phase 01 complete, transitioned to Phase 2
+last_activity_desc: Phase 02 execution started
 progress:
   total_phases: 5
   completed_phases: 1
-  total_plans: 4
-  completed_plans: 4
+  total_plans: 6
+  completed_plans: 5
   percent: 20
 ---
 
@@ -24,14 +24,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-04)
 
 **Core value:** A designer with zero terminal experience can install GuideMyGrid on macOS or Windows with a double-click, without being asked to grant admin/root access, and can trust that what they installed is genuinely from the developer and hasn't been tampered with — even without paid OS-level code signing.
-**Current focus:** Phase 01 — foundation-macos-installer-rework
+**Current focus:** Phase 02 — windows-installer-rework
 
 ## Current Position
 
-Phase: 2 — Windows Installer Rework
-Plan: Not started
+Phase: 02 (windows-installer-rework) — EXECUTING
+Plan: 2 of 2
 Status: Ready to execute
-Last activity: 2026-07-06 — Phase 01 complete, transitioned to Phase 2
+Last activity: 2026-07-06 — Phase 02 execution started
 
 Progress: [██████████] 100%
 
@@ -60,6 +60,7 @@ Progress: [██████████] 100%
 | Phase 01 P03 | 12min | 2 tasks | 5 files |
 | Phase 01 P03 | 15min | 3 tasks | 9 files |
 | Phase 01 P04 | 25min | 2 tasks | 7 files |
+| Phase 02 P01 | 6min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -79,6 +80,7 @@ Recent decisions affecting current work:
 - [Phase 01]: Portal-issued plugin id 53e308e0 obtained directly via orchestrator/user exchange; manifest.json host array->object, id->53e308e0, manifestVersion stays 4 (D-01a)
 - [Phase 01]: All five disproven raw-copy/native-dialog installer files deleted outright (not replaced) — manual QA already proved none could work
 - [Phase 01]: Removed manifest.json's requiredPermissions.network block after live A/B test proved it triggers Creative Cloud Desktop's admin-password prompt on install — The update checker it was declared for is currently disconnected dead code (Phase 4's UPD-03); re-adding it later is a conscious Phase 4 decision, not a silent default
+- [Phase 02]: Removed scripts/package.js's now-orphaned helpers (copyDir, JUNK, shouldSkip, EXCLUDE, distDir) after the -installer.zip build step removal, confirmed via grep they had zero remaining callers
 
 ### Pending Todos
 
@@ -103,6 +105,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-06T19:40:28.850Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-windows-installer-rework/02-CONTEXT.md
+Last session: 2026-07-06T21:59:29.459Z
+Stopped at: Completed 02-01-PLAN.md
+Resume file: None
