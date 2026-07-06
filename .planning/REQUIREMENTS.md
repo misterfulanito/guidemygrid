@@ -14,12 +14,14 @@ Requirements for this milestone. Each maps to a roadmap phase.
 
 ### macOS Installer
 
-- [x] **MAC-01**: Replace the root-requiring `pkgbuild` `.pkg` installer with a user-level installer (no admin/root privileges) that copies the plugin into `~/Library/Application Support/Adobe/UXP/PluginsStorage/PHSP/...`
-- [x] **MAC-02**: Installer writes an install-time manifest listing every file/folder it creates (foundation for the uninstaller's "no breadcrumbs" guarantee)
-- [ ] **MAC-03**: Installer detects if Photoshop is running and asks the user to quit it first, rather than risking a partial install
-- [x] **MAC-04**: Installer scripts use absolute binary paths and never trust inherited `$PATH`/implicit shell rc files
+- [x] **MAC-01**: Replace the root-requiring `pkgbuild` `.pkg` installer with a user-level installer (no admin/root privileges) — **superseded 2026-07-06:** manual QA proved a raw file-copy installer never becomes visible in Photoshop's Plugins panel at all (see 01-RESEARCH.md addendum); satisfied instead via a `.ccx` package installed through Creative Cloud Desktop, which is user-level by design, same as Marketplace installs
+- [x] ~~**MAC-02**: Installer writes an install-time manifest listing every file/folder it creates~~ — **superseded 2026-07-06:** no longer applicable. Creative Cloud Desktop owns the install/uninstall path for a `.ccx`-distributed plugin and tracks its own registry of installed files; our own custom manifest has no install code left to attach to. Flagged for Phase 3 (INTEG-01) to reconsider whether a custom uninstaller is still needed at all.
+- [ ] ~~**MAC-03**: Installer detects if Photoshop is running and asks the user to quit it first~~ — **superseded 2026-07-06:** no longer implementable — Creative Cloud Desktop controls the install sequence, not our code. No real-world precedent (GuideGuide, Adobe's own docs) enforces this either.
+- [x] **MAC-04**: Installer scripts use absolute binary paths and never trust inherited `$PATH`/implicit shell rc files — n/a to the `.ccx` packaging script itself (no shell execution in the install path anymore), preserved as a general good-practice note for any remaining build scripts
 
 ### Windows Installer
+
+**Note (2026-07-06):** WIN-01/02/03 below assume the same raw-file-copy install model that MAC-01/02/03 assumed and which Phase 1 empirically disproved (see 01-RESEARCH.md addendum) — Windows UXP plugins use the same PluginsStorage/Creative-Cloud-Desktop-registry architecture. Phase 2 planning should re-verify this before assuming WIN-01..03 are buildable as literally written; likely the same `.ccx` pivot applies.
 
 - [ ] **WIN-01**: Replace the bare `.bat` script with a proper unelevated installer (`RequestExecutionLevel user`) targeting `%APPDATA%\Adobe\UXP\PluginsStorage\...` only
 - [ ] **WIN-02**: Installer writes an install-time manifest listing every file/folder it creates
@@ -49,7 +51,7 @@ Requirements for this milestone. Each maps to a roadmap phase.
 ### Trust & Documentation
 
 - [ ] **DOCS-01**: Plain-language "why this warning appears" explainer with screenshots of the correct one-time override flow (macOS right-click→Open; Windows More info→Run anyway) — shown on the Gumroad page and inside the installer package
-- [ ] **DOCS-02**: Update README to describe the actual current install flow, removing the obsolete Creative Cloud Desktop `.ccx` instructions
+- [ ] **DOCS-02**: Update README to describe the actual current install flow — **reversed 2026-07-06:** Phase 1 reinstated the `.ccx`/Creative Cloud Desktop flow (see MAC-01/02/03 notes and 01-RESEARCH.md addendum), so this now means documenting *that* flow, not removing it. DOCS-01's "why this warning appears" explainer should also cover Creative Cloud Desktop's "unverified third-party developer" dialog, not just the OS-level Gatekeeper/SmartScreen warnings.
 - [ ] **DOCS-03**: Release notes explicitly set expectations that each new unsigned release re-triggers the OS warning even for previously-trusted users — this is expected, not a regression
 
 ## v2 Requirements

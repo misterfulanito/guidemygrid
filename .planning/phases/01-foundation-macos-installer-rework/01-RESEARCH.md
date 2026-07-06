@@ -101,6 +101,46 @@ There is no third, Adobe-uninvolved path. Raw filesystem placement into `Plugins
 
 **Confidence:** HIGH on the root cause (multiple independent confirmations: official docs, a real shipped competing product, and direct empirical testing on the actual target machine this session). MEDIUM on the exact `.ccx` build mechanics (CLI command not yet hands-on verified) — treat as an open item for the revised Plan 01-03.
 
+### Follow-up (same session): historical precedent + real .ccx inspection resolves remaining open items
+
+Two further findings close the gaps this addendum originally left open:
+
+**1. This project already shipped via `.ccx` + Creative Cloud Desktop once before (v1.0.x).** Git history confirms the exact prior arc:
+```
+d7e2017  fix: manifest v1.0.1 — fix error -4 on CCX install
+fb72679  chore: add .ccx packaging pipeline
+1647832  feat: direct install without Creative Cloud + automated GitHub releases
+fbab9bc  feat: macOS .pkg installer — no terminal, no Creative Cloud required
+```
+The project deliberately moved away from `.ccx`/CC Desktop toward the `.pkg` installer specifically to avoid a Creative Cloud dependency — and that `.pkg` installer is exactly what introduced the root-elevation problem this whole milestone exists to fix. **"No admin password" and "no Creative Cloud dependency" already conflicted once in this project's own history.** Given user sign-off (this session), the plan is to accept the CC Desktop dependency again, since it's the only mechanism that satisfies "no admin password" for actual UXP plugin discovery.
+
+**Consequence for DOCS-02** ("remove the obsolete Creative Cloud Desktop `.ccx` instructions" from the README): this requirement is now backwards. The `.ccx` install flow is being *reinstated*, not removed. DOCS-02 needs rewording during Phase 5 planning — flagged here so it isn't silently actioned as originally written.
+
+**2. Direct inspection of a real, currently-shipping competitor `.ccx`** (GuideGuide, provided by the user — `2025.12.8-guideguide-ps.ccx`) resolved the remaining packaging unknowns:
+
+- **Format:** a plain zip, compression method `store` (no compression), containing a top-level `dist/` folder with `manifest.json`, `index.html`, bundled JS, and `icons/` inside it — not files at the zip root.
+- **`"host"` is a bare object, not an array:**
+  ```json
+  "host": {"app":"PS","minVersion":"23.3.0","data":{"apiVersion":2,"loadEvent":"use"}}
+  ```
+  Ours currently uses `"host": [{...}]` (array-wrapped) in both the v4 (current) and origin/main's v5 manifest. This is a real, confirmed structural difference worth testing directly — not assumed from secondhand docs. Note `apiVersion` lives nested under a `"data"` key in this real v5 example, not as a flat sibling of `minVersion` (origin/main's v5 dropped `apiVersion` entirely, which may itself have been an incomplete v5 migration).
+- **`"id": "a99f111a"`** — an opaque 8-character hex string, not a self-chosen reverse-domain string like `com.guidemygrid.plugin`. Confirmed via Adobe's Developer Distribution portal docs: creating a listing there auto-generates a plugin ID, and this is a **free step distinct from Marketplace publication** — a listing can stay in "Draft" indefinitely; "Submission and Review" (the actual approval gate) only applies when a listing is submitted for publishing. Getting an ID this way does not require passing any Adobe review, and does not put the plugin in the Marketplace. User has confirmed accepting this one-time manual registration step.
+
+**Revised technical plan for Plans 01-03/01-04 rework:**
+1. (User, manual, one-time) Register a Draft listing at the Developer Distribution portal → obtain a plugin ID → never submit for review/publication.
+2. Update `manifest.json`: swap the new portal-issued `id` in, change `host` from an array to an object (test with manifestVersion 4 first per D-01a; escalate to v5 only if empirical install testing surfaces a real failure, same fallback discipline as the original D-01a decision).
+3. Add a `.ccx` packaging script (Node, zips `dist/` into `<name>-v<version>.ccx` matching the confirmed structure) — no dependency on the UXP Developer Tool GUI or its CLI needed, since the format is now confirmed directly from a real working example.
+4. Wire `.ccx` output into the existing GitHub Release publish flow (`release/github-release.js`) — this is a reversion to the project's own pre-.pkg release shape, not new infrastructure.
+5. Retire the AppleScript/DMG installer entirely (`installer.applescript`, `build-installer.js`, the `install-payload.sh` file-copy core, and their Jest tests) — none of it is reachable anymore since CC Desktop owns the install.
+6. Manual QA checkpoint: double-click the built `.ccx`, confirm the "unverified third-party developer" warning, confirm install with no admin/root prompt, confirm the plugin appears in Photoshop's Plugins menu.
+
+**Sources (this follow-up):**
+- Local git history of this repository (`d7e2017`, `fb72679`, `1647832`, `fbab9bc`) and old README diffs — HIGH confidence, primary source
+- Direct binary inspection of `2025.12.8-guideguide-ps.ccx` (user-provided, real shipped artifact) — HIGH confidence, ground truth
+- [Adobe Developer Distribution FAQ](https://developer.adobe.com/developer-distribution/creative-cloud/docs/guides/faq) — listing creation vs. submission/review distinction — MEDIUM-HIGH confidence (official docs, some ambiguity on exact free/instant wording)
+
+**Confidence:** HIGH overall — the remaining uncertainty from the first addendum (exact `.ccx` build mechanics) is now resolved via direct inspection of a real file rather than secondhand documentation.
+
 ## Architectural Responsibility Map
 
 | Capability | Primary Tier | Secondary Tier | Rationale |
