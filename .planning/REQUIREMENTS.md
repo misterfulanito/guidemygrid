@@ -27,7 +27,7 @@ Requirements for this milestone. Each maps to a roadmap phase.
 - [x] **WIN-02**: Installer writes an install-time manifest listing every file/folder it creates
 - [x] **WIN-03**: Installer detects if Photoshop is running and asks the user to quit it first
 - [x] **WIN-04**: Uninstaller registers under `HKEY_CURRENT_USER` only — no admin required to uninstall
-- [x] **WIN-05**: Installer and uninstaller are verified automatically via CI on a real Windows environment (GitHub Actions `windows-latest` runner) — confirms no elevation prompt, correct install path, and clean uninstall, since the developer has no physical Windows machine to test manually
+- [x] **WIN-05** *(deferred — see note)*: Installer and uninstaller are verified automatically via CI on a real Windows environment (GitHub Actions `windows-latest` runner) — confirms no elevation prompt, correct install path, and clean uninstall, since the developer has no physical Windows machine to test manually. **2026-07-06:** the workflow (`windows-ccx-verify.yml`) exists and is correctly wired, but its first real run failed at the packaging step — `distribution/photoshop/build-ccx.js` shells out to the `zip` CLI, which isn't present on Windows. This doesn't block real Windows end users (they only install the prebuilt `.ccx` via Creative Cloud Desktop, never running this script). Deferred per developer decision to prioritize a Mac-only MVP for now; tracked in `.planning/todos/pending/2026-07-06-build-ccx-zip-cli-not-cross-platform.md`.
 
 ### Integrity & Uninstall
 
