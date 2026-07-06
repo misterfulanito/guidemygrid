@@ -102,7 +102,7 @@ Explicitly excluded. Documented to prevent scope creep.
 | FOUND-02 | Phase 1 | Complete |
 | MAC-01 | Phase 1 | Complete |
 | MAC-02 | Phase 1 | Complete |
-| MAC-03 | Phase 1 | Pending |
+| MAC-03 | Phase 1 | Complete |
 | MAC-04 | Phase 1 | Complete |
 | WIN-01 | Phase 2 | Pending |
 | WIN-02 | Phase 2 | Pending |

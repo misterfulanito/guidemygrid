@@ -34,7 +34,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. ~~After installing, an install-time manifest file exists listing every file/folder the installer created~~ — **superseded 2026-07-06:** Creative Cloud Desktop owns its own install registry for a `.ccx`-distributed plugin; a custom manifest has no install code left to attach to (see REQUIREMENTS.md MAC-02)
   5. After install, the plugin appears in Photoshop's Plugins menu (Plugins → GuideMyGrid) and opens as a working panel — the outcome the original installer approach never actually reached
 
-**Plans**: 2/4 plans executed
+**Plans**: 3/4 plans executed
 **Wave 1**
 
 - [x] 01-01-PLAN.md — Merge origin/main into epic/ui-icons (+ manifest schema decision) [FOUND-01]
@@ -45,7 +45,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 01-03-PLAN.md — Adobe Developer Distribution portal ID + manifest fix (host object) + retire disproven raw-copy installer code [MAC-01, MAC-02, MAC-03, MAC-04]
+- [x] 01-03-PLAN.md — Adobe Developer Distribution portal ID + manifest fix (host object) + retire disproven raw-copy installer code [MAC-01, MAC-02, MAC-03, MAC-04]
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -116,7 +116,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & macOS Installer Rework | 2/4 | In Progress|  |
+| 1. Foundation & macOS Installer Rework | 3/4 | In Progress|  |
 | 2. Windows Installer Rework | 0/TBD | Not started | - |
 | 3. Manifest-Driven Uninstall & Checksum Integrity | 0/TBD | Not started | - |
 | 4. Release Automation & Distribution | 0/TBD | Not started | - |
