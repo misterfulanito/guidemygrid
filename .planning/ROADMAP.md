@@ -29,12 +29,12 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Success Criteria** (what must be TRUE):
 
   1. The working branch contains all of origin/main's installer work (v1.6.1-1.6.2) merged in with no unresolved conflicts, and the repo has a `distribution/photoshop/{macos,windows}` + `release/` directory split ready for host-specific and release-automation work
-  2. A designer can double-click the macOS installer and it completes without ever prompting for an admin/root password
-  3. If Photoshop is running, the installer detects it and asks the user to quit before proceeding, rather than risking a partial install
-  4. After installing, an install-time manifest file exists listing every file/folder the installer created
-  5. The installer script uses only absolute binary paths and never relies on inherited `$PATH` or shell rc files
+  2. A designer can double-click the built `.ccx` and, through Creative Cloud Desktop's own install flow, complete installation without ever being prompted for an admin/root password — **updated 2026-07-06:** manual QA proved a raw file-copy installer is never listed by Photoshop at all; see `01-RESEARCH.md`'s CRITICAL ADDENDUM. Satisfied via a `.ccx` package instead of the originally-planned `.app`/`.dmg`.
+  3. ~~If Photoshop is running, the installer detects it and asks the user to quit before proceeding~~ — **superseded 2026-07-06:** no longer enforceable; Creative Cloud Desktop controls the install sequence for a `.ccx`, not our code (see REQUIREMENTS.md MAC-03)
+  4. ~~After installing, an install-time manifest file exists listing every file/folder the installer created~~ — **superseded 2026-07-06:** Creative Cloud Desktop owns its own install registry for a `.ccx`-distributed plugin; a custom manifest has no install code left to attach to (see REQUIREMENTS.md MAC-02)
+  5. After install, the plugin appears in Photoshop's Plugins menu (Plugins → GuideMyGrid) and opens as a working panel — the outcome the original installer approach never actually reached
 
-**Plans**: 3/4 plans executed
+**Plans**: 2/4 plans executed
 **Wave 1**
 
 - [x] 01-01-PLAN.md — Merge origin/main into epic/ui-icons (+ manifest schema decision) [FOUND-01]
@@ -45,11 +45,11 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [x] 01-03-PLAN.md — Unprivileged install-payload core + manifest + Nyquist validation harness [MAC-01, MAC-02, MAC-04]
+- [ ] 01-03-PLAN.md — Adobe Developer Distribution portal ID + manifest fix (host object) + retire disproven raw-copy installer code [MAC-01, MAC-02, MAC-03, MAC-04]
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 01-04-PLAN.md — Installer .app + DMG build + Photoshop hard block + end-to-end QA [MAC-01, MAC-03, MAC-04]
+- [ ] 01-04-PLAN.md — .ccx packaging script + GitHub Release wiring + Creative Cloud Desktop install QA [MAC-01, MAC-04]
 
 ### Phase 2: Windows Installer Rework
 
@@ -116,7 +116,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & macOS Installer Rework | 3/4 | In Progress|  |
+| 1. Foundation & macOS Installer Rework | 2/4 | In Progress|  |
 | 2. Windows Installer Rework | 0/TBD | Not started | - |
 | 3. Manifest-Driven Uninstall & Checksum Integrity | 0/TBD | Not started | - |
 | 4. Release Automation & Distribution | 0/TBD | Not started | - |
