@@ -141,6 +141,30 @@ The project deliberately moved away from `.ccx`/CC Desktop toward the `.pkg` ins
 
 **Confidence:** HIGH overall — the remaining uncertainty from the first addendum (exact `.ccx` build mechanics) is now resolved via direct inspection of a real file rather than secondhand documentation.
 
+### Second follow-up (same session): real install QA succeeded, then surfaced a MAC-01-relevant permissions finding
+
+The `.ccx` built per the plan above was installed end-to-end on the real dev Mac: Creative Cloud Desktop's "Manage Plugins" screen shows GuideMyGrid as "Installed," version 0.1.0, and the panel opens and renders correctly in Photoshop (Grid/Margins/Columns/Rows controls, footer reads "GuideMyGrid v0.1.0"). **This is the first time in this phase the plugin was actually observed working end-to-end.**
+
+However, the first install prompted for the Mac's administrator password. Creative Cloud Desktop's own pre-install warning dialog explicitly states why: *"This plugin has been developed by a third-party developer and you may be asked to enter your administrator password to complete the installation."* This is a direct MAC-01 concern (no admin/root password) — surfaced via manual QA, not something to silently accept.
+
+**Root cause, confirmed empirically:** the admin-password prompt is tied to `manifest.json`'s `requiredPermissions` block, not an unconditional property of all non-Marketplace `.ccx` installs. Our manifest declared `requiredPermissions.network` (for the currently-disconnected update checker — dead code per PROJECT.md/CONCERNS.md, not wired up until Phase 4's UPD-03). Test performed this session:
+1. Removed `requiredPermissions` entirely from `manifest.json`, rebuilt `dist/` and the `.ccx`.
+2. User uninstalled the prior install via Creative Cloud Desktop's Manage Plugins, then reinstalled the new `.ccx` fresh.
+3. Same Creative Cloud Desktop dialogs appeared (non-Marketplace confirm, third-party-developer warning) — but **no administrator password prompt this time**. Plugin still installs, still shows in Manage Plugins, panel still opens and works.
+
+This is strong (not yet exhaustively verified) evidence that **requesting elevated permissions (network, filesystem, etc.) in a non-Marketplace plugin's manifest is what triggers the admin-password requirement — omitting them avoids it.** This is also consistent with secondary research (Adobe help docs describe admin-password prompts as tied to "the specific access level the plugin requires, such as Network or Local FileSystem," and separately note that only "Hybrid" plugins with native/compiled code unconditionally require it — GuideMyGrid has neither).
+
+**Consequence for this phase:** `manifest.json`'s `requiredPermissions.network` block is removed for now (harmless — the update checker isn't wired up yet, nothing currently calls out to `api.github.com`).
+
+**Consequence for Phase 4 (UPD-03, reconnect the update checker):** re-adding `requiredPermissions.network` when the update checker is wired back up will very likely reintroduce the admin-password prompt on install/update. **This is a real, conscious tradeoff Phase 4 must decide on, not something to silently reintroduce** — options include: accepting the one-time admin prompt as the cost of an in-app update checker, keeping the update checker manifest-permission-free by some alternative mechanism (e.g., an out-of-panel checker, or moving the network call to happen not tied to plugin manifest permissions if UXP/CC Desktop's model allows a distinction there — unconfirmed, would need its own research), or deferring the update checker's reconnection entirely. Flagged here so Phase 4 planning starts from this evidence instead of rediscovering it.
+
+**Sources:**
+- Live empirical A/B test on the dev Mac this session (manifest with vs. without `requiredPermissions.network`, full uninstall/reinstall cycle between the two)
+- [Fix issues with installing XD plugins — Adobe Help](https://helpx.adobe.com/creative-cloud/kb/troubleshoot-common-addon-installation-issues.html) — admin-password requirement tied to requested access level; Hybrid (native-code) plugins always require it
+- Creative Cloud Desktop's own in-app warning dialog text (this session, screenshotted by the user)
+
+**Confidence:** MEDIUM-HIGH — the A/B test is a single trial (not repeated multiple times to rule out other confounds like macOS's admin-credential caching window), but the result is consistent with independently-sourced secondary documentation and the dialog's own stated reasoning. Worth a second confirmation pass if this becomes safety-critical later (e.g., before Phase 4 commits to a specific update-checker reconnection approach).
+
 ## Architectural Responsibility Map
 
 | Capability | Primary Tier | Secondary Tier | Rationale |
