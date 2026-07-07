@@ -59,6 +59,22 @@ const stageDir = path.join(root, '.tmp-ccx');
 if (fs.existsSync(stageDir)) fs.rmSync(stageDir, { recursive: true });
 copyDir(distDir, path.join(stageDir, 'dist'));
 
+// 3b. Preflight: confirm `zip` is on PATH before shelling out to it. `zip` is
+//    not bundled with Node and isn't guaranteed present on every machine
+//    (notably some minimal Windows setups) — this is the known cross-platform
+//    packaging pain point tracked as a pending todo (a full Node-zip-library
+//    rework is out of scope here; this is just a clear, actionable error
+//    instead of an opaque `execSync` ENOENT/exit-code failure).
+try {
+  execSync('command -v zip', { stdio: 'ignore' });
+} catch {
+  throw new Error(
+    '`zip` was not found on PATH — the .ccx cannot be built without it. ' +
+    'Install zip (e.g. via your OS package manager) or see the pending ' +
+    'cross-platform-packaging todo for a Node-based alternative.'
+  );
+}
+
 // 4. Zip the staged `dist/` folder itself (not its contents) into the .ccx.
 //    Standard zip deflate compression is used here (not `-Z store`) —
 //    research found no evidence Creative Cloud Desktop requires a specific

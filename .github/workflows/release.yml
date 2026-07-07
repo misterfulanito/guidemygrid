@@ -32,6 +32,5 @@ jobs:
         with:
           files: |
             releases/GuideMyGrid-v*.ccx
-            releases/GuideMyGrid-v*-installer.zip
           generate_release_notes: true
           fail_on_unmatched_files: false
