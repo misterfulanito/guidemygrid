@@ -1,0 +1,67 @@
+# Source: 02-RESEARCH.md's `## CI Job Design (WIN-05 Rescoped)`, mirrored for
+# macOS per Phase 3's D-09/D-10 — build the .ccx the way a real release does,
+# then assert its contents have no requiredPermissions and no retired
+# installer/uninstaller scripts. Uses `unzip` (macOS built-in) + `node -e` for
+# JSON parsing instead of a `jq` dependency the project doesn't otherwise use.
+name: macOS CCX Verification
+
+on:
+  push:
+    branches: [ main, epic/ui-icons ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify-macos-ccx:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build plugin
+        run: npm run build
+
+      - name: Package .ccx
+        run: npm run package:ccx
+
+      - name: Extract .ccx and validate contents
+        run: |
+          set -euo pipefail
+
+          CCX=$(ls releases/*.ccx 2>/dev/null | head -n1 || true)
+          if [ -z "$CCX" ]; then
+            echo "No .ccx artifact found in releases/ after packaging"
+            exit 1
+          fi
+
+          mkdir -p ccx-extracted
+          unzip -q "$CCX" -d ccx-extracted
+
+          MANIFEST="ccx-extracted/dist/manifest.json"
+          if [ ! -f "$MANIFEST" ]; then
+            echo "manifest.json not found at expected path dist/manifest.json inside the .ccx"
+            exit 1
+          fi
+
+          if node -e "process.exit(require('$PWD/$MANIFEST').requiredPermissions ? 1 : 0)"; then
+            echo "OK: manifest.json has no requiredPermissions block"
+          else
+            echo "manifest.json declares requiredPermissions -- this triggers Creative Cloud Desktop's admin-password prompt on non-Marketplace installs (see 01-RESEARCH.md). Remove it unless this is an intentional, reviewed tradeoff (relevant to Phase 4's UPD-03)."
+            exit 1
+          fi
+
+          RETIRED_NAMES="install.bat install.ps1 install.sh uninstall.bat uninstall.ps1 build-mac-uninstaller.js uninstall-preinstall"
+          for name in $RETIRED_NAMES; do
+            if find ccx-extracted -name "$name" | grep -q .; then
+              echo "Retired installer/uninstaller script '$name' found inside the built .ccx -- should have been deleted per Phase 2's D-03 / Phase 3's D-01"
+              exit 1
+            fi
+          done
+          echo "OK: no retired installer/uninstaller scripts found in the .ccx"
