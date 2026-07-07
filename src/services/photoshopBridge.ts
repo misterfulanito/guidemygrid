@@ -14,13 +14,24 @@ export class PhotoshopBridge {
   async getActiveDocument(): Promise<DocumentInfo | null> {
     const doc = app.activeDocument;
     if (!doc) return null;
+
+    let hasSelection = false;
+    try {
+      hasSelection = await this.hasActiveSelection();
+    } catch (err) {
+      // Selection check can fail on initial mount before UXP grants modal
+      // scope (executeAsModal timing race) — degrade hasSelection only,
+      // never suppress document detection.
+      console.error('[GMG] getActiveDocument selection check fallback:', err);
+    }
+
     return {
       id: doc.id,
       name: doc.name,
       width: doc.width,
       height: doc.height,
       resolution: doc.resolution,
-      hasSelection: await this.hasActiveSelection(),
+      hasSelection,
     };
   }
 
