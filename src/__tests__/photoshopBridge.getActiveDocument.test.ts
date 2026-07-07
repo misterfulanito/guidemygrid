@@ -1,4 +1,6 @@
-let mockActiveDocument: { id: number; name: string; width: number; height: number; resolution: number } | null = {
+type MockDoc = { id: number; name: string; width: number; height: number; resolution: number };
+
+let mockActiveDocument: MockDoc | null = {
   id: 1,
   name: 'Untitled-1',
   width: 1000,
@@ -6,12 +8,19 @@ let mockActiveDocument: { id: number; name: string; width: number; height: numbe
   resolution: 72,
 };
 
+// app.documents is a DIFFERENT API surface than app.activeDocument. The bonus
+// fallback in getActiveDocument() reads it when activeDocument is null (File > New).
+let mockDocuments: MockDoc[] = [];
+
 jest.mock(
   'photoshop',
   () => ({
     app: {
       get activeDocument() {
         return mockActiveDocument;
+      },
+      get documents() {
+        return mockDocuments;
       },
     },
     core: {
@@ -38,6 +47,7 @@ describe('photoshopBridge.getActiveDocument', () => {
       height: 1000,
       resolution: 72,
     };
+    mockDocuments = [];
   });
 
   test('resolves a non-null document with hasSelection:false when getSelectionBounds() rejects (modal-scope timing failure)', async () => {
@@ -72,11 +82,32 @@ describe('photoshopBridge.getActiveDocument', () => {
     expect(doc?.hasSelection).toBe(true);
   });
 
-  test('returns null when there is no active document', async () => {
+  test('returns null when there is no active document and no open documents', async () => {
     mockActiveDocument = null;
+    mockDocuments = [];
 
     const doc = await photoshopBridge.getActiveDocument();
 
     expect(doc).toBeNull();
+  });
+
+  test('BONUS: falls back to app.documents when activeDocument is null (File > New)', async () => {
+    // app.activeDocument never reported the freshly-created document, but
+    // app.documents (a different API surface) lists it — auto-detection should
+    // still resolve dimensions from the most recently added document.
+    mockActiveDocument = null;
+    mockDocuments = [{ id: 5, name: 'Untitled-2', width: 800, height: 600, resolution: 72 }];
+    jest.spyOn(photoshopBridge as any, 'getSelectionBounds').mockResolvedValue(null);
+
+    const doc = await photoshopBridge.getActiveDocument();
+
+    expect(doc).toEqual({
+      id: 5,
+      name: 'Untitled-2',
+      width: 800,
+      height: 600,
+      resolution: 72,
+      hasSelection: false,
+    });
   });
 });

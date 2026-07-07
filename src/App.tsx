@@ -1,7 +1,8 @@
 // src/App.tsx
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useUIStore } from './store';
 import { GridPanel } from './components/ColumnGrid/GridPanel';
+import { DocumentHintBanner } from './components/shared/DocumentHintBanner';
 import { useDocument } from './hooks/useDocument';
 import { photoshopBridge } from './services/photoshopBridge';
 import styles from './App.module.css';
@@ -24,6 +25,21 @@ function IconEye() {
 export function App() {
   const { guidesVisible, setGuidesVisible } = useUIStore();
   const { document } = useDocument();
+
+  // Dismissible "no canvas detected" hint. Reset dismissal whenever a document
+  // appears (null → non-null) so the hint returns fresh the next time it's
+  // needed (e.g. a second File > New later in the session) instead of being
+  // permanently gone after one dismissal. While a document IS detected the
+  // banner is hidden anyway via the `!document` condition below.
+  const [hintDismissed, setHintDismissed] = useState(false);
+  const hadDocument = useRef(false);
+  useEffect(() => {
+    const hasDocument = document !== null;
+    if (hasDocument && !hadDocument.current) {
+      setHintDismissed(false);
+    }
+    hadDocument.current = hasDocument;
+  }, [document]);
 
   async function handleToggleEye() {
     const next = !guidesVisible;
@@ -49,9 +65,9 @@ export function App() {
         </div>
       </div>
 
-      {/* ── No-document notice ── */}
-      {!document && (
-        <div className={styles.noDoc}>Open a document in Photoshop to get started.</div>
+      {/* ── No-canvas-detected hint (dismissible) ── */}
+      {!document && !hintDismissed && (
+        <DocumentHintBanner onDismiss={() => setHintDismissed(true)} />
       )}
 
       {/* ── Main panel ── */}

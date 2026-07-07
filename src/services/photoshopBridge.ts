@@ -12,7 +12,19 @@ export class PhotoshopBridge {
   // --- Active document ---
 
   async getActiveDocument(): Promise<DocumentInfo | null> {
-    const doc = app.activeDocument;
+    let doc = app.activeDocument;
+    if (!doc) {
+      // BONUS (debug session canvas-not-detected): app.activeDocument can stay
+      // null for a freshly-created (File > New) document even though app.documents
+      // — a different API surface — already lists it. Fall back to the most
+      // recently added document so auto-detection can still work; if app.documents
+      // is also empty we correctly report no document (the UI hint then guides
+      // the user to open a document / make a selection).
+      const docs = app.documents;
+      if (docs && docs.length > 0) {
+        doc = docs[docs.length - 1];
+      }
+    }
     if (!doc) return null;
 
     let hasSelection = false;

@@ -81,15 +81,8 @@
   flex-shrink: 0;
 }
 
-/* ── No-document notice ──────────────────────────────────────────────────── */
-.noDoc {
-  padding: 5px 12px;
-  font-size: 11px;
-  color: var(--gmg-text-secondary);
-  background: var(--gmg-bg-toolbar);
-  border-bottom: 1px solid var(--gmg-border);
-  flex-shrink: 0;
-}
+/* ── No-canvas-detected hint lives in components/shared/DocumentHintBanner.tsx
+   (inline-styled, dismissible) — no CSS-module rule needed here. ──────────── */
 
 /* ── Tab content ─────────────────────────────────────────────────────────── */
 .tabContent {
