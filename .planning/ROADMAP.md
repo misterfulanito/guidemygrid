@@ -89,12 +89,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. An automated install-then-uninstall filesystem-diff check runs as part of the release process and flags any residue before a release ships — on Windows this runs via the same GitHub Actions `windows-latest` CI runner established in Phase 2, since that's the only way to exercise it on real Windows
   4. A completed security review confirms both installer/uninstaller scripts use absolute paths and don't trust inherited environment/PATH state
 
-**Plans**: 1/4 plans executed
+**Plans**: 2/4 plans executed
 
 **Wave 1** *(parallel — no shared files)*
 
 - [x] 03-01-PLAN.md — Retire the legacy macOS uninstaller + document CC Desktop uninstall + retirement regression test [INTEG-01]
-- [ ] 03-03-PLAN.md — Add the `macos-latest` .ccx build-artifact regression CI job (parity with Windows) [INTEG-03]
+- [x] 03-03-PLAN.md — Add the `macos-latest` .ccx build-artifact regression CI job (parity with Windows) [INTEG-03]
 
 **Wave 2** *(blocked on 03-01 — shares scripts/package.js + README.md)*
 
@@ -141,6 +141,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Foundation & macOS Installer Rework | 4/4 | Complete    | 2026-07-06 |
 | 2. Windows Installer Rework | 2/2 | Complete    | 2026-07-06 |
-| 3. Manifest-Driven Uninstall & Checksum Integrity | 1/4 | In Progress|  |
+| 3. Manifest-Driven Uninstall & Checksum Integrity | 2/4 | In Progress|  |
 | 4. Release Automation & Distribution | 0/TBD | Not started | - |
 | 5. Trust & Documentation Polish | 0/TBD | Not started | - |

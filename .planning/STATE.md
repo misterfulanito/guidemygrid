@@ -6,14 +6,14 @@ current_phase: 03
 current_phase_name: manifest-driven-uninstall-checksum-integrity
 status: executing
 stopped_at: Phase 3 context gathered
-last_updated: "2026-07-07T15:02:15.430Z"
+last_updated: "2026-07-07T15:22:49.212Z"
 last_activity: 2026-07-07
 last_activity_desc: Phase 03 execution started
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 10
-  completed_plans: 7
+  completed_plans: 8
   percent: 40
 ---
 
@@ -29,9 +29,9 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 ## Current Position
 
 Phase: 03 (manifest-driven-uninstall-checksum-integrity) — EXECUTING
-Plan: 2 of 4
-Status: Ready to execute
-Last activity: 2026-07-07 — Phase 03 execution started
+Plan: 3 of 4 (03-03 complete; 03-02 still pending — wave-based execution, not strictly sequential)
+Status: Executing — 03-01 and 03-03 complete, 03-02 and 03-04 remaining
+Last activity: 2026-07-07 — Completed 03-03-PLAN.md (macOS .ccx build-artifact regression CI job)
 
 Progress: [██████████] 100%
 
@@ -64,6 +64,7 @@ Progress: [██████████] 100%
 | Phase 02 P01 | 6min | 2 tasks | 7 files |
 | Phase 02 P02 | 4min | 2 tasks | 3 files |
 | Phase 03 P01 | 8min | 3 tasks | 5 files |
+| Phase 03 P03 | 6min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -88,6 +89,8 @@ Recent decisions affecting current work:
 - [Phase 02]: windows-ccx-verify.yml carries no top-level permissions block (least privilege, build-and-assert only)
 - [Phase 03]: INTEG-01 satisfied by deletion + documentation + regression guard, not new tracking code -- CC Desktop already owns install/uninstall end-to-end (Phase 03 Plan 01)
 - [Phase 03]: Pre-existing package.js git-add-on-gitignored-.ccx bug logged to deferred-items.md rather than fixed inline -- predates Plan 01's changes
+- [Phase 03]: Mirrored windows-ccx-verify.yml almost exactly for macos-ccx-verify.yml per D-10, using unzip + node -e instead of PowerShell zip/JSON handling to avoid a jq dependency
+- [Phase 03]: Retired-names loop extended to seven entries (five Windows raw-copy scripts + build-mac-uninstaller.js + uninstall-preinstall) per D-11, giving the macOS CI job coverage of both phases' retirements
 
 ### Pending Todos
 
@@ -112,6 +115,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-07T15:02:15.423Z
+Last session: 2026-07-07T15:12:59.792Z
 Stopped at: Phase 3 context gathered
 Resume file: .planning/phases/03-manifest-driven-uninstall-checksum-integrity/03-CONTEXT.md
