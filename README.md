@@ -67,7 +67,7 @@ When a new version is available, the plugin displays a notice at the top of the 
 ### Steps
 
 1. Go to the **[Releases](https://github.com/misterfulanito/guidemygrid/releases/latest)** section of this repository
-2. Download the `guidemygrid-vX.X.X.ccx` file from the latest release
+2. Download the `guidemygrid-vX.X.X.ccx` file from the latest release (want to confirm your download is untampered first? See **[VERIFY.md](VERIFY.md)**)
 3. **Double-click** the `.ccx` file — Creative Cloud Desktop will open a confirmation dialog
 4. Accept the installation
 5. Open Photoshop and go to **Plugins → GuideMyGrid**

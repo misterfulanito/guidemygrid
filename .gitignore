@@ -5,4 +5,5 @@ releases/
 .DS_Store
 *.md
 !README.md
+!VERIFY.md
 !.planning/**/*.md
