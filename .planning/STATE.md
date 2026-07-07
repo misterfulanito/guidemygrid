@@ -2,18 +2,18 @@
 gsd_state_version: 1.0
 milestone: v1.6.1
 milestone_name: milestone
-current_phase: 3
-current_phase_name: Manifest-Driven Uninstall & Checksum Integrity
+current_phase: 03
+current_phase_name: manifest-driven-uninstall-checksum-integrity
 status: executing
 stopped_at: Phase 3 context gathered
-last_updated: "2026-07-07T14:41:05.660Z"
-last_activity: 2026-07-06
-last_activity_desc: Phase 02 complete, transitioned to Phase 3
+last_updated: "2026-07-07T15:02:15.430Z"
+last_activity: 2026-07-07
+last_activity_desc: Phase 03 execution started
 progress:
   total_phases: 5
   completed_phases: 2
-  total_plans: 6
-  completed_plans: 6
+  total_plans: 10
+  completed_plans: 7
   percent: 40
 ---
 
@@ -24,14 +24,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-04)
 
 **Core value:** A designer with zero terminal experience can install GuideMyGrid on macOS or Windows with a double-click, without being asked to grant admin/root access, and can trust that what they installed is genuinely from the developer and hasn't been tampered with — even without paid OS-level code signing.
-**Current focus:** Phase 02 — windows-installer-rework
+**Current focus:** Phase 03 — manifest-driven-uninstall-checksum-integrity
 
 ## Current Position
 
-Phase: 3 — Manifest-Driven Uninstall & Checksum Integrity
-Plan: Not started
+Phase: 03 (manifest-driven-uninstall-checksum-integrity) — EXECUTING
+Plan: 2 of 4
 Status: Ready to execute
-Last activity: 2026-07-06 — Phase 02 complete, transitioned to Phase 3
+Last activity: 2026-07-07 — Phase 03 execution started
 
 Progress: [██████████] 100%
 
@@ -63,6 +63,7 @@ Progress: [██████████] 100%
 | Phase 01 P04 | 25min | 2 tasks | 7 files |
 | Phase 02 P01 | 6min | 2 tasks | 7 files |
 | Phase 02 P02 | 4min | 2 tasks | 3 files |
+| Phase 03 P01 | 8min | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -85,6 +86,8 @@ Recent decisions affecting current work:
 - [Phase 02]: Removed scripts/package.js's now-orphaned helpers (copyDir, JUNK, shouldSkip, EXCLUDE, distDir) after the -installer.zip build step removal, confirmed via grep they had zero remaining callers
 - [Phase 02]: WIN-05 rescoped: CI cannot drive Creative Cloud Desktop's GUI/Adobe-login headlessly, so windows-ccx-verify.yml verifies artifact regressions (no requiredPermissions, no retired scripts) on windows-latest instead of a literal end-to-end install/uninstall; real device verification deferred to D-06 before ship
 - [Phase 02]: windows-ccx-verify.yml carries no top-level permissions block (least privilege, build-and-assert only)
+- [Phase 03]: INTEG-01 satisfied by deletion + documentation + regression guard, not new tracking code -- CC Desktop already owns install/uninstall end-to-end (Phase 03 Plan 01)
+- [Phase 03]: Pre-existing package.js git-add-on-gitignored-.ccx bug logged to deferred-items.md rather than fixed inline -- predates Plan 01's changes
 
 ### Pending Todos
 
@@ -109,6 +112,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-06T23:22:14.776Z
+Last session: 2026-07-07T15:02:15.423Z
 Stopped at: Phase 3 context gathered
 Resume file: .planning/phases/03-manifest-driven-uninstall-checksum-integrity/03-CONTEXT.md
