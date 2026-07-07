@@ -4,17 +4,17 @@ milestone: v1.6.1
 milestone_name: milestone
 current_phase: 03
 current_phase_name: manifest-driven-uninstall-checksum-integrity
-status: executing
-stopped_at: Phase 3 context gathered
-last_updated: "2026-07-07T15:43:14.631Z"
+status: ready_for_verification
+stopped_at: Completed 03-04-PLAN.md (Phase 3 complete, ready for verification)
+last_updated: "2026-07-07T15:55:29.854Z"
 last_activity: 2026-07-07
-last_activity_desc: Completed 03-02-PLAN.md (SHA256 checksum integrity)
+last_activity_desc: "Completed 03-04-PLAN.md (release-script security review: zip preflight, release.yml cleanup, release-script-safety.test.ts, 03-SECURITY-REVIEW.md)"
 progress:
   total_phases: 5
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 10
-  completed_plans: 9
-  percent: 40
+  completed_plans: 10
+  percent: 60
 ---
 
 # Project State
@@ -28,10 +28,10 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 
 ## Current Position
 
-Phase: 03 (manifest-driven-uninstall-checksum-integrity) — EXECUTING
-Plan: 4 of 4 (03-01, 03-02, 03-03 complete; only 03-04 remaining)
-Status: Executing — 03-01, 03-02, and 03-03 complete, 03-04 remaining
-Last activity: 2026-07-07 — Completed 03-02-PLAN.md (SHA256 checksum integrity: release/checksums.js, publish wiring, VERIFY.md)
+Phase: 03 (manifest-driven-uninstall-checksum-integrity) — COMPLETE
+Plan: 4 of 4 (03-01, 03-02, 03-03, 03-04 all complete)
+Status: Ready for verification — all four plans complete (INTEG-01, INTEG-02, INTEG-03, INTEG-04 satisfied)
+Last activity: 2026-07-07 — Completed 03-04-PLAN.md (release-script security review: zip preflight, release.yml cleanup, release-script-safety.test.ts, 03-SECURITY-REVIEW.md)
 
 Progress: [██████████] 100%
 
@@ -66,6 +66,7 @@ Progress: [██████████] 100%
 | Phase 03 P01 | 8min | 3 tasks | 5 files |
 | Phase 03 P03 | 6min | 1 tasks | 1 files |
 | Phase 03 P02 | 12min | 3 tasks | 7 files |
+| Phase 03 P04 | 8min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -94,6 +95,8 @@ Recent decisions affecting current work:
 - [Phase 03]: Retired-names loop extended to seven entries (five Windows raw-copy scripts + build-mac-uninstaller.js + uninstall-preinstall) per D-11, giving the macOS CI job coverage of both phases' retirements
 - [Phase 03]: release/checksums.js uses Node built-in crypto/fs streaming (no new dependency), matching version.js/github-release.js's zero-dependency sibling-script style
 - [Phase 03]: .gitignore's blanket *.md exclusion silently blocked VERIFY.md — added an explicit !VERIFY.md exception (Rule 3 auto-fix)
+- [Phase 03]: Applied differentiated severity per D-15/Pitfall 4 -- bare git/gh/npm command names in dev-machine/CI-only release scripts accepted as low risk, not equivalent to the retired installer's remote root-elevated PATH-hijack bug; only the zip preflight in build-ccx.js was mitigated
+- [Phase 03]: release/version.js and release/checksums.js recorded as 'no finding' in the INTEG-04 security review -- neither has any execSync/shell-out surface at all
 
 ### Pending Todos
 
@@ -118,6 +121,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-07T15:39:57.262Z
-Stopped at: Phase 3 context gathered
-Resume file: .planning/phases/03-manifest-driven-uninstall-checksum-integrity/03-CONTEXT.md
+Last session: 2026-07-07T15:53:19.386Z
+Stopped at: Completed 03-04-PLAN.md (Phase 3 complete, ready for verification)
+Resume file: .planning/phases/03-manifest-driven-uninstall-checksum-integrity/03-04-SUMMARY.md

@@ -34,7 +34,7 @@ Requirements for this milestone. Each maps to a roadmap phase.
 - [x] **INTEG-01**: Uninstaller (both platforms) consumes the install-time manifest and removes exactly those paths — zero leftover files, logs, or preference entries
 - [x] **INTEG-02**: Published SHA256 checksum for every release artifact, with plain-language copy-paste verification steps for both OS
 - [x] **INTEG-03**: Automated install→uninstall filesystem-diff regression check added to the release process (catches "breadcrumbs" before they ship)
-- [ ] **INTEG-04**: Security review of both installer/uninstaller scripts specifically for env/PATH trust issues (absolute paths, no bare command names, no implicit environment trust)
+- [x] **INTEG-04**: Security review of both installer/uninstaller scripts specifically for env/PATH trust issues (absolute paths, no bare command names, no implicit environment trust)
 
 ### Update Mechanism
 
@@ -112,7 +112,7 @@ Explicitly excluded. Documented to prevent scope creep.
 | INTEG-01 | Phase 3 | Complete |
 | INTEG-02 | Phase 3 | Complete |
 | INTEG-03 | Phase 3 | Complete |
-| INTEG-04 | Phase 3 | Pending |
+| INTEG-04 | Phase 3 | Complete |
 | UPD-01 | Phase 4 | Pending |
 | UPD-02 | Phase 4 | Pending |
 | UPD-03 | Phase 4 | Pending |
