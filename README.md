@@ -76,6 +76,19 @@ When a new version is available, the plugin displays a notice at the top of the 
 
 ---
 
+## Uninstalling
+
+GuideMyGrid is uninstalled through Creative Cloud Desktop's **Manage Plugins** panel — there is no separate uninstaller app to download or run.
+
+1. Open **Creative Cloud Desktop**
+2. Go to the **Plugins** area and select **Manage Plugins**
+3. Find **GuideMyGrid** in the list
+4. Choose **Uninstall** (or **Remove**)
+
+Creative Cloud Desktop owns the entire install and uninstall lifecycle for the plugin, so this is the only step needed.
+
+---
+
 ## How to use it
 
 ### 1. Configure your grid
