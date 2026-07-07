@@ -18,11 +18,4 @@ describe('Windows installer retirement (Phase 2, D-03)', () => {
       expect(packageJs).not.toContain(file);
     }
   });
-
-  it('manifest.json should not declare requiredPermissions', () => {
-    const manifest = JSON.parse(
-      fs.readFileSync(path.resolve(__dirname, '../../manifest.json'), 'utf8')
-    );
-    expect(manifest.requiredPermissions).toBeUndefined();
-  });
 });

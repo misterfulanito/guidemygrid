@@ -9,6 +9,11 @@
     "minVersion": "22.0.0",
     "apiVersion": 2
   },
+  "requiredPermissions": {
+    "network": {
+      "domains": ["https://api.github.com"]
+    }
+  },
   "entrypoints": [
     {
       "type": "panel",
