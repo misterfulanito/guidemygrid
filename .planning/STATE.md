@@ -2,18 +2,18 @@
 gsd_state_version: 1.0
 milestone: v1.6.1
 milestone_name: milestone
-current_phase: 4
-current_phase_name: Release Automation & Distribution
+current_phase: 04
+current_phase_name: release-automation-distribution
 status: executing
-stopped_at: Phase 4 context gathered
-last_updated: "2026-07-07T21:25:08.152Z"
+stopped_at: Completed 04-01-PLAN.md
+last_updated: "2026-07-07T21:37:31.001Z"
 last_activity: 2026-07-07
-last_activity_desc: Phase 03 complete, transitioned to Phase 4
+last_activity_desc: Phase 04 execution started
 progress:
   total_phases: 5
   completed_phases: 3
-  total_plans: 11
-  completed_plans: 11
+  total_plans: 15
+  completed_plans: 12
   percent: 60
 ---
 
@@ -24,14 +24,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-04)
 
 **Core value:** A designer with zero terminal experience can install GuideMyGrid on macOS or Windows with a double-click, without being asked to grant admin/root access, and can trust that what they installed is genuinely from the developer and hasn't been tampered with — even without paid OS-level code signing.
-**Current focus:** Phase 03 — manifest-driven-uninstall-checksum-integrity
+**Current focus:** Phase 04 — release-automation-distribution
 
 ## Current Position
 
-Phase: 4 — Release Automation & Distribution
-Plan: Not started
+Phase: 04 (release-automation-distribution) — EXECUTING
+Plan: 2 of 4
 Status: Ready to execute
-Last activity: 2026-07-07 — Phase 03 complete, transitioned to Phase 4
+Last activity: 2026-07-07 — Phase 04 execution started
 
 Progress: [██████████] 100%
 
@@ -69,6 +69,7 @@ Progress: [██████████] 100%
 | Phase 03 P02 | 12min | 3 tasks | 7 files |
 | Phase 03 P04 | 8min | 2 tasks | 4 files |
 | Phase 03 P05 | 4min | 1 tasks | 2 files |
+| Phase 04 P01 | 1min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -100,6 +101,7 @@ Recent decisions affecting current work:
 - [Phase 03]: Applied differentiated severity per D-15/Pitfall 4 -- bare git/gh/npm command names in dev-machine/CI-only release scripts accepted as low risk, not equivalent to the retired installer's remote root-elevated PATH-hijack bug; only the zip preflight in build-ccx.js was mitigated
 - [Phase 03]: release/version.js and release/checksums.js recorded as 'no finding' in the INTEG-04 security review -- neither has any execSync/shell-out surface at all
 - [Phase 03]: Fix confined to getActiveDocument() only — getSelectionBounds(), hasActiveSelection(), and useDocument.ts left unchanged, per plan's explicit scope boundary
+- [Phase 04]: D-01/D-03 executed: manifest.json restores requiredPermissions.network.domains to ["https://api.github.com"], accepting CC Desktop's install-time admin-password prompt in exchange for a working, test-covered update checker
 
 ### Pending Todos
 
@@ -124,6 +126,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-07T19:40:49.647Z
-Stopped at: Phase 4 context gathered
-Resume file: .planning/phases/04-release-automation-distribution/04-CONTEXT.md
+Last session: 2026-07-07T21:37:30.996Z
+Stopped at: Completed 04-01-PLAN.md
+Resume file: None
