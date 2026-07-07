@@ -1,7 +1,8 @@
 /**
  * package.js
- * Creates the release artifact in releases/:
+ * Creates the release artifacts in releases/:
  *   1. GuideMyGrid-vX.Y.Z.ccx          — Creative Cloud installation (double-click)
+ *   2. SHA256SUMS.txt                  — checksums for integrity verification (INTEG-02)
  *
  * Usage: node scripts/package.js  (or via `npm run package`)
  */
@@ -27,6 +28,10 @@ if (fs.existsSync(ccxFile)) fs.unlinkSync(ccxFile);
 execSync('npm run package:ccx', { stdio: 'inherit', cwd: root });
 console.log(`✅  CCX:       releases/GuideMyGrid-v${version}.ccx`);
 
-// ── 2. Stage all release files so the publish script can commit + push them ───
-const toStage = [ccxFile];
+// ── 2. Checksums ──────────────────────────────────────────────────────────────
+// Generates releases/SHA256SUMS.txt for this version's artifacts (INTEG-02).
+execSync('node release/checksums.js', { stdio: 'inherit', cwd: root });
+
+// ── 3. Stage all release files so the publish script can commit + push them ───
+const toStage = [ccxFile, path.join(outDir, 'SHA256SUMS.txt')];
 execSync(`git add ${toStage.map(f => `"${f}"`).join(' ')}`, { stdio: 'inherit', cwd: root });
