@@ -89,7 +89,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. An automated install-then-uninstall filesystem-diff check runs as part of the release process and flags any residue before a release ships — on Windows this runs via the same GitHub Actions `windows-latest` CI runner established in Phase 2, since that's the only way to exercise it on real Windows
   4. A completed security review confirms both installer/uninstaller scripts use absolute paths and don't trust inherited environment/PATH state
 
-**Plans**: 4/4 complete + 1 gap-closure plan (03-05)
+**Plans**: 5/5 plans complete
 
 **Wave 1** *(parallel — no shared files)*
 
@@ -106,7 +106,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Gap Closure** *(from 03-UAT.md — pre-existing bug surfaced during UAT, out of Phase 3's original scope)*
 
-- [ ] 03-05-PLAN.md — Harden `getActiveDocument()` so a modal-scope selection-check failure no longer nulls out document presence on panel mount + regression test [GAP-03-DOC-DETECT]
+- [x] 03-05-PLAN.md — Harden `getActiveDocument()` so a modal-scope selection-check failure no longer nulls out document presence on panel mount + regression test [GAP-03-DOC-DETECT]
 
 ### Phase 4: Release Automation & Distribution
 
@@ -145,6 +145,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Foundation & macOS Installer Rework | 4/4 | Complete    | 2026-07-06 |
 | 2. Windows Installer Rework | 2/2 | Complete    | 2026-07-06 |
-| 3. Manifest-Driven Uninstall & Checksum Integrity | 4/4 | Complete   | 2026-07-07 |
+| 3. Manifest-Driven Uninstall & Checksum Integrity | 5/5 | Complete   | 2026-07-07 |
 | 4. Release Automation & Distribution | 0/TBD | Not started | - |
 | 5. Trust & Documentation Polish | 0/TBD | Not started | - |
