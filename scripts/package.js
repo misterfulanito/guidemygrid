@@ -27,18 +27,6 @@ if (fs.existsSync(ccxFile)) fs.unlinkSync(ccxFile);
 execSync('npm run package:ccx', { stdio: 'inherit', cwd: root });
 console.log(`✅  CCX:       releases/GuideMyGrid-v${version}.ccx`);
 
-// ── 3. Legacy macOS uninstaller (kept until Phase 3's manifest-driven rework) ─
-// The unprivileged app-bundle installer this used to build alongside is
-// retired — the actual install mechanism is now the ccx built above
-// (Creative Cloud Desktop-processed). Only the legacy pkgbuild-based
-// uninstaller remains here pending Phase 3's INTEG-01 rework —
-// documented technical debt, not a Phase 1 regression.
-if (process.platform === 'darwin') {
-  execSync('node scripts/build-mac-uninstaller.js', { stdio: 'inherit', cwd: root });
-}
-
-// ── 4. Stage all release files so the publish script can commit + push them ───
+// ── 2. Stage all release files so the publish script can commit + push them ───
 const toStage = [ccxFile];
-const uninstallerFile = path.join(outDir, `GuideMyGrid-v${version}-uninstaller.pkg`);
-if (fs.existsSync(uninstallerFile)) toStage.push(uninstallerFile);
 execSync(`git add ${toStage.map(f => `"${f}"`).join(' ')}`, { stdio: 'inherit', cwd: root });
