@@ -144,3 +144,12 @@ None - no external service configuration required.
 ---
 *Phase: 03-manifest-driven-uninstall-checksum-integrity*
 *Completed: 2026-07-07*
+
+## Self-Check: PASSED
+
+- FOUND: src/__tests__/macos-installer-retirement.test.ts
+- FOUND: README.md Uninstalling section
+- CONFIRMED DELETED: scripts/build-mac-uninstaller.js
+- CONFIRMED DELETED: scripts/pkg-resources/uninstall-preinstall
+- FOUND: .planning/phases/03-manifest-driven-uninstall-checksum-integrity/03-01-SUMMARY.md
+- FOUND commits: 9feaa77, 0120983, 67a63a4, ea29567
