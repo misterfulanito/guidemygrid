@@ -89,7 +89,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. An automated install-then-uninstall filesystem-diff check runs as part of the release process and flags any residue before a release ships — on Windows this runs via the same GitHub Actions `windows-latest` CI runner established in Phase 2, since that's the only way to exercise it on real Windows
   4. A completed security review confirms both installer/uninstaller scripts use absolute paths and don't trust inherited environment/PATH state
 
-**Plans**: 4/4 plans complete
+**Plans**: 4/4 complete + 1 gap-closure plan (03-05)
 
 **Wave 1** *(parallel — no shared files)*
 
@@ -103,6 +103,10 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Wave 3** *(blocked on 03-01/03-02/03-03 — reviews their final state)*
 
 - [x] 03-04-PLAN.md — Security review of remaining release/build scripts + CI workflows, with hardening + regression test [INTEG-04]
+
+**Gap Closure** *(from 03-UAT.md — pre-existing bug surfaced during UAT, out of Phase 3's original scope)*
+
+- [ ] 03-05-PLAN.md — Harden `getActiveDocument()` so a modal-scope selection-check failure no longer nulls out document presence on panel mount + regression test [GAP-03-DOC-DETECT]
 
 ### Phase 4: Release Automation & Distribution
 
