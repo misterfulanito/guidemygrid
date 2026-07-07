@@ -89,7 +89,20 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. An automated install-then-uninstall filesystem-diff check runs as part of the release process and flags any residue before a release ships — on Windows this runs via the same GitHub Actions `windows-latest` CI runner established in Phase 2, since that's the only way to exercise it on real Windows
   4. A completed security review confirms both installer/uninstaller scripts use absolute paths and don't trust inherited environment/PATH state
 
-**Plans**: TBD
+**Plans**: 4 plans
+
+**Wave 1** *(parallel — no shared files)*
+
+- [ ] 03-01-PLAN.md — Retire the legacy macOS uninstaller + document CC Desktop uninstall + retirement regression test [INTEG-01]
+- [ ] 03-03-PLAN.md — Add the `macos-latest` .ccx build-artifact regression CI job (parity with Windows) [INTEG-03]
+
+**Wave 2** *(blocked on 03-01 — shares scripts/package.js + README.md)*
+
+- [ ] 03-02-PLAN.md — SHA256 checksum generation (`release/checksums.js` → `SHA256SUMS.txt`), publish wiring, and `VERIFY.md` [INTEG-02]
+
+**Wave 3** *(blocked on 03-01/03-02/03-03 — reviews their final state)*
+
+- [ ] 03-04-PLAN.md — Security review of remaining release/build scripts + CI workflows, with hardening + regression test [INTEG-04]
 
 ### Phase 4: Release Automation & Distribution
 
@@ -128,6 +141,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Foundation & macOS Installer Rework | 4/4 | Complete    | 2026-07-06 |
 | 2. Windows Installer Rework | 2/2 | Complete    | 2026-07-06 |
-| 3. Manifest-Driven Uninstall & Checksum Integrity | 0/TBD | Not started | - |
+| 3. Manifest-Driven Uninstall & Checksum Integrity | 0/4 | Not started | - |
 | 4. Release Automation & Distribution | 0/TBD | Not started | - |
 | 5. Trust & Documentation Polish | 0/TBD | Not started | - |
