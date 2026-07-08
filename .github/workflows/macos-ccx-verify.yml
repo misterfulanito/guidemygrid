@@ -50,12 +50,24 @@ jobs:
             exit 1
           fi
 
-          if node -e "process.exit(require('$PWD/$MANIFEST').requiredPermissions ? 1 : 0)"; then
-            echo "OK: manifest.json has no requiredPermissions block"
-          else
-            echo "manifest.json declares requiredPermissions -- this triggers Creative Cloud Desktop's admin-password prompt on non-Marketplace installs (see 01-RESEARCH.md). Remove it unless this is an intentional, reviewed tradeoff (relevant to Phase 4's UPD-03)."
-            exit 1
-          fi
+          node -e '
+            const rp = require(process.argv[1]).requiredPermissions;
+            const okScope = !!rp
+              && typeof rp === "object"
+              && Object.keys(rp).length === 1
+              && rp.network
+              && typeof rp.network === "object"
+              && Object.keys(rp.network).length === 1
+              && Array.isArray(rp.network.domains)
+              && rp.network.domains.length === 1
+              && rp.network.domains[0] === "https://api.github.com";
+            if (!rp || okScope) {
+              console.log("OK: manifest.json requiredPermissions is absent or scoped to the reviewed api.github.com-only tradeoff (Phase 4 D-01/D-03)");
+              process.exit(0);
+            }
+            console.error("manifest.json declares requiredPermissions broader than the reviewed api.github.com-only scope (Phase 4 D-01/D-03) -- found: " + JSON.stringify(rp) + ". This widens Creative Cloud Desktop admin-password-prompt trigger beyond what was reviewed.");
+            process.exit(1);
+          ' "$PWD/$MANIFEST"
 
           RETIRED_NAMES="install.bat install.ps1 install.sh uninstall.bat uninstall.ps1 build-mac-uninstaller.js uninstall-preinstall"
           for name in $RETIRED_NAMES; do

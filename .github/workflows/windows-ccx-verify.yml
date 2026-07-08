@@ -45,10 +45,28 @@ jobs:
           }
           $manifest = Get-Content $manifestPath -Raw | ConvertFrom-Json
 
-          if ($manifest.PSObject.Properties.Name -contains "requiredPermissions") {
-            throw "manifest.json declares requiredPermissions -- this triggers Creative Cloud Desktop's admin-password prompt on non-Marketplace installs (see 01-RESEARCH.md). Remove it unless this is an intentional, reviewed tradeoff (relevant to Phase 4's UPD-03)."
+          $rp = $manifest.requiredPermissions
+          $okScope = $false
+          if ($null -ne $rp) {
+            $rpKeys = @($rp.PSObject.Properties.Name)
+            $net = $rp.network
+            $netKeys = if ($net) { @($net.PSObject.Properties.Name) } else { @() }
+            $domains = if ($net) { @($net.domains) } else { @() }
+            if ($rpKeys.Count -eq 1 -and $rpKeys[0] -eq "network") {
+              if ($netKeys.Count -eq 1 -and $netKeys[0] -eq "domains") {
+                if ($domains.Count -eq 1 -and $domains[0] -eq "https://api.github.com") {
+                  $okScope = $true
+                }
+              }
+            }
           }
-          Write-Host "OK: manifest.json has no requiredPermissions block"
+
+          if ($null -eq $rp -or $okScope) {
+            Write-Host "OK: manifest.json requiredPermissions is absent or scoped to the reviewed api.github.com-only tradeoff (Phase 4 D-01/D-03)"
+          } else {
+            $found = $rp | ConvertTo-Json -Compress -Depth 10
+            throw "manifest.json declares requiredPermissions broader than the reviewed api.github.com-only scope (Phase 4 D-01/D-03) -- found: $found. This widens Creative Cloud Desktop admin-password-prompt trigger beyond what was reviewed."
+          }
 
           $retiredNames = @("install.bat", "install.ps1", "install.sh", "uninstall.bat", "uninstall.ps1")
           foreach ($name in $retiredNames) {
