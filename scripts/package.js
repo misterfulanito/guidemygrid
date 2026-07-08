@@ -33,5 +33,13 @@ console.log(`✅  CCX:       releases/GuideMyGrid-v${version}.ccx`);
 execSync('node release/checksums.js', { stdio: 'inherit', cwd: root });
 
 // ── 3. Stage all release files so the publish script can commit + push them ───
-const toStage = [ccxFile, path.join(outDir, 'SHA256SUMS.txt')];
+// Includes manifest.json + src/version.ts — the prebuild hook (release/version.js)
+// syncs these to package.json's version on every `npm run build`, but nothing
+// downstream staged them, so every prior release commit silently omitted the sync.
+const toStage = [
+  ccxFile,
+  path.join(outDir, 'SHA256SUMS.txt'),
+  path.join(root, 'manifest.json'),
+  path.join(root, 'src', 'version.ts'),
+];
 execSync(`git add ${toStage.map(f => `"${f}"`).join(' ')}`, { stdio: 'inherit', cwd: root });
