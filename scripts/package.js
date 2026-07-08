@@ -32,13 +32,14 @@ console.log(`✅  CCX:       releases/GuideMyGrid-v${version}.ccx`);
 // Generates releases/SHA256SUMS.txt for this version's artifacts (INTEG-02).
 execSync('node release/checksums.js', { stdio: 'inherit', cwd: root });
 
-// ── 3. Stage all release files so the publish script can commit + push them ───
-// Includes manifest.json + src/version.ts — the prebuild hook (release/version.js)
-// syncs these to package.json's version on every `npm run build`, but nothing
-// downstream staged them, so every prior release commit silently omitted the sync.
+// ── 3. Stage the version-sync source files ────────────────────────────────────
+// manifest.json + src/version.ts are tracked source files that the prebuild hook
+// (release/version.js) syncs to package.json's version on every `npm run build` —
+// stage them so the release commit captures the sync. releases/ itself is
+// gitignored on purpose (binaries don't belong in git history); those artifacts
+// are attached to the GitHub Release directly by release/github-release.js, not
+// committed.
 const toStage = [
-  ccxFile,
-  path.join(outDir, 'SHA256SUMS.txt'),
   path.join(root, 'manifest.json'),
   path.join(root, 'src', 'version.ts'),
 ];
