@@ -4,17 +4,17 @@ milestone: v1.6.1
 milestone_name: milestone
 current_phase: 04
 current_phase_name: release-automation-distribution
-status: executing
-stopped_at: Completed 04-01-PLAN.md
-last_updated: "2026-07-08T18:13:50.352Z"
+status: verifying
+stopped_at: Completed 04-04-PLAN.md
+last_updated: "2026-07-08T19:04:33.728Z"
 last_activity: 2026-07-07
 last_activity_desc: Phase 04 execution started
 progress:
   total_phases: 5
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 15
-  completed_plans: 14
-  percent: 60
+  completed_plans: 15
+  percent: 80
 ---
 
 # Project State
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-07-04)
 
 Phase: 04 (release-automation-distribution) — EXECUTING
 Plan: 4 of 4
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-07-07 — Phase 04 execution started
 
 Progress: [██████████] 100%
@@ -72,6 +72,7 @@ Progress: [██████████] 100%
 | Phase 04 P01 | 1min | 2 tasks | 4 files |
 | Phase 04 P02 | 5min | 2 tasks | 6 files |
 | Phase 04 P03 | 10min | 2 tasks | 1 files |
+| Phase 04 P04 | 1min | 1 tasks | 0 files |
 
 ## Accumulated Context
 
@@ -107,6 +108,7 @@ Recent decisions affecting current work:
 - [Phase 04]: No try/catch added around checkForUpdates().then() in App.tsx — the function already resolves null on any failure (silent-null convention)
 - [Phase 04]: UpdateBanner.tsx left completely untouched (verified via empty git diff) to preserve UPD-02's manual-download-only behavior
 - [Phase 04]: D-05 pivoted at execution time: Gumroad's Content tab no longer exposes a redirect-after-purchase option, so the user chose direct .ccx upload to Gumroad instead of a GitHub-Releases redirect -- introduces a manual re-upload obligation and partial DIST-01/DIST-03 risk (see 04-03-SUMMARY.md) — Live UI investigation during the human-verify checkpoint; user-directed architectural deviation, not an auto-fix
+- [Phase 04]: Live macOS install checkpoint (Plan 04) confirmed UPD-02/UPD-03 working end-to-end (banner fired, Download opened browser, no console error) -- but contradicted research Assumption A2: the admin-password prompt anticipated for D-03 did NOT appear on this live install despite the credential-caching confound being explicitly ruled out. Two trials (Phase 1's A/B test vs this checkpoint) now disagree -- genuinely unresolved, flagged for Phase 5 documentation (see 04-04-SUMMARY.md)
 
 ### Pending Todos
 
@@ -131,6 +133,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-08T18:09:05.331Z
-Stopped at: Completed 04-01-PLAN.md
+Last session: 2026-07-08T19:04:33.721Z
+Stopped at: Completed 04-04-PLAN.md
 Resume file: None

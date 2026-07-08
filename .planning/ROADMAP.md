@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation & macOS Installer Rework** - Merge existing installer work, establish the host-agnostic directory split, and replace the root-requiring `.pkg` with a user-level macOS installer (completed 2026-07-06)
 - [x] **Phase 2: Windows Installer Rework** - Replace the bare `.bat` script with a proper unelevated Windows installer using the same manifest pattern (completed 2026-07-06)
 - [x] **Phase 3: Manifest-Driven Uninstall & Checksum Integrity** - Symmetric, breadcrumb-free uninstall on both platforms plus published, verifiable release checksums (completed 2026-07-07)
-- [ ] **Phase 4: Release Automation & Distribution** - GitHub Release + Gumroad sync, and a working (not dead) in-app update checker
+- [x] **Phase 4: Release Automation & Distribution** - GitHub Release + Gumroad sync, and a working (not dead) in-app update checker (completed 2026-07-08)
 - [ ] **Phase 5: Trust & Documentation Polish** - Plain-language warning explainers, accurate README, and expectation-setting release notes
 
 ## Phase Details
@@ -121,7 +121,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. A public Gumroad listing exists as the download page/front-end, and its download link points to the current GitHub Release rather than a duplicate hosted binary
   5. GitHub Releases remains the definitive, versioned file host that both the update checker and the Gumroad listing reference
 
-**Plans**: 3/4 plans executed
+**Plans**: 4/4 plans complete
 
 **Wave 1** *(parallel — no shared files)*
 
@@ -131,7 +131,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Wave 2** *(blocked on 04-01 + 04-02)*
 
-- [ ] 04-04-PLAN.md — Live macOS install + panel-open update-check verification (admin-prompt/D-03 + banner) [UPD-01, UPD-02, UPD-03]
+- [x] 04-04-PLAN.md — Live macOS install + panel-open update-check verification (admin-prompt/D-03 + banner) [UPD-01, UPD-02, UPD-03]
 
 ### Phase 5: Trust & Documentation Polish
 
@@ -156,5 +156,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Foundation & macOS Installer Rework | 4/4 | Complete    | 2026-07-06 |
 | 2. Windows Installer Rework | 2/2 | Complete    | 2026-07-06 |
 | 3. Manifest-Driven Uninstall & Checksum Integrity | 5/5 | Complete    | 2026-07-07 |
-| 4. Release Automation & Distribution | 3/4 | In Progress|  |
+| 4. Release Automation & Distribution | 4/4 | Complete   | 2026-07-08 |
 | 5. Trust & Documentation Polish | 0/TBD | Not started | - |
