@@ -124,6 +124,12 @@ None yet.
 - Phase 2 (Windows installer) likely faces the identical PluginsStorage/Creative-Cloud-Desktop-registry architecture — REQUIREMENTS.md flags WIN-01..03 for re-verification before assuming the raw-copy model works there either.
 - `scripts/package.js`'s separate `-installer.zip` build step rests on the same disproven raw-copy assumption on both platforms — flagged out of scope for Phase 1 (macOS-only), worth a look whenever that script is next touched.
 
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260708-inq | Fix stale CI checks in macos-ccx-verify.yml and windows-ccx-verify.yml that assert manifest.json has no requiredPermissions block; update to allow requiredPermissions scoped to exactly api.github.com (Phase 4 reviewed tradeoff) | 2026-07-08 | 3b4a6b6 | [260708-inq-fix-stale-ci-checks-in-macos-ccx-verify-](./quick/260708-inq-fix-stale-ci-checks-in-macos-ccx-verify-/) |
+
 ## Deferred Items
 
 Items acknowledged and carried forward from previous milestone close:
@@ -137,3 +143,4 @@ Items acknowledged and carried forward from previous milestone close:
 Last session: 2026-07-08T19:24:17.656Z
 Stopped at: Phase 5 context gathered
 Resume file: .planning/phases/05-trust-documentation-polish/05-CONTEXT.md
+Last activity: 2026-07-08 - Completed quick task 260708-inq: Fix stale CI checks in macos-ccx-verify.yml and windows-ccx-verify.yml
