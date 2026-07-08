@@ -121,12 +121,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. A public Gumroad listing exists as the download page/front-end, and its download link points to the current GitHub Release rather than a duplicate hosted binary
   5. GitHub Releases remains the definitive, versioned file host that both the update checker and the Gumroad listing reference
 
-**Plans**: 1/4 plans executed
+**Plans**: 2/4 plans executed
 
 **Wave 1** *(parallel — no shared files)*
 
 - [x] 04-01-PLAN.md — Update-checker unit tests + restore scoped `requiredPermissions.network` in manifest.json [UPD-01, UPD-03, DIST-01]
-- [ ] 04-02-PLAN.md — Wire `checkForUpdates()`/`UpdateBanner` into App.tsx + uiStore update state + UPD-02/UPD-03 regression guards [UPD-02, UPD-03]
+- [x] 04-02-PLAN.md — Wire `checkForUpdates()`/`UpdateBanner` into App.tsx + uiStore update state + UPD-02/UPD-03 regression guards [UPD-02, UPD-03]
 - [ ] 04-03-PLAN.md — Draft Gumroad page copy + setup guide, then human-verify the live `releases/latest` redirect [DIST-01, DIST-02, DIST-03]
 
 **Wave 2** *(blocked on 04-01 + 04-02)*
@@ -156,5 +156,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Foundation & macOS Installer Rework | 4/4 | Complete    | 2026-07-06 |
 | 2. Windows Installer Rework | 2/2 | Complete    | 2026-07-06 |
 | 3. Manifest-Driven Uninstall & Checksum Integrity | 5/5 | Complete    | 2026-07-07 |
-| 4. Release Automation & Distribution | 1/4 | In Progress|  |
+| 4. Release Automation & Distribution | 2/4 | In Progress|  |
 | 5. Trust & Documentation Polish | 0/TBD | Not started | - |

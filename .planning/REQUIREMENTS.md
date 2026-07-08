@@ -39,7 +39,7 @@ Requirements for this milestone. Each maps to a roadmap phase.
 ### Update Mechanism
 
 - [x] **UPD-01**: Preserve the existing GitHub-API-only network allowlisting and response validation in the update checker — don't regress this
-- [ ] **UPD-02**: Preserve the existing manual "update available → click → browser download" flow — don't regress this
+- [x] **UPD-02**: Preserve the existing manual "update available → click → browser download" flow — don't regress this
 - [x] **UPD-03**: Reconnect the update checker end-to-end (`checkForUpdates()`/`UpdateBanner` are currently disconnected dead code per the codebase's own CONCERNS.md) so the manual update flow actually works, not just exists in source — **new constraint found 2026-07-06:** Phase 1 empirically confirmed that declaring `requiredPermissions.network` in `manifest.json` triggers Creative Cloud Desktop's admin-password prompt on install/update for non-Marketplace plugins (removing it avoids the prompt). Phase 1 removed this permission since the update checker wasn't wired up yet. Re-adding it here to make network calls work will likely reintroduce the admin-password prompt — this needs a conscious decision during Phase 4 planning (accept the prompt, find an alternative mechanism, or reconsider scope), not a silent re-add. Full detail in 01-RESEARCH.md's second follow-up addendum.
 
 ### Distribution
@@ -114,7 +114,7 @@ Explicitly excluded. Documented to prevent scope creep.
 | INTEG-03 | Phase 3 | Complete |
 | INTEG-04 | Phase 3 | Complete |
 | UPD-01 | Phase 4 | Complete |
-| UPD-02 | Phase 4 | Pending |
+| UPD-02 | Phase 4 | Complete |
 | UPD-03 | Phase 4 | Complete |
 | DIST-01 | Phase 4 | Complete |
 | DIST-02 | Phase 4 | Pending |
