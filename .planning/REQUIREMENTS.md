@@ -44,9 +44,9 @@ Requirements for this milestone. Each maps to a roadmap phase.
 
 ### Distribution
 
-- [x] **DIST-01**: GitHub Releases remains the canonical file host and the update checker's source of truth
-- [ ] **DIST-02**: Set up a free Gumroad listing as the distribution front-end / download page
-- [ ] **DIST-03**: Gumroad listing links out to the current GitHub Release download rather than hosting a duplicate binary copy — eliminates version-drift risk between the two channels (verify Gumroad's product-page options support this before committing to any other sync approach)
+- [x] **DIST-01**: GitHub Releases remains the canonical file host and the update checker's source of truth — **caveat added 2026-07-08:** the update checker (`checkForUpdates()`) still calls only `api.github.com`, so this requirement's literal text holds. However, see DIST-03 below — Phase 4 Plan 03 introduced a second, manually-synced copy of the binary on Gumroad, which is a real drift risk this requirement was originally meant to help prevent. Not unconditionally "the only copy anywhere" anymore.
+- [x] **DIST-02**: Set up a free Gumroad listing as the distribution front-end / download page — **Complete 2026-07-08:** live at https://666551126816.gumroad.com/l/guidemygrid-psd (Phase 4 Plan 03)
+- [ ] ~~**DIST-03**: Gumroad listing links out to the current GitHub Release download rather than hosting a duplicate binary copy — eliminates version-drift risk between the two channels~~ — **deviated 2026-07-08:** Gumroad's Content tab no longer exposes a "Redirect to a URL after purchase" option in its current (redesigned) UI, so the originally-planned redirect-to-GitHub link could not be built. The user made an explicit, informed decision to upload the `.ccx` directly to Gumroad instead, with a pasted SHA-256 checksum for self-verification. Live-verified: the checksum of the file downloaded from the live Gumroad listing exactly matches `releases/SHA256SUMS.txt`, so the current copy is authentic — but this requirement's core guarantee ("no duplicate binary, no version-drift risk") is **not satisfied as originally scoped**: a second binary copy now exists on Gumroad requiring a **manual re-upload on every future release**, with no automatic sync. See `.planning/phases/04-release-automation-distribution/04-03-SUMMARY.md` for the full deviation writeup and the recommended release-checklist follow-up.
 
 ### Trust & Documentation
 
@@ -116,9 +116,9 @@ Explicitly excluded. Documented to prevent scope creep.
 | UPD-01 | Phase 4 | Complete |
 | UPD-02 | Phase 4 | Complete |
 | UPD-03 | Phase 4 | Complete |
-| DIST-01 | Phase 4 | Complete |
-| DIST-02 | Phase 4 | Pending |
-| DIST-03 | Phase 4 | Pending |
+| DIST-01 | Phase 4 | Complete (caveat — see note) |
+| DIST-02 | Phase 4 | Complete |
+| DIST-03 | Phase 4 | Deviated — see note |
 | DOCS-01 | Phase 5 | Pending |
 | DOCS-02 | Phase 5 | Pending |
 | DOCS-03 | Phase 5 | Pending |
