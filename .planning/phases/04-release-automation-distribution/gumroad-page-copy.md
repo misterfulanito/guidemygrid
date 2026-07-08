@@ -79,6 +79,19 @@ $0 (Free)
 
 ## Section B — Step-by-step Gumroad setup (do this in your Gumroad account)
 
+> **2026-07-08 update — how this section changed:** This section originally described
+> wiring Gumroad's "Redirect to a URL after purchase" option so the listing would hand
+> customers straight to `github.com/.../releases/latest` and never host the plugin file
+> itself. Live in Gumroad's current product editor, the Content tab is now a single
+> unified block editor with no visible toggle to turn off that newer editor and no
+> "Redirect to a URL after purchase" option in sight — Gumroad appears to have redesigned
+> or relocated this since it was documented. Rather than keep hunting for a relocated
+> setting, the decision made was to **upload the `.ccx` file directly to the Gumroad
+> listing instead.** That is what the steps below now describe. See this plan's
+> `04-03-SUMMARY.md` for the full tradeoff this introduces (Gumroad now hosts its own
+> copy of the binary, which needs a manual re-upload on every future release so it
+> doesn't drift out of sync with GitHub).
+
 These steps assume you don't have a Gumroad account yet. If you already have one, skip to step 2.
 
 1. **Create a Gumroad account.**
@@ -90,23 +103,38 @@ These steps assume you don't have a Gumroad account yet. If you already have one
 3. **Paste the Section A copy.**
    Copy the product title, tagline, and description from Section A above into the matching fields in Gumroad's product editor.
 
-4. **Set up the "always current" download link — this is the important part.**
-   On the product's **Content** tab in Gumroad:
-   - Toggle **OFF** the beta content editor (Gumroad's newer built-in file/content builder) if it's on. You want the older, simpler content options for this step.
-   - Choose **"Redirect to a URL after purchase."**
-   - Paste this exact URL into that field:
-     ```
-     https://github.com/misterfulanito/guidemygrid/releases/latest
-     ```
+4. **Upload the `.ccx` file directly, with the checksum and install steps as its description.**
+   On the product's **Content** tab in Gumroad, add the current release file (e.g. `releases/GuideMyGrid-v0.1.0.ccx`) as the downloadable file block. Directly below the file block, paste text along these lines (adjust the version/checksum for whatever you're currently releasing):
 
-   Here's why this matters: that GitHub link always points at whatever the newest released version of the plugin is — automatically, forever. Once you set this once, you never have to come back and update this link again, even when you release version 2.0, 3.0, and so on. GitHub handles "which file is current" for you.
+   ```
+   Thanks for downloading GuideMyGrid!
 
-   **The plugin file itself is never uploaded to Gumroad.** GitHub Releases is the only place the actual plugin file lives. Gumroad's job is purely to be the storefront/download page — it just hands the customer off to GitHub at the moment of "purchase." This means there's no second copy of the file anywhere that could quietly fall out of date or get mixed up with an older version.
+   Your file: GuideMyGrid-v0.1.0.ccx (attached above)
+   Checksum (SHA-256): fa7d5ee6dc01bd8597edc6155bf36042ce8c6dc086d35fe18153b8a8ad139454
+
+   How to install:
+   1. Double-click the downloaded .ccx file — Adobe Creative Cloud Desktop will
+      open and prompt you to install it into Photoshop.
+   2. If Creative Cloud Desktop doesn't open automatically, open it manually,
+      go to Plugins, and install the file from there.
+   3. Open Photoshop and look for "GuideMyGrid" in the Plugins panel.
+
+   You may see a one-time permission prompt during install — that's expected
+   and normal. Full install walkthrough coming soon.
+
+   Questions or issues? [add your support link/email here]
+   ```
+
+   The checksum lets anyone verify the file they downloaded from Gumroad matches the official release exactly (copy the correct value for the version you're uploading from `releases/SHA256SUMS.txt` in the repo).
+
+   **Important — this is now a second copy of the file.** Unlike the original redirect-based plan, the plugin binary now genuinely lives in two places: GitHub Releases (still the canonical source, and what the in-app update checker calls) and this Gumroad listing. **Every time you cut a new release, you must manually come back here and re-upload the new `.ccx` file plus updated checksum/version text** — Gumroad will not do this automatically. Skipping this step means the Gumroad copy silently goes stale relative to GitHub.
 
 5. **Publish the listing.**
-   Once the copy and the redirect link are in place, publish the product so it's live and publicly reachable.
+   Once the copy and the file/description are in place, publish the product so it's live and publicly reachable.
 
-6. **Verify the live link (do this every time, right after publishing).**
-   Open the live product page in a normal browser window (not the Gumroad editor preview) and go through the free "purchase"/download flow as a real customer would. Confirm that your browser ends up on the **current GitHub Release page** for GuideMyGrid — not a file hosted directly on Gumroad, and not an old/stale version. If it lands anywhere else, double-check the URL you pasted in step 4 for typos.
+6. **Verify the live download (do this every time, right after publishing or re-uploading).**
+   Open the live product page in a normal browser window (not the Gumroad editor preview) and download the file as a real customer would. Run a checksum check on the downloaded file (macOS/Linux: `shasum -a 256 <downloaded file>`) and confirm it **exactly matches** the checksum published in `releases/SHA256SUMS.txt` for that version. If it doesn't match, re-check what you uploaded — don't leave a mismatched file live.
 
-That's it — once this is done and verified, you have a working free distribution page whose download link will always point at whatever you release next, with zero further Gumroad maintenance required.
+That's it — once this is done and verified, you have a working free distribution page. Unlike the original plan, this one needs a short manual step (re-upload + re-verify) on every future release to stay in sync with GitHub — see the deviation note in `04-03-SUMMARY.md` for why, and a suggestion to fold that step into the release checklist so it isn't forgotten.
+
+**Live listing:** https://666551126816.gumroad.com/l/guidemygrid-psd
