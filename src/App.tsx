@@ -5,6 +5,8 @@ import { GridPanel } from './components/ColumnGrid/GridPanel';
 import { DocumentHintBanner } from './components/shared/DocumentHintBanner';
 import { useDocument } from './hooks/useDocument';
 import { photoshopBridge } from './services/photoshopBridge';
+import { checkForUpdates } from './services/updateChecker';
+import { UpdateBanner } from './components/shared/UpdateBanner';
 import styles from './App.module.css';
 
 function IconEye() {
@@ -23,8 +25,21 @@ function IconEye() {
 }
 
 export function App() {
-  const { guidesVisible, setGuidesVisible } = useUIStore();
+  const { guidesVisible, setGuidesVisible, updateInfo, setUpdateInfo, dismissUpdate } = useUIStore();
   const { document } = useDocument();
+
+  // Check for a newer release on every panel open (D-04: no throttle, no
+  // 24-hour cache, no manual "check now" button). checkForUpdates() already
+  // swallows all errors and resolves null — never wrap its .then in try/catch.
+  useEffect(() => {
+    let cancelled = false;
+    checkForUpdates().then((info) => {
+      if (!cancelled && info?.hasUpdate) setUpdateInfo(info);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // Dismissible "no canvas detected" hint. Reset dismissal whenever a document
   // appears (null → non-null) so the hint returns fresh the next time it's
@@ -68,6 +83,11 @@ export function App() {
       {/* ── No-canvas-detected hint (dismissible) ── */}
       {!document && !hintDismissed && (
         <DocumentHintBanner onDismiss={() => setHintDismissed(true)} />
+      )}
+
+      {/* ── Update-available banner (dismissible) ── */}
+      {updateInfo && (
+        <UpdateBanner info={updateInfo} onDismiss={dismissUpdate} />
       )}
 
       {/* ── Main panel ── */}
