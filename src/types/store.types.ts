@@ -1,5 +1,7 @@
 // src/types/store.types.ts
 
+import { UpdateInfo } from '../services/updateChecker';
+
 export interface ColumnsState {
   count: string;  // '' or numeric string
   gutter: string; // '' or numeric string
@@ -31,8 +33,11 @@ export interface UIStore {
   isApplying: boolean;
   lastError: string | null;
   marginsLocked: boolean;
+  updateInfo: UpdateInfo | null;
   setGuidesVisible: (v: boolean) => void;
   setApplying: (state: boolean) => void;
   setError: (message: string | null) => void;
   setMarginsLocked: (v: boolean) => void;
+  setUpdateInfo: (info: UpdateInfo | null) => void;
+  dismissUpdate: () => void;
 }
