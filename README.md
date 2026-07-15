@@ -9,7 +9,7 @@ Set up columns, rows, and margins in seconds — no manual calculations required
 [![Version](https://img.shields.io/github/v/release/misterfulanito/guidemygrid?label=version&style=flat-square&color=0066cc)](https://github.com/misterfulanito/guidemygrid/releases/latest)
 [![Photoshop](https://img.shields.io/badge/Photoshop-22.0%2B-blue?style=flat-square&logo=adobe-photoshop&logoColor=white)](https://github.com/misterfulanito/guidemygrid/releases/latest)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Windows-lightgrey?style=flat-square)](https://github.com/misterfulanito/guidemygrid/releases/latest)
-[![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-red?style=flat-square)](LICENSE)
 
 ---
 
@@ -214,4 +214,11 @@ For bugs or suggestions, open an [Issue](https://github.com/misterfulanito/guide
 
 ## License
 
-MIT — free for personal and commercial use. See [LICENSE](LICENSE) for more details.
+**All Rights Reserved.**
+
+Copyright (c) 2026 Huriata Bonilla Peña.
+
+This source code is published for viewing and reference only. No permission is
+granted to use, copy, modify, distribute, or create derivative works of this
+software without the prior written consent of the copyright holder. See
+[LICENSE](LICENSE) for full terms.
