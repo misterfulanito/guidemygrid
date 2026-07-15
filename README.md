@@ -201,17 +201,6 @@ The calculation logic (`gridGenerator.ts`) is completely decoupled from UXP, whi
 
 ---
 
-## Contributing
-
-1. Fork the repository
-2. Create a branch: `git checkout -b feature/my-improvement`
-3. Make your changes and add tests if applicable
-4. Open a Pull Request with a description of the change
-
-For bugs or suggestions, open an [Issue](https://github.com/misterfulanito/guidemygrid/issues).
-
----
-
 ## License
 
 **All Rights Reserved.**
